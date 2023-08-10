@@ -24,6 +24,7 @@
     <div v-show="status.isLoading">
       Cargando...
     </div>
+    <p>{{ $user.email }}</p>
     <input 
       :disabled="status.isLoading"
       id="code"
@@ -41,9 +42,13 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { useStore } from '@nanostores/vue'
+import { user } from '../stores/session'
 import { supabase } from '../services/supabase'
 
-const email = ref('')
+const $user = useStore(user)
+const stEmail= user.get().email || ''
+const email = ref(stEmail)
 const code = ref('')
 const status = reactive({
   error: null,
@@ -55,6 +60,10 @@ const sendAuthLink = async () => {
   status.error = null
   status.success = false
   status.isLoading = true
+
+  user.setKey('email', email.value)
+
+  console.log("test", user.get().email)
 
   const { error } = await supabase.auth.signInWithOtp({
     email: email.value,
@@ -74,6 +83,9 @@ const sendAuthLink = async () => {
 }
 
 const validateCode = async () => {
+
+  if (!email.value || !code.value) return
+
   status.error = null
   status.success = false
   status.isLoading = true
