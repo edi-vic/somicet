@@ -24,6 +24,19 @@
     <div v-show="status.isLoading">
       Cargando...
     </div>
+    <input 
+      :disabled="status.isLoading"
+      id="code"
+      type="text"
+      placeholder="Codigo"
+      v-model="code"
+    >
+    <button 
+      @click="validateCode"
+      :disabled="status.isLoading"
+    >
+      Validar código
+    </button>
 </template>
 
 <script setup>
@@ -31,6 +44,7 @@ import { ref, reactive } from 'vue'
 import { supabase } from '../services/supabase'
 
 const email = ref('')
+const code = ref('')
 const status = reactive({
   error: null,
   success: false,
@@ -57,5 +71,26 @@ const sendAuthLink = async () => {
   }
   status.isLoading = false
 
+}
+
+const validateCode = async () => {
+  status.error = null
+  status.success = false
+  status.isLoading = true
+
+  const { data, error } = await supabase.auth.verifyOtp({ 
+    email: email.value,
+    token: code.value, 
+    type: 'email'
+  })
+
+  console.log(data, error)
+  if (error?.message) {
+    status.error = error.message
+    status.success = false
+  } else {
+    status.success = true
+  }
+  status.isLoading = false
 }
 </script>
