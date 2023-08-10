@@ -1,4 +1,9 @@
 ---
+import { getUser } from '../services/supabase'
+import LoginStatus from '../components/LoginStatus.astro'
+
+const user = await getUser(Astro.request)
+const isLoggedIn = !(user == null)
 ---
 
 <html lang="en">
@@ -11,5 +16,7 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		<LoginStatus isLoggedIn={isLoggedIn}></LoginStatus>
+		<a href="/login">Login</a>
 	</body>
 </html>
