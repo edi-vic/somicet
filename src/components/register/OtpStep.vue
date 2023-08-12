@@ -20,6 +20,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { session, expiration } from '@stores/session';
 import { user } from '@stores/session'
 import { supabase } from '@helpers/supabase'
 
@@ -43,6 +44,16 @@ const validateCode = async () => {
   })
 
   console.log(data, error)
+
+  if (error?.message) {
+    status.error = error.message
+  } else {
+    const { session: { access_token, refresh_token, expires_at } } = data
+    session.set({ access_token, refresh_token })
+    expiration.set(expires_at)
+    status.success = true
+  } 
+  status.loading = false
 }
 
 </script>

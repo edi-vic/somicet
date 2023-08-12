@@ -6,7 +6,7 @@ export const user = persistentMap('_somicet_user_', {
   email: '',
 })
 
-export const session = persistentAtom('_somicet_session_', {
+export const session = persistentMap('_somicet_session_', {
   access_token: '',
   refresh_token: '',
 }, encoding)
