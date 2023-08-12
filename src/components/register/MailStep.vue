@@ -30,9 +30,7 @@ import { isEmpty, isEmail } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
 
 //  STATE 
-
-const storedEmail = user.get().email || ''
-const email = ref(storedEmail)
+const email = ref('')
 const status = reactive({
   error: null,
   success: false,
@@ -40,12 +38,16 @@ const status = reactive({
 })
 
 //  COMPUTED 
-
 const isEmailValid = computed(() => 
   !isEmpty(email.value) && isEmail(email.value))
 
-//  METHODS 
+//  LIFECYCLE 
+onMounted(() => {
+  const storedEmail = user.get().email || ''
+  if (storedEmail) email.value = storedEmail
+})
 
+//  METHODS 
 const validateEmail = () => {
   const empty = isEmpty(email.value)
   const valid = isEmail(email.value)
@@ -75,6 +77,5 @@ const sendAuthCode = async () => {
     status.success = true
   }
   status.loading = false
-
 }
 </script>
