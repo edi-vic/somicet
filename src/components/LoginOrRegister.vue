@@ -1,7 +1,7 @@
 <template>
-  <p>
+  <!-- <p>
     Inicia o registrarte, con un enlace a tu correo.
-  </p>
+  </p> -->
     <!-- <input 
       :disabled="status.isLoading"
       id="email"
@@ -64,41 +64,41 @@ const sendAuthLink = async () => {
   // user.setKey('email', email.value)
 
 
-  const { error } = await supabase.auth.signInWithOtp({
-    email: email.value,
-  })
+  // const { error } = await supabase.auth.signInWithOtp({
+  //   email: email.value,
+  // })
 
-  if (error && error.message) {
-    status.error = error.message
-    status.success = false
-  } else {
-    status.success = true
-  }
-  status.isLoading = false
+  // if (error && error.message) {
+  //   status.error = error.message
+  //   status.success = false
+  // } else {
+  //   status.success = true
+  // }
+  // status.isLoading = false
 
 }
 
-const validateCode = async () => {
+// const validateCode = async () => {
 
-  if (!email.value || !code.value) return
+//   if (!email.value || !code.value) return
 
-  status.error = null
-  status.success = false
-  status.isLoading = true
+//   status.error = null
+//   status.success = false
+//   status.isLoading = true
 
-  const { data, error } = await supabase.auth.verifyOtp({ 
-    email: email.value,
-    token: code.value, 
-    type: 'email'
-  })
+//   const { data, error } = await supabase.auth.verifyOtp({ 
+//     email: email.value,
+//     token: code.value, 
+//     type: 'email'
+//   })
 
-  console.log(data, error)
-  if (error?.message) {
-    status.error = error.message
-    status.success = false
-  } else {
-    status.success = true
-  }
-  status.isLoading = false
-}
+//   console.log(data, error)
+//   if (error?.message) {
+//     status.error = error.message
+//     status.success = false
+//   } else {
+//     status.success = true
+//   }
+//   status.isLoading = false
+// }
 </script>
