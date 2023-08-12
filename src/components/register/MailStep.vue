@@ -76,6 +76,7 @@ const sendAuthCode = async () => {
   } else {
     status.success = true
   }
+  
   status.loading = false
 }
 </script>

@@ -9,9 +9,12 @@
       placeholder="Código"
       v-model="code"
     >
+    <span v-if="status.error">
+      {{ status.error }}
+    </span>
     <button 
-      @click="validateCode"
-      :disabled="status.loading"
+      @click="validateAuthCode"
+      :disabled="status.loading || !isCodeValid"
     >
       Validar código
     </button>
@@ -19,12 +22,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import { session, expiration } from '@stores/session';
-import { user } from '@stores/session'
+import { ref, reactive, computed } from 'vue'
+import { session, expiration, user } from '@stores/session';
+import { isEmpty, isLength } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
 
-const email = user.get().email || ''
+//  STATE 
 const code = ref('')
 const status = reactive({
   error: null,
@@ -32,7 +35,14 @@ const status = reactive({
   loading: false,
 })
 
-const validateCode = async () => {
+//  COMPUTED 
+const isCodeValid = computed(() => 
+  !isEmpty(code.value) && isLength(code.value, 6))
+
+//  METHODS 
+const validateAuthCode = async () => {
+  const email = user.get().email
+
   status.error = null
   status.success = false
   status.loading = true
@@ -43,17 +53,25 @@ const validateCode = async () => {
     type: 'email'
   })
 
-  console.log(data, error)
-
   if (error?.message) {
     status.error = error.message
   } else {
-    const { session: { access_token, refresh_token, expires_at } } = data
-    session.set({ access_token, refresh_token })
-    expiration.set(expires_at)
-    status.success = true
-  } 
+    saveStorage(data)
+  }
+
   status.loading = false
 }
 
+const saveStorage = (data) => {
+  const { 
+    session: { access_token, refresh_token, expires_at },
+    user: { id }
+  } = data
+
+  session.set({ access_token, refresh_token })
+  expiration.set(expires_at)
+  user.set({ id })
+
+  status.success = true
+}
 </script>

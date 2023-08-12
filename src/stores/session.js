@@ -11,4 +11,4 @@ export const session = persistentMap('_somicet_session_', {
   refresh_token: '',
 }, encoding)
 
-export const expiration = persistentAtom('_somicet_expiration_', 0)
+export const expiration = persistentAtom('_somicet_expiration', 0)
