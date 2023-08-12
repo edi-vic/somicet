@@ -1,5 +1,5 @@
 ---
-import { getUser } from '../services/supabase'
+import { getUser } from '../helpers/supabase'
 import LoginStatus from '../components/LoginStatus.astro'
 
 const user = await getUser(Astro.request)
@@ -17,6 +17,7 @@ const isLoggedIn = !(user == null)
 	<body>
 		<h1>Astro</h1>
 		<LoginStatus isLoggedIn={isLoggedIn}></LoginStatus>
-		<a href="/login">Login</a>
+		<a href="/registro">Registro</a>
+		
 	</body>
 </html>

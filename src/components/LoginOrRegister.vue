@@ -2,25 +2,25 @@
   <p>
     Inicia o registrarte, con un enlace a tu correo.
   </p>
-    <input 
+    <!-- <input 
       :disabled="status.isLoading"
       id="email"
       type="text"
       placeholder="Correo"
       v-model="email"
-    >
+    > -->
     <div v-show="status.error">
       {{ status.error }}
     </div>
     <div v-show="status.success">
         Revisa tu bandeja de entrada.
     </div>
-    <button 
+    <!-- <button 
       @click="sendAuthLink"
       :disabled="status.isLoading"
     >
       Enviar enlace
-    </button>
+    </button> -->
     <div v-show="status.isLoading">
       Cargando...
     </div>
@@ -44,7 +44,7 @@
 import { ref, reactive } from 'vue'
 import { useStore } from '@nanostores/vue'
 import { user } from '../stores/session'
-import { supabase } from '../services/supabase'
+import { supabase } from '../helpers/supabase'
 
 const $user = useStore(user)
 const stEmail= user.get().email || ''
@@ -57,22 +57,18 @@ const status = reactive({
 })
 
 const sendAuthLink = async () => {
-  status.error = null
-  status.success = false
-  status.isLoading = true
+  // status.error = null
+  // status.success = false
+  // status.isLoading = true
 
-  user.setKey('email', email.value)
+  // user.setKey('email', email.value)
 
-  console.log("test", user.get().email)
 
   const { error } = await supabase.auth.signInWithOtp({
     email: email.value,
-    options: {
-      emailRedirectTo: import.meta.env.PUBLIC_REDIRECT_URL
-    }
   })
 
-  if (error?.message) {
+  if (error && error.message) {
     status.error = error.message
     status.success = false
   } else {
