@@ -47,14 +47,14 @@ import { user } from '../stores/session'
 import { supabase } from '../helpers/supabase'
 
 const $user = useStore(user)
-const stEmail= user.get().email || ''
-const email = ref(stEmail)
-const code = ref('')
-const status = reactive({
-  error: null,
-  success: false,
-  isLoading: false,
-})
+// const stEmail= user.get().email || ''
+// const email = ref(stEmail)
+// const code = ref('')
+// const status = reactive({
+//   error: null,
+//   success: false,
+//   isLoading: false,
+// })
 
 const sendAuthLink = async () => {
   // status.error = null

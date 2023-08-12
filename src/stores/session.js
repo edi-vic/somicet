@@ -1,28 +1,14 @@
 import { persistentMap } from '@nanostores/persistent'
-import { encrypt, decrypt } from '@helpers/crypto'
+import { encoding } from '@helpers/crypto'
 
-// export const session = persistentAtom('session', {
-//   access_token: '',
-//   refresh_token: '',
-//   expires_at: 0,
-// })
-
-export const user = persistentMap('user', {
+export const user = persistentMap('_somicet_user_', {
   id: '',
   email: '',
-},
-{
-  encode (value) {
-    let stringValue = JSON.stringify(value);
-    return encrypt(stringValue);
-  },
-  decode (value ) {
-    try {
-      let decryptedValue = decrypt(value);
-      return JSON.parse(decryptedValue);
-    } catch(err) {
-      console.error(err);
-      return value
-    }
-  }
 })
+
+export const session = persistentAtom('_somicet_session_', {
+  access_token: '',
+  refresh_token: '',
+}, encoding)
+
+export const expiration = persistentAtom('_somicet_expiration_', 0)

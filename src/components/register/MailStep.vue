@@ -1,24 +1,30 @@
 <template>
-  <input 
-    id="email"
-    type="text"
-    placeholder="Correo electrónico"
-    v-model="email"
-    :disabled="status.isLoading"
-  >
-  <button 
-    @click="sendAuthCode"
-    :disabled="status.isLoading"
-  >
-    Enviar código
-  </button>
+  <section>
+    <label for="email">
+      Correo electrónico
+    </label>
+    <input 
+      id="email"
+      type="text"
+      placeholder="Correo electrónico"
+      v-model="email"
+      :disabled="status.isLoading"
+    >
+    <button 
+      @click="sendAuthCode"
+      :disabled="status.isLoading"
+    >
+      Enviar código
+    </button>
+  </section>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
 import { user } from '@stores/session'
 
-const email = ref('')
+const stEmail = user.get().email || ''
+const email = ref(stEmail)
 const status = reactive({
   error: null,
   success: false,
