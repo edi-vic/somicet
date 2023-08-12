@@ -12,7 +12,7 @@
     >
     <button 
       @click="sendAuthCode"
-      :disabled="status.isLoading"
+      :disabled="status.isLoading || !isEmailValid"
     >
       Enviar código
     </button>
@@ -20,9 +20,11 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { user } from '@stores/session'
+import { isEmpty, isEmail } from '@helpers/validators'
 
+//  STATE 
 const stEmail = user.get().email || ''
 const email = ref(stEmail)
 const status = reactive({
@@ -31,16 +33,21 @@ const status = reactive({
   isLoading: false,
 })
 
+//  COMPUTED 
+const isEmailValid = computed(() => 
+  !isEmpty(email.value) && isEmail(email.value))
+
+//  METHODS 
 const sendAuthCode = async () => {
-  //  TODO:  Email validation
+  const _email = email.value.trim()
 
   status.error = null
   status.success = false
   status.isLoading = true
 
-  user.set({ email: email.value })
+  user.set({ email: _email })
 
   // TODO:  Supabase logic to send code
 
 }
-</script>@helpers/crypto
+</script>

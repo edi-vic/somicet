@@ -1,4 +1,4 @@
-import { persistentMap } from '@nanostores/persistent'
+import { persistentAtom, persistentMap } from '@nanostores/persistent'
 import { encoding } from '@helpers/crypto'
 
 export const user = persistentMap('_somicet_user_', {
