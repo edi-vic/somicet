@@ -1,0 +1,58 @@
+<template>
+  <section>
+    <label for="name">
+      Nombre
+    </label>
+    <input 
+      id="name"
+      type="text"
+      placeholder="Nombre"
+      v-model="name"
+      :disabled="status.loading"
+    >
+    <span v-if="status.error">
+      {{ status.error }}
+    </span>
+    <button 
+      @click="saveName"
+      :disabled="status.loading"
+    >
+      Guardar nombre
+    </button>
+  </section>
+</template>
+
+<script setup>
+import { ref, reactive, onMounted, watch } from 'vue'
+import { user } from '@stores/session'
+import { supabase } from '@helpers/supabase'
+
+const props = defineProps(['firstName'])
+
+const emit = defineEmits(['ready'])
+
+//  STATE 
+const name = ref('')
+const status = reactive({
+  error: null,
+  success: false,
+  loading: false,
+})
+
+//  LIFECYCLE 
+onMounted(() => {
+  emit('ready')
+})
+
+watch(() => props.firstName, (value) => {
+  name.value = value
+})
+
+//  METHODS 
+const saveName = async () => {
+
+  status.error = null
+  status.success = false
+  status.loading = true
+}
+</script>

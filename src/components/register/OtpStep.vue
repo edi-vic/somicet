@@ -70,7 +70,7 @@ const saveStorage = (data) => {
 
   session.set({ access_token, refresh_token })
   expiration.set(expires_at)
-  user.set({ id })
+  user.set({ id }) // FIX
 
   status.success = true
 }

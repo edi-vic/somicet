@@ -30,6 +30,7 @@ import { isEmpty, isEmail } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
 
 //  STATE 
+const storedEmail = user.get().email || ''
 const email = ref('')
 const status = reactive({
   error: null,
@@ -76,7 +77,7 @@ const sendAuthCode = async () => {
   } else {
     status.success = true
   }
-  
+
   status.loading = false
 }
 </script>

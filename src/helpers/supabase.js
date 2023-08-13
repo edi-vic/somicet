@@ -8,16 +8,10 @@ const sbKey = import.meta.env.PUBLIC_SUPABASE_KEY
 export const supabase = createClient(
   sbUrl, 
   sbKey,
-  { 
-    auth: { 
-      persistSession: false 
-    } 
-  })
+)
 
-export async function getUser(req) {
-  const token = session.get().access_token
-
-  const { data, error, data: { user } } = await supabase.auth.getUser(token)
+export async function getUser() {
+  const { data, error, data: { user } } = await supabase.auth.getUser()
   console.log(data, error)
   if (!user || user.role !== "authenticated") return null
   return user
