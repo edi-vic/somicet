@@ -1,6 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 import { session } from '@stores/session'
-import cookie from 'cookie'
 
 const sbUrl = import.meta.env.PUBLIC_SUPABASE_URL
 const sbKey = import.meta.env.PUBLIC_SUPABASE_KEY
