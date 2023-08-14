@@ -14,7 +14,7 @@
       {{ status.error }}
     </span>
     <button 
-      @click="saveName"
+      @click="updateName"
       :disabled="status.loading"
     >
       Guardar nombre
@@ -51,8 +51,27 @@ watch(() => props.firstName, (value) => {
 //  METHODS 
 const saveName = async () => {
 
-  status.error = null
-  status.success = false
-  status.loading = true
+  // status.error = null
+  // status.success = false
+  // status.loading = true
+
+  const { error } = await supabase
+  .from('event_attendees')
+  .insert({ 'first_name': name.value })
+
+  console.log(error)
+}
+
+const updateName = async () => {
+  const userId = await user.get()?.id
+
+  console.log(name.value, userId)
+
+  const { error } = await supabase
+    .from('event_attendees')
+    .update({ 'first_name': name.value })
+    .eq('user_id', userId)
+
+  console.log(error)
 }
 </script>
