@@ -15,6 +15,28 @@ const { title } = Astro.props
     <GlobalStyles />
   </head>
   <body>
-    <slot />
+    <div id="container">
+      <aside>
+        <a href="/admin/panel">Panel</a>
+        <a href="/admin/aistentes">Asitentes</a>
+      </aside>
+      <main>
+        <slot />
+      </main>
+    </div>
   </body>
 </html>
+
+<style lang="scss">
+#container {
+  display: flex;
+}
+aside {
+  width: 250px;
+  padding: 20px;
+}
+main {
+  flex: 1;
+  padding: 20px;
+}
+</style>
