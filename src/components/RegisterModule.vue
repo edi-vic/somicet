@@ -5,12 +5,14 @@
     :firstName="firstName"
     @ready='getEventRegistration' 
   />
+  <ReceiptStep />
 </template>
 
 <script setup>
 import MailStep from '@components/register/MailStep.vue'
 import OtpStep from '@components/register/OtpStep.vue'
-import NameStep from '@components/register/NameStep.vue';
+import NameStep from '@components/register/NameStep.vue'
+import ReceiptStep from '@components/register/ReceiptStep.vue'
 import { ref } from 'vue'
 import { user } from '@stores/session'
 import { supabase } from '@helpers/supabase'

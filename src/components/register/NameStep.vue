@@ -56,8 +56,8 @@ const saveName = async () => {
   // status.loading = true
 
   const { error } = await supabase
-  .from('event_attendees')
-  .insert({ 'first_name': name.value })
+    .from('event_attendees')
+    .insert({ 'first_name': name.value })
 
   console.log(error)
 }
