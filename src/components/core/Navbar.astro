@@ -1,0 +1,28 @@
+---
+const { active } = Astro.props
+const home = active === 'Inicio'
+const register = active === 'Registro'
+console.log(active, "active");
+
+---
+<nav>
+  <ul>
+    <li class:list={[{ active: home }]}>
+      <a href="/">
+        Inicio
+      </a>
+    </li>
+    <li class:list={[{ active: register }]}>
+      <a href="/registro">
+        Registro
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<style lang="scss">
+  .active{
+    background-color: blue;
+  }
+
+</style>
