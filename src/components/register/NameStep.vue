@@ -14,7 +14,7 @@
       {{ status.error }}
     </span>
     <button 
-      @click="updateName"
+      @click="saveName"
       :disabled="status.loading"
     >
       Guardar nombre

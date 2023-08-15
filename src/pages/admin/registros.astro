@@ -1,0 +1,9 @@
+---
+import AdminLayout from '@layouts/AdminLayout.astro'
+import AttendeesModule from '@components/admin/AttendeesModule.vue'
+---
+
+<AdminLayout title='Panel'>
+  <h1>Registros</h1>
+  <AttendeesModule client:only='vue' />
+</AdminLayout>

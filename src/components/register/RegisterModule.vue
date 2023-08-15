@@ -30,7 +30,7 @@ const getEventRegistration = async () => {
     .single()
   
   if (error) {
-    console.log(error, error.message)
+    console.log('here', error, error.message)
   } else {
     firstName.value = data.first_name
   }
