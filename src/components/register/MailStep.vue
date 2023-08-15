@@ -27,11 +27,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
-import { session, session as user } from '@stores/session'
-import { isEmpty, isEmail } from '@helpers/validators'
-import { supabase } from '@helpers/supabase'
-import { STEPS } from '@helpers/constants'
+import { ref, reactive, computed, onMounted } from "vue"
+import { session } from "@stores/session"
+import { STEPS } from "@helpers/constants"
+import { supabase } from "@helpers/supabase"
+import { isEmpty, isEmail } from "@helpers/validators"
 
 /*  vue  props  */
 const { step } = defineProps({
@@ -42,32 +42,32 @@ const { step } = defineProps({
 })
 
 /*  vue  state  */
-const email = ref('')
+const email = ref("")
 const status = reactive({
   loading: false,
   success: false,
   error: null,
 })
 
-//  COMPUTED 
+/*  vue  computed  */
 const isEmailValid = computed(() => 
   !isEmpty(email.value) && isEmail(email.value))
 
 /*  vue  lifecycle  */
 onMounted(() => {
-  const storedEmail = session.get()?.user_email || ''
+  const storedEmail = session.get()?.user_email || ""
   if (storedEmail) email.value = storedEmail
 })
 
-//  METHODS 
+/*  vue  methods  */
 const validateEmail = () => {
   const empty = isEmpty(email.value)
   const valid = isEmail(email.value)
 
   if (empty)
-    status.error = 'El campo de correo electrónico no puede estar vacío.'
+    status.error = "El campo de correo electrónico no puede estar vacío."
   else if (!valid)
-    status.error = 'Por favor, ingresa un correo electrónico válido.'
+    status.error = "Por favor, ingresa un correo electrónico válido."
   else
     status.error = null
 }
@@ -86,7 +86,7 @@ const sendAuthCode = async () => {
     signInWithOtp({ email: _email })
 
   if (error) {
-    console.error('Error in sendAuthCode: ', error)
+    console.error("Error in sendAuthCode: ", error)
   } else {
     status.success = true
   }
@@ -94,3 +94,12 @@ const sendAuthCode = async () => {
   status.loading = false
 }
 </script>
+
+<style lang="scss">
+#email-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>
