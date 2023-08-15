@@ -1,5 +1,8 @@
 <template>
-  <section>
+  <section
+    id="email-input"
+    v-if="step === STEPS[0]"
+  >
     <label for="email">
       Correo electrónico
     </label>
@@ -25,26 +28,34 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
-import { user } from '@stores/session'
+import { session, session as user } from '@stores/session'
 import { isEmpty, isEmail } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
+import { STEPS } from '@helpers/constants'
 
-//  STATE 
-const storedEmail = user.get().email || ''
+/*  vue  props  */
+const { step } = defineProps({
+  step: {
+    type: String,
+    required: true,
+  }
+})
+
+/*  vue  state  */
 const email = ref('')
 const status = reactive({
-  error: null,
-  success: false,
   loading: false,
+  success: false,
+  error: null,
 })
 
 //  COMPUTED 
 const isEmailValid = computed(() => 
   !isEmpty(email.value) && isEmail(email.value))
 
-//  LIFECYCLE 
+/*  vue  lifecycle  */
 onMounted(() => {
-  const storedEmail = user.get().email || ''
+  const storedEmail = session.get()?.user_email || ''
   if (storedEmail) email.value = storedEmail
 })
 
@@ -64,16 +75,18 @@ const validateEmail = () => {
 const sendAuthCode = async () => {
   const _email = email.value.trim()
 
-  status.error = null
-  status.success = false
   status.loading = true
+  status.success = false
+  status.error = null
 
-  user.set({ email: _email })
+  session.set({ user_email: _email })
 
-  const { error } = await supabase.auth.signInWithOtp({ email: _email })
+  const { data, error } = await supabase
+    .auth.
+    signInWithOtp({ email: _email })
 
-  if (error?.message) {
-    status.error = error.message
+  if (error) {
+    console.error('Error in sendAuthCode: ', error)
   } else {
     status.success = true
   }

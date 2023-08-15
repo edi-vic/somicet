@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, watch } from 'vue'
-import { user } from '@stores/session'
+import { session as user } from '@stores/session'
 import { supabase } from '@helpers/supabase'
 
 const props = defineProps(['firstName'])

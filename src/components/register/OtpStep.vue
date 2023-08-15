@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { session, expiration, user } from '@stores/session';
+import { session as user } from '@stores/session';
 import { isEmpty, isLength } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
 
@@ -68,9 +68,9 @@ const saveStorage = (data) => {
     user: { id }
   } = data
 
-  session.set({ access_token, refresh_token })
-  expiration.set(expires_at)
-  user.set({ id }) // FIX
+  // session.set({ access_token, refresh_token })
+  // expiration.set(expires_at)
+  // user.set({ id }) // FIX
 
   status.success = true
 }

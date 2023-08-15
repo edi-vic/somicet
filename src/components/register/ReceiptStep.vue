@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { user } from '@stores/session'
+import { session as user } from '@stores/session'
 import { isEmpty } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
 
