@@ -3,14 +3,17 @@
     v-if="step === STEPS[0]"
     @success="handleNextStep"
   />
-  <OtpStep v-if="step === STEPS[1]" />
+  <OtpStep
+    v-if="step === STEPS[1]"
+    @success="handleNextStep"
+  />
   <!-- <NameStep/>
   <ReceiptStep /> -->
 </template>
 
 <script setup>
-import EmailStep from '@components/register/EmailStep.vue'
-import OtpStep from '@components/register/OtpStep.vue'
+import EmailStep from '@components/register/00EmailStep.vue'
+import OtpStep from '@components/register/01OtpStep.vue'
 import NameStep from '@components/register/NameStep.vue'
 import ReceiptStep from '@components/register/ReceiptStep.vue'
 import { ref, reactive, onMounted } from 'vue'
@@ -27,10 +30,10 @@ onMounted(async () => {
 })
 
 /*  vue  methods  */
-const getUserId = async () => await session.get()?.user_id
+const getUserId = () => session.get()?.user_id
 
 const getUserProfile = async () => {
-  const user_id = await getUserId()
+  const user_id = getUserId()
   if (!user_id) {
     step.value = STEPS[0]
     return

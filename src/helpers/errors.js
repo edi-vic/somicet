@@ -5,3 +5,8 @@ const errorMessages = {
     details: "Results contain 0 rows, application/vnd.pgrst.object+json requires 1 row",
   }
 }
+
+
+/* 
+Token has expired or is invalid
+*/
