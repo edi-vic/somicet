@@ -1,8 +1,5 @@
 <template>
-  <section
-    id="email-input"
-    v-if="step === STEPS[0]"
-  >
+  <section class="mail-step">
     <label for="email">
       Correo electrónico
     </label>
@@ -33,13 +30,8 @@ import { STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 import { isEmpty, isEmail } from "@helpers/validators"
 
-/*  vue  props  */
-const { step } = defineProps({
-  step: {
-    type: String,
-    required: true,
-  }
-})
+/*  vue  emits  */
+defineEmits(["success"])
 
 /*  vue  state  */
 const email = ref("")
@@ -81,13 +73,15 @@ const sendAuthCode = async () => {
 
   session.set({ user_email: _email })
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .auth.
     signInWithOtp({ email: _email })
 
   if (error) {
+    // TODO: find errors
     console.error("Error in sendAuthCode: ", error)
   } else {
+    emit("success", STEPS[1])
     status.success = true
   }
 
@@ -96,7 +90,7 @@ const sendAuthCode = async () => {
 </script>
 
 <style lang="scss">
-#email-input {
+.mail-step {
   display: flex;
   flex-direction: column;
   align-items: center;

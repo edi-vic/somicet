@@ -1,12 +1,15 @@
 <template>
-  <MailStep :step="step" />
-  <!-- <OtpStep />
-  <NameStep/>
+  <EmailStep
+    v-if="step === STEPS[0]"
+    @success="handleNextStep"
+  />
+  <OtpStep v-if="step === STEPS[1]" />
+  <!-- <NameStep/>
   <ReceiptStep /> -->
 </template>
 
 <script setup>
-import MailStep from '@components/register/MailStep.vue'
+import EmailStep from '@components/register/EmailStep.vue'
 import OtpStep from '@components/register/OtpStep.vue'
 import NameStep from '@components/register/NameStep.vue'
 import ReceiptStep from '@components/register/ReceiptStep.vue'
@@ -46,6 +49,7 @@ const getUserProfile = async () => {
   }
 }
 
+const handleNextStep = (val) => step.value = val
 
 // const getEventRegistration = async () => {
 //   return

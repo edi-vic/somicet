@@ -29,6 +29,14 @@ import { supabase } from '@helpers/supabase'
 
 const props = defineProps(['firstName'])
 
+/*  vue  props  */
+// const { step } = defineProps({
+//   step: {
+//     type: String,
+//     required: true,
+//   }
+// })
+
 const emit = defineEmits(['ready'])
 
 //  STATE 
