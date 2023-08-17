@@ -80,7 +80,7 @@ onMounted(() => {
 
 /*  vue  methods  */
 const saveName = async () => {
-  const user_id = getUserId()
+  const userId = getUserId()
 
   status.loading = true
   status.success = false
@@ -92,7 +92,7 @@ const saveName = async () => {
       "first_name": firstName.value,
       "last_name": lastName.value, 
     })
-    .eq("id", user_id)
+    .eq("id", userId)
 
   console.log(data, error)
 

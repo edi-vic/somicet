@@ -3,6 +3,7 @@ export const REGISTER_STEPS = {
   1: "otp",
   2: "user_name",
   3: "registration",
+  4: "approval",
 }
 
 export const REGISTRATION_STATUS = {

@@ -47,8 +47,8 @@ onMounted(async () => {
 const getUserId = () => session.get()?.user_id
 
 const getUserProfile = async () => {
-  const user_id = getUserId()
-  if (!user_id) {
+  const userId = getUserId()
+  if (!userId) {
     step.value = REGISTER_STEPS[0]
     return
   }
@@ -60,7 +60,7 @@ const getUserProfile = async () => {
   const { data, error } = await supabase
     .from('profiles')
     .select()
-    .eq('id', user_id)
+    .eq('id', userId)
     .single()
 
   if (error) {
@@ -79,7 +79,7 @@ const getUserProfile = async () => {
         lastName: last_name,
         email
       }
-      step.value = REGISTER_STEPS[3]
+      getRegistration()
     }
     status.success = true
   }
@@ -89,22 +89,24 @@ const getUserProfile = async () => {
 
 const handleNextStep = (val) => step.value = val
 
-// const getEventRegistration = async () => {
-//   return
-//   const userId = await user.get()?.id
-//   const { data, error } = await supabase
-//     .from('event_attendees')
-//     .select('first_name')
-//     .eq('user_id', userId)
-//     .single()
+const getRegistration = async () => {
+  const userId = getUserId()
+
+  const { data, error } = await supabase
+    .from('registrations')
+    .select()
+    .eq('user_id', userId)
+    .single()
+
+  console.log(data)
   
-//   if (error) {
-//     console.log('here', error, error.message)
-//   } else {
-//     firstName.value = data.first_name
-//   }
+  if (error) {
+    console.log('here', error, error.message)
+    step.value = REGISTER_STEPS[3]
+  } else {
+    step.value = REGISTER_STEPS[4]
+  }
   
-//   console.log(data, error)
-// }
+}
 
 </script>
