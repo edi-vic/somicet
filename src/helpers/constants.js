@@ -3,12 +3,13 @@ export const REGISTER_STEPS = {
   1: "otp",
   2: "user_name",
   3: "registration",
-  4: "approval",
+  4: "validation",
 }
 
 export const REGISTRATION_STATUS = {
   0: "pending",
-  1: "success",
+  1: "aproved",
+  2: "rejected",
 }
 
 export const REGISTRATION_GROUPS = {

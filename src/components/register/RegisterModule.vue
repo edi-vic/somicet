@@ -11,11 +11,13 @@
     v-if="step === REGISTER_STEPS[2]"
     :profile="profile"
     :getUserId="getUserId"
+    @success="handleNextStep"
   />
   <RegistrationStep
     :profile="profile"
     :getUserId="getUserId"
     v-if="step === REGISTER_STEPS[3]"
+    @success="handleNextStep"
   />
 </template>
 

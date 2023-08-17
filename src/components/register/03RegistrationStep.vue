@@ -174,6 +174,7 @@ const saveRegistration = async () => {
     console.error("Error in saveRegistration: ", error.message)
   } else {
     status.success = true
+    emit("success", REGISTER_STEPS[4])
   }
 
   status.loading = false
