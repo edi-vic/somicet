@@ -14,6 +14,7 @@
   />
   <RegistrationStep
     :profile="profile"
+    :getUserId="getUserId"
     v-if="step === REGISTER_STEPS[3]"
   />
 </template>

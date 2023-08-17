@@ -53,14 +53,14 @@
       {{ status.error }}
     </span>
     <button 
-      @click="getPublicUrl"
+      @click="saveRegistration"
       :disabled="status.loading"
     >
-      Subir recibo
+      Guardar registro
     </button>
     <img
-      v-if="receipt"
-      :src="receipt"
+      v-if="receiptUrl"
+      :src="receiptUrl"
       alt=""
     >
   </section>
@@ -68,15 +68,17 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { session as user } from '@stores/session'
 import { REGISTRATION_GROUPS } from '@helpers/constants'
-import { isEmpty } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
 
 /*  vue  props  */
-const { profile } = defineProps({
+const { profile, getUserId } = defineProps({
   profile: {
     type: Object,
+    required: true,
+  },
+  getUserId: {
+    type: Function,
     required: true,
   },
 })
@@ -85,81 +87,91 @@ const { profile } = defineProps({
 const secondment = ref('')
 const group = ref('no_group')
 const file = ref(null)
+const receiptUrl = ref('')
 const status = reactive({
   error: null,
   success: false,
   loading: false,
 })
-const receipt = ref('')
 
 /*  vue  computed  */
 const groups = computed(() => Object.values(REGISTRATION_GROUPS))
 
-//  METHODS 
+/*  vue  methods  */
 const handleFile = (event) => {
   file.value = event.target.files[0]
+  uploadReceipt()
 }
 
 const uploadReceipt = async () => {
-  const userId = user.get().id
+  const userId = getUserId()
+  const todayArray = new Date().toISOString().split('T')
+  const date = todayArray[0]
+  const time = todayArray[1].split('.')[0]
+  const path = `receipts/23SIM1/${userId}-${date}-${time}`
 
-  status.error = null
-  status.success = false
   status.loading = true
+  status.success = false
+  status.error = null
 
   const { data, error } = await supabase
     .storage
     .from('receipts')
-    .upload(`receipts/23/${userId}`, file.value)
+    .upload(path, file.value)
 
   console.log(data, error)
 
-  if (error?.message) {
-    status.error = error.message
+  if (error) {
+    // TODO: find errors
+    console.error("Error in uploadReceipt: ", error.message)
   } else {
-    getPublicUrl()
+    await getPublicUrl(path)
+    status.success = true
+  }
+
+  status.loading = false
+}
+
+const getPublicUrl = async (path) => {
+  const { data, error } = await supabase
+    .storage
+    .from('receipts')
+    .getPublicUrl(path)
+  
+  console.log(data, error)
+
+  if (error) {
+    // TODO: find errors
+    console.error("Error in getPublicUrl: ", error.message)
+  } else {
+    receiptUrl.value = data.publicUrl
   }
 }
 
-const getPublicUrl = () => {
-  console.log('getPublicUrl')
-  const userId = user.get().id
-  const key = `receipts/23/${userId}`
+const saveRegistration = async () => {
+  const record = { 
+    name: `${profile.firstName} ${profile.lastName}`,
+    email: profile.email,
+    secondment: secondment.value,
+    group: group.value,
+    receipt_url: receiptUrl.value,
+  }
 
-  const { data } = supabase
-    .storage
-    .from('receipts')
-    .getPublicUrl(key)
-  
-  console.log(data)
+  console.log(record)
 
-  receipt.value = data.publicUrl
+  status.loading = true
+  status.success = false
+  status.error = null
 
-  return data
-}
+  const { data, error } = await supabase
+    .from('registrations')
+    .insert(record)
 
-// event-x
-// name -<
-// email -<
-// secondment -?
-// group-*
-// receipt_url-*
-// status-x
-// user_id-x
+  console.log(data, error)
 
-const saveStorage = (data) => {
-  console.log(data)
-  const userId = user.get().id
-
-  const { data: res, error } = supabase
-    .from('event_attendees')
-    .update({ receipt: data.Key })
-    .eq('user_id', userId)
-
-  console.log(res, error)
-
-  if (error?.message) {
-    status.error = error.message
+  if (error) {
+    // TODO: find errors
+    console.error("Error in saveRegistration: ", error.message)
   } else {
     status.success = true
   }
