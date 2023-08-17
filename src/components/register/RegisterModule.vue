@@ -7,13 +7,17 @@
     v-if="step === STEPS[1]"
     @success="handleNextStep"
   />
-  <NameStep v-if="step === STEPS[2]"/>
+  <NameStep 
+    v-if="step === STEPS[2]"
+    :profile="profile"
+    :getUserId="getUserId"
+  />
 </template>
 
 <script setup>
 import EmailStep from '@components/register/00EmailStep.vue'
 import OtpStep from '@components/register/01OtpStep.vue'
-import NameStep from '@components/register/NameStep.vue'
+import NameStep from '@components/register/02NameStep.vue'
 import { ref, reactive, onMounted } from 'vue'
 import { session } from '@stores/session'
 import { supabase } from '@helpers/supabase'
@@ -21,6 +25,7 @@ import { STEPS } from '@helpers/constants'
 
 /*  vue  state  */
 const step = ref(null)
+const profile = ref({})
 const status = reactive({
   loading: false,
   success: false,
@@ -63,6 +68,10 @@ const getUserProfile = async () => {
     if (!first_name || !last_name) {
       step.value = STEPS[2]
     } else {
+      profile.value = {
+        firstName: first_name,
+        lastName: last_name,
+      }
       step.value = STEPS[3]
     }
     status.success = true
