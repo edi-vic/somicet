@@ -26,7 +26,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue"
 import { session } from "@stores/session"
-import { STEPS } from "@helpers/constants"
+import { REGISTER_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 import { isEmpty, isEmail } from "@helpers/validators"
 
@@ -82,7 +82,7 @@ const sendAuthCode = async () => {
     console.error("Error in sendAuthCode: ", error.message)
   } else {
     status.success = true
-    emit("success", STEPS[1])
+    emit("success", REGISTER_STEPS[1])
   }
 
   status.loading = false

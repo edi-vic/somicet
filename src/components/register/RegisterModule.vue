@@ -1,16 +1,20 @@
 <template>
   <EmailStep
-    v-if="step === STEPS[0]"
+    v-if="step === REGISTER_STEPS[0]"
     @success="handleNextStep"
   />
   <OtpStep
-    v-if="step === STEPS[1]"
+    v-if="step === REGISTER_STEPS[1]"
     @success="handleNextStep"
   />
   <NameStep 
-    v-if="step === STEPS[2]"
+    v-if="step === REGISTER_STEPS[2]"
     :profile="profile"
     :getUserId="getUserId"
+  />
+  <RegistrationStep
+    :profile="profile"
+    v-if="step === REGISTER_STEPS[3]"
   />
 </template>
 
@@ -18,10 +22,11 @@
 import EmailStep from '@components/register/00EmailStep.vue'
 import OtpStep from '@components/register/01OtpStep.vue'
 import NameStep from '@components/register/02NameStep.vue'
+import RegistrationStep from '@components/register/03RegistrationStep.vue'
 import { ref, reactive, onMounted } from 'vue'
 import { session } from '@stores/session'
 import { supabase } from '@helpers/supabase'
-import { STEPS } from '@helpers/constants'
+import { REGISTER_STEPS } from '@helpers/constants'
 
 /*  vue  state  */
 const step = ref(null)
@@ -43,7 +48,7 @@ const getUserId = () => session.get()?.user_id
 const getUserProfile = async () => {
   const user_id = getUserId()
   if (!user_id) {
-    step.value = STEPS[0]
+    step.value = REGISTER_STEPS[0]
     return
   }
 
@@ -66,13 +71,14 @@ const getUserProfile = async () => {
       user_email: email,
     })
     if (!first_name || !last_name) {
-      step.value = STEPS[2]
+      step.value = REGISTER_STEPS[2]
     } else {
       profile.value = {
         firstName: first_name,
         lastName: last_name,
+        email
       }
-      step.value = STEPS[3]
+      step.value = REGISTER_STEPS[3]
     }
     status.success = true
   }

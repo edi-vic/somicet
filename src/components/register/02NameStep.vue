@@ -1,4 +1,12 @@
 <template>
+  <section>
+    <p>
+      Correo
+    </p>
+    <p>
+      {{ profile.email }}
+    </p>
+  </section>
   <section class="name-step">
     <label for="first-name">
       Nombre(s)
@@ -37,7 +45,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue"
-import { STEPS } from "@helpers/constants"
+import { REGISTER_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 
 /*  vue  emits  */
@@ -93,9 +101,18 @@ const saveName = async () => {
     console.error("Error in saveName: ", error.message)
   } else {
     status.success = true
-    emit("success", STEPS[3])
+    emit("success", REGISTER_STEPS[3])
   }
 
   status.loading = false
 }
 </script>
+
+<style lang="scss">
+.name-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>

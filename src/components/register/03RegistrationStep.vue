@@ -1,5 +1,45 @@
 <template>
   <section>
+    <p>
+      Correo
+    </p>
+    <p>
+      {{ profile.email }}
+    </p>
+    <p>
+      Nombre
+    </p>
+    <p>
+      {{ profile.firstName }} {{ profile.lastName }}
+    </p>
+  </section>
+  <section class="registration-step">
+    <label for="secondment">
+      Adscripción
+    </label>
+    <input 
+      id="secondment"
+      type="text"
+      placeholder="Adscripción"
+      v-model="secondment"
+      :disabled="status.loading"
+    >
+    <span v-if="status.error">
+      {{ status.error }}
+    </span>
+    <label for="group">
+      Grupo
+    </label>
+    <select v-model="group">
+      <option
+        v-for="option in groups"
+        :key="option.code"
+        :value="option.code"
+        :disabled="option.code === 'no_group'"
+      >
+        {{ option.copy }}
+      </option>
+    </select>
     <label for="receipt">
       Recibo
     </label>
@@ -29,10 +69,21 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { session as user } from '@stores/session'
+import { REGISTRATION_GROUPS } from '@helpers/constants'
 import { isEmpty } from '@helpers/validators'
 import { supabase } from '@helpers/supabase'
 
-//  STATE 
+/*  vue  props  */
+const { profile } = defineProps({
+  profile: {
+    type: Object,
+    required: true,
+  },
+})
+
+/*  vue  state  */
+const secondment = ref('')
+const group = ref('no_group')
 const file = ref(null)
 const status = reactive({
   error: null,
@@ -40,6 +91,9 @@ const status = reactive({
   loading: false,
 })
 const receipt = ref('')
+
+/*  vue  computed  */
+const groups = computed(() => Object.values(REGISTRATION_GROUPS))
 
 //  METHODS 
 const handleFile = (event) => {
@@ -84,6 +138,15 @@ const getPublicUrl = () => {
   return data
 }
 
+// event-x
+// name -<
+// email -<
+// secondment -?
+// group-*
+// receipt_url-*
+// status-x
+// user_id-x
+
 const saveStorage = (data) => {
   console.log(data)
   const userId = user.get().id
@@ -105,3 +168,12 @@ const saveStorage = (data) => {
 }
 
 </script>
+
+<style lang="scss">
+.registration-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>
