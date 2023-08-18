@@ -1,28 +1,188 @@
 ---
+import logo from "@assets/logo.png"
+
 const { active } = Astro.props
-const home = active === 'Inicio'
-const register = active === 'Registro'
-console.log(active, "active");
+let home, register, program, contact, aboutUs;
+switch (active){
+  case "Inicio" : 
+    home = true;
+    break;
+  case "Registro": 
+    register = true;
+    break;
+  case "Programa" :
+    program = true;
+    break;
+  case "Contacto":
+    contact = true;
+    break;
+  case "Sobre Nosotros":
+    aboutUs = true;
+    break;
+};
 
 ---
-<nav>
-  <ul>
-    <li class:list={[{ active: home }]}>
+<nav class="navbar">
+  <input type="checkbox" name="toggle-nav" id="">
+  <div class="navbar__hamburger-lines">
+    <span class="navbar__line navbar__line-one"/>
+    <span class="navbar__line navbar__line-two"/>
+    <span class="navbar__line navbar__line-three"/>
+  </div>
+  <div class="navbar__div"/>
+  <ul class="navbar__items">
+    <li 
+      class:list={[{ active: home }]}
+    >
       <a href="/">
         Inicio
       </a>
     </li>
-    <li class:list={[{ active: register }]}>
+    <li 
+      class:list={[{ active: program}]}
+    >
       <a href="/registro">
+        Programa
+      </a>
+    </li>
+    <li 
+      class:list={[{ active: register}]}
+    >
+      <a href="/registro">
+        
         Registro
+      </a>
+    </li>
+    <li 
+      class:list={[{ active: contact}]}
+    >
+      <a href="/registro">
+        Contacto
+      </a>
+    </li>
+    <li 
+      class:list={[{ active: aboutUs}]}
+    >
+      <a href="/registro">
+        Sobre Nosotros
       </a>
     </li>
   </ul>
 </nav>
 
 <style lang="scss">
-  .active{
-    background-color: blue;
+  .navbar{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    & input[name="toggle-nav"]{
+      display: none;
+      @media (max-width: 768px){
+        display: block;
+        position: absolute;
+        height: 35px;
+        width: 30px;
+        top: 50px;
+        left: 30px;
+        z-index: 5;
+        opacity: 0;
+        cursor: pointer;
+        
+      }
+    }
+    &__hamburger-lines{
+      display: none;
+      @media (max-width: 768px){
+        display: block;
+        height: 28px;
+        width: 35px;
+        position: absolute;
+        top: 50px;
+        left: 30px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        
+      }
+    }
+    &__line{
+      display: none;
+      @media (max-width: 768px){
+        display: block;
+        height: 3px;
+        width: 100%;
+        border-radius: 10px;
+        background: #333;
+      }
+    }
+    &__line-one{
+      @media (max-width: 768px){
+        transform-origin: 0% 0%;
+        transition: transform 0.3s ease-in-out;
+      }
+    }
+    
+    &__line-two{
+      @media (max-width: 768px){
+        transition: transform 0.2s ease-in-out;
+        
+      }
+    }
+    &__line-three{
+      @media (max-width: 768px){
+        transform-origin: 0% 100%;
+        transition: transform 0.3s ease-in-out;
+        
+      }
+    }
+    &__div{
+      display: none;
+    }
+    &__items{
+      display: flex;
+      @media (max-width: 768px){
+        position: absolute;
+        top: 0;
+        padding-top: 100px;
+        background: #fff;
+        height: 100vh;
+        width: 100%;
+        transform: translate(-150%);
+        transition: transform 0.5s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        
+        padding-left: 40px;
+        box-shadow:  5px 0px 10px 0px #aaa;
+        overflow: scroll;
+        
+      }
+    }
   }
+  input[name="toggle-nav"]:checked{
+    & ~ .navbar__items{
+      transform: translateX(0);
+    }
+    & ~ .navbar__div{
+      display: block;
+      transform: translate(-150%);
+      transition: transform 0.5s ease-in-out;
+      border:1px solid blueviolet;
+      width: 100%;
+      position: absolute;
+      top: 100px;
+      z-index: 100;
 
+    }
+    & ~ .navbar__hamburger-lines .navbar__line-one{
+      transform: rotate(45deg);
+    }
+    & ~ .navbar__hamburger-lines .navbar__line-two{
+      transform: scaleY(0);
+    }
+    & ~ .navbar__hamburger-lines .navbar__line-three{
+      transform: rotate(-45deg);
+    }
+  }
 </style>
