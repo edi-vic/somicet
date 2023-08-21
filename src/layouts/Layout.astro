@@ -1,6 +1,7 @@
 ---
 import GlobalStyles from "@components/GlobalStyles.astro";
-import Navbar from '@components/core/Navbar.astro'
+import Navbar from "@components/core/Navbar.astro";
+import Header from "@components/core/Header.astro";
 const { title } = Astro.props
 
 ---
@@ -16,8 +17,9 @@ const { title } = Astro.props
     <GlobalStyles />
   </head>
   <body>
+    <Header />
     <Navbar 
-      active={title}
+      active= {title}
     />
     <slot />
   </body>

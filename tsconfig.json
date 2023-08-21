@@ -8,6 +8,7 @@
       "@helpers/*": ["src/helpers/*"],
       "@layouts/*": ["src/layouts/*"],
       "@stores/*": ["src/stores/*"],
+      "@assets/*": ["src/assets/*"]
     }
   }
 }
