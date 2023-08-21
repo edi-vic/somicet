@@ -1,51 +1,60 @@
 <template>
-  <ul class="registrations__table">
-    <li class="registrations__header">
-      <div>
-        Folio
-      </div>
-      <div>
-        Nombre
-      </div>
-      <div>
-        Correo
-      </div>
-      <div>
-        Adscripción
-      </div>
-      <div>
-        Grupo
-      </div>
-      <div>
-        Estatus
-      </div>
-    </li>
-    <li
-      class="registrations__row"
-      v-for="attendee in attendees" 
-      :key="attendee.id"
-    >
-      <div>
-        {{ attendee.serial_number }}
-      </div>
-      <div>
-        {{ attendee.name }}
-      </div>
-      <div>
-        {{ attendee.email }}
-      </div>
-      <div>
-        {{ attendee.secondment || "-" }}
-      </div>
-      <div>
-        {{ attendee.group }}
-      </div>
-      <div>
-        {{ attendee.status }}
-      </div>
-    </li>
-  </ul>
-
+  <section class="registrations__table">
+    <ul class="registrations__header">
+      <li class="registrations__titles">
+        <div class="registrations__title registrations__title--status">
+          Estatus
+        </div>
+        <div class="registrations__title registrations__title--actions">
+          Acciones
+        </div>
+        <div class="registrations__title registrations__title--folio">
+          Folio
+        </div>
+        <div class="registrations__title registrations__title--name">
+          Nombre
+        </div>
+        <div class="registrations__title registrations__title--email">
+          Correo
+        </div>
+        <div class="registrations__title registrations__title--group">
+          Grupo
+        </div>
+        <div class="registrations__title registrations__title--secondment">
+          Adscripción
+        </div>
+      </li>
+    </ul>
+    <ul class="registrations__rows">
+      <li
+        class="registrations__row"
+        v-for="attendee in attendees" 
+        :key="attendee.id"
+      >
+        <div class="registrations__cell registrations__cell--status">
+          {{ attendee.status }}
+        </div>
+        <div class="registrations__cell registrations__cell--actions">
+          Validar
+        </div>
+        <div class="registrations__cell registrations__cell--folio">
+          {{ attendee.serial_number }}
+        </div>
+        <div class="registrations__cell registrations__cell--name">
+          {{ attendee.name }}
+        </div>
+        <div class="registrations__cell registrations__cell--email">
+          {{ attendee.email }}
+        </div>
+        <div class="registrations__cell registrations__cell--group">
+          {{ attendee.group }}
+        </div>
+        <div class="registrations__cell registrations__cell--secondment">
+          {{ attendee.secondment || "-" }}
+        </div>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script setup>
@@ -76,7 +85,7 @@ onMounted(() => {
     "event": "23SIM1",
     "serial_number": 1
   }
-  const array = Array(20).fill().map(() => ({ ...obj }));
+  const array = Array(100).fill().map(() => ({ ...obj }));
   attendees.value = array
 })
 
@@ -106,25 +115,43 @@ const getRegistrations = async () => {
 <style lang="scss">
 .registrations {
   &__table {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     border: 1px solid lightgray;
   }
-  &__header {
+  &__rows {
+    height: 80vh;
+    overflow-y: scroll;
+  }
+  &__titles, &__row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
     border-bottom: 1px solid lightgray;
+  }
+  &__titles {
     font-weight: bold;
   }
   &__row {
+    &:last-child {
+      border-bottom: none;
+    }
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+  &__title, &__cell {
+    padding: 12px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 12px 20px;
-    border-bottom: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    &--status, &--actions, &--folio {
+      width: 10%;
+    }
+    &--name, &--email {
+      width: 20%;
+    }
+    &--group, &--secondment {
+      width: 15%;
+    }
   }
 }
 </style>

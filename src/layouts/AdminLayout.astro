@@ -15,7 +15,7 @@ const { title } = Astro.props
     <GlobalStyles />
   </head>
   <body>
-    <div id="container">
+    <div class="admin">
       <div class="top-bar">
         SOMICET
       </div>
@@ -33,10 +33,10 @@ const { title } = Astro.props
 </html>
 
 <style lang="scss">
-#container {
-  display: flex;
-  flex-direction: column;
+.admin {
   height: 100vh;
+  border: 1px solid red;
+  overflow: hidden;
 }
 .top-bar {
   width: 100%;
