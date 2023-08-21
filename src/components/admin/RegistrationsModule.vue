@@ -28,29 +28,31 @@
     <ul class="registrations__rows">
       <li
         class="registrations__row"
-        v-for="attendee in attendees" 
-        :key="attendee.id"
+        v-for="registration in registrations" 
+        :key="registration.id"
       >
         <div class="registrations__cell registrations__cell--status">
-          {{ attendee.status }}
+          <div :class="`status-tag status-tag--${registration.status}`" />
         </div>
         <div class="registrations__cell registrations__cell--actions">
-          Validar
+          <button class="action">
+            Validar
+          </button>
         </div>
         <div class="registrations__cell registrations__cell--folio">
-          {{ attendee.serial_number }}
+          {{ registration.serial_number }}
         </div>
         <div class="registrations__cell registrations__cell--name">
-          {{ attendee.name }}
+          {{ registration.name }}
         </div>
         <div class="registrations__cell registrations__cell--email">
-          {{ attendee.email }}
+          {{ registration.email }}
         </div>
         <div class="registrations__cell registrations__cell--group">
-          {{ attendee.group }}
+          {{ registration.group }}
         </div>
         <div class="registrations__cell registrations__cell--secondment">
-          {{ attendee.secondment || "-" }}
+          {{ registration.secondment || "-" }}
         </div>
       </li>
     </ul>
@@ -62,7 +64,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { supabase } from '@helpers/supabase'
 
 /*  vue  state  */
-const attendees = ref([])
+const registrations = ref([])
 const status = reactive({
   loading: false,
   success: false,
@@ -71,22 +73,22 @@ const status = reactive({
 
 /*  vue  lifecycle  */
 onMounted(() => {
-  // getRegistrations()
-  const obj = {
-    "id": "0dbc37c9-06a7-4189-a4bc-1de609e5d812",
-    "created_at": "2023-08-21T02:43:23.964578+00:00",
-    "name": "Víctor Peña Romero",
-    "email": "vic.pero@icloud.com",
-    "secondment": "UNAM",
-    "group": "student",
-    "receipt_url": "https://dvehcomkytvfptmklezb.supabase.co/storage/v1/object/public/receipts/receipts/23SIM1/071bf837-f3a7-41d9-bee5-7f042d4d1bcb-2023-08-21-02:43:21",
-    "status": "pending",
-    "user_id": "071bf837-f3a7-41d9-bee5-7f042d4d1bcb",
-    "event": "23SIM1",
-    "serial_number": 1
-  }
-  const array = Array(100).fill().map(() => ({ ...obj }));
-  attendees.value = array
+  getRegistrations()
+  // const obj = {
+  //   "id": "0dbc37c9-06a7-4189-a4bc-1de609e5d812",
+  //   "created_at": "2023-08-21T02:43:23.964578+00:00",
+  //   "name": "Víctor Peña Romero",
+  //   "email": "vic.pero@icloud.com",
+  //   "secondment": "UNAM",
+  //   "group": "student",
+  //   "receipt_url": "https://dvehcomkytvfptmklezb.supabase.co/storage/v1/object/public/receipts/receipts/23SIM1/071bf837-f3a7-41d9-bee5-7f042d4d1bcb-2023-08-21-02:43:21",
+  //   "status": "pending",
+  //   "user_id": "071bf837-f3a7-41d9-bee5-7f042d4d1bcb",
+  //   "event": "23SIM1",
+  //   "serial_number": 1
+  // }
+  // const array = Array(100).fill().map(() => ({ ...obj }));
+  // registrations.value = array
 })
 
 /*  vue  methods  */
@@ -104,7 +106,7 @@ const getRegistrations = async () => {
     console.error('Error in getRegistrations: ', error.message)
   } else {
     console.log('getRegistrations: ', data)
-    attendees.value = data
+    registrations.value = data
     status.success = true
   }
 
@@ -118,7 +120,7 @@ const getRegistrations = async () => {
     border: 1px solid lightgray;
   }
   &__rows {
-    height: 80vh;
+    max-height: 78vh;
     overflow-y: scroll;
   }
   &__titles, &__row {
@@ -138,7 +140,7 @@ const getRegistrations = async () => {
     }
   }
   &__title, &__cell {
-    padding: 12px 0;
+    height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -152,6 +154,25 @@ const getRegistrations = async () => {
     &--group, &--secondment {
       width: 15%;
     }
+  }
+}
+.status-tag {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid lightgray;
+  &--pending {
+    background-color: yellow;
+  }
+}
+.action {
+  padding: 8px 12px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #f5f5f5;
   }
 }
 </style>
