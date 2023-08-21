@@ -35,12 +35,14 @@
           <div :class="`status-tag status-tag--${registration.status}`" />
         </div>
         <div class="registrations__cell registrations__cell--actions">
-          <button 
+          <button
+            v-if="registration.status === 'pending'"
             class="action"
             @click="handleRegistration(registration)"
           >
             Validar
           </button>
+          <span v-else>-</span>
         </div>
         <div class="registrations__cell registrations__cell--folio">
           {{ registration.serial_number }}
