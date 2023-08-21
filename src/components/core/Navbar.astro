@@ -1,6 +1,7 @@
 ---
 import logo from "@assets/logo.png"
 
+
 const { active } = Astro.props
 let home, register, program, contact, aboutUs;
 switch (active){
@@ -34,43 +35,53 @@ switch (active){
     <li 
       class:list={[{ active: home }]}
     >
-      <a href="/">
-        Inicio
-      </a>
+      <div>
+        <a href="/">
+            Inicio
+        </a>
+      </div>
     </li>
     <li 
       class:list={[{ active: program}]}
     >
-      <a href="/registro">
-        Programa
-      </a>
+      <div>
+        <a href="/registro">
+          Programa
+        </a>
+      </div>
     </li>
     <li 
       class:list={[{ active: register}]}
     >
-      <a href="/registro">
-        
-        Registro
-      </a>
+      <div>
+        <a href="/registro">
+          Registro
+        </a>
+      </div>
     </li>
     <li 
       class:list={[{ active: contact}]}
     >
-      <a href="/registro">
-        Contacto
-      </a>
+      <div>
+        <a href="/registro">
+          Contacto
+        </a>
+      </div>
     </li>
     <li 
       class:list={[{ active: aboutUs}]}
     >
-      <a href="/registro">
-        Sobre Nosotros
-      </a>
+      <div>
+        <a href="/registro">
+          Sobre Nosotros
+        </a>
+      </div>
     </li>
   </ul>
 </nav>
 
-<style lang="scss">
+<style lang="scss" >
+@import "@assets/library";
   .navbar{
     width: 100%;
     height: 50px;
@@ -138,25 +149,85 @@ switch (active){
     }
     &__div{
       display: none;
+      @media (max-width: 768px){
+        display: block;
+        border:1px solid #959595;
+        width: 100%;
+        position: absolute;
+        top: 100px;
+        z-index: 100;
+        transform: translate(-150%);
+        transition: transform 0.5s ease-in-out;
+      }
     }
     &__items{
       display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      margin-top: 20px;
+      width: 100%;
+      height: 60px;
       @media (max-width: 768px){
         position: absolute;
         top: 0;
         padding-top: 100px;
-        background: #fff;
+        background: $background-color;
         height: 100vh;
         width: 100%;
         transform: translate(-150%);
         transition: transform 0.5s ease-in-out;
         display: flex;
         flex-direction: column;
-        
-        padding-left: 40px;
         box-shadow:  5px 0px 10px 0px #aaa;
         overflow: scroll;
-        
+      }
+      & li{
+        list-style: none;
+        color: #000000;
+        font-size: 20px;
+        line-height: 28px;
+        @media (max-width: 768px){
+          font-size: 24px;
+          line-height: 32px;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 105px;
+          border-bottom: 1px solid $accent-color;
+        }
+        &:last-child{
+          border: none;
+        }
+        &:hover{
+          font-weight: 600;
+          @media (max-width: 768px){
+            background-color: $primary-color;
+            color: $background-color;
+            font-weight: 500;
+          }
+        }
+        & div{
+          &:hover{
+            border-bottom: solid 2px $primary-color;
+          }
+          @media (max-width: 768px){
+          }
+          & a{
+            text-decoration: none;
+            @media (max-width: 768px){
+              padding-left: 40px;
+              
+            }
+            &:hover{
+              @media (max-width: 768px){
+                color: $background-color;
+                font-weight: 500;
+              }
+
+            }
+          }
+        }
+
       }
     }
   }
@@ -165,14 +236,10 @@ switch (active){
       transform: translateX(0);
     }
     & ~ .navbar__div{
-      display: block;
-      transform: translate(-150%);
-      transition: transform 0.5s ease-in-out;
-      border:1px solid blueviolet;
-      width: 100%;
-      position: absolute;
-      top: 100px;
-      z-index: 100;
+      
+      transform: translateX(0);
+      
+      
 
     }
     & ~ .navbar__hamburger-lines .navbar__line-one{
