@@ -14,10 +14,15 @@
     @success="handleNextStep"
   />
   <RegistrationStep
+    v-if="step === REGISTER_STEPS[3]"
     :profile="profile"
     :getUserId="getUserId"
-    v-if="step === REGISTER_STEPS[3]"
     @success="handleNextStep"
+  />
+  <ValidationStep
+    v-if="step === REGISTER_STEPS[4]"
+    :profile="profile"
+    :registration="registration"
   />
 </template>
 
@@ -26,6 +31,7 @@ import EmailStep from '@components/register/00EmailStep.vue'
 import OtpStep from '@components/register/01OtpStep.vue'
 import NameStep from '@components/register/02NameStep.vue'
 import RegistrationStep from '@components/register/03RegistrationStep.vue'
+import ValidationStep from '@components/register/04ValidationStep.vue'
 import { ref, reactive, onMounted } from 'vue'
 import { session } from '@stores/session'
 import { supabase } from '@helpers/supabase'
@@ -34,6 +40,7 @@ import { REGISTER_STEPS } from '@helpers/constants'
 /*  vue  state  */
 const step = ref(null)
 const profile = ref({})
+const registration = ref({})
 const status = reactive({
   loading: false,
   success: false,
@@ -99,13 +106,13 @@ const getRegistration = async () => {
     .select()
     .eq('user_id', userId)
     .single()
-
-  console.log(data)
   
   if (error) {
     console.log('here', error, error.message)
     step.value = REGISTER_STEPS[3]
   } else {
+    console.log('there', data)
+    registration.value = data
     step.value = REGISTER_STEPS[4]
   }
   

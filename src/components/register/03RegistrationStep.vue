@@ -68,8 +68,11 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { REGISTRATION_GROUPS } from '@helpers/constants'
+import { REGISTER_STEPS, REGISTRATION_GROUPS } from '@helpers/constants'
 import { supabase } from '@helpers/supabase'
+
+/*  vue  emits  */
+const emit = defineEmits(["success"])
 
 /*  vue  props  */
 const { profile, getUserId } = defineProps({

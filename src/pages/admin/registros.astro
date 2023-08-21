@@ -1,9 +1,15 @@
 ---
 import AdminLayout from '@layouts/AdminLayout.astro'
-import AttendeesModule from '@components/admin/AttendeesModule.vue'
+import RegistrationsModule from '@components/admin/RegistrationsModule.vue'
 ---
 
 <AdminLayout title='Panel'>
   <h1>Registros</h1>
-  <AttendeesModule client:only='vue' />
+  <RegistrationsModule client:only='vue' />
 </AdminLayout>
+
+<style lang="scss">
+  h1 {
+    margin-bottom: 20px;
+  }
+</style>
