@@ -35,7 +35,10 @@
           <div :class="`status-tag status-tag--${registration.status}`" />
         </div>
         <div class="registrations__cell registrations__cell--actions">
-          <button class="action">
+          <button 
+            class="action"
+            @click="handleRegistration(registration)"
+          >
             Validar
           </button>
         </div>
@@ -49,7 +52,7 @@
           {{ registration.email }}
         </div>
         <div class="registrations__cell registrations__cell--group">
-          {{ registration.group }}
+          {{ handleGroup(registration.group).copy }}
         </div>
         <div class="registrations__cell registrations__cell--secondment">
           {{ registration.secondment || "-" }}
@@ -57,14 +60,23 @@
       </li>
     </ul>
   </section>
+  <ValidationDialog
+    v-if="registration"
+    :registration="registration"
+    :handleGroup="handleGroup"
+    @close="registration = null"
+  />
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { supabase } from '@helpers/supabase'
+import ValidationDialog from "@components/admin/ValidationDialog.vue"
+import { ref, reactive, onMounted } from "vue"
+import { REGISTRATION_GROUPS } from "@helpers/constants"
+import { supabase } from "@helpers/supabase"
 
 /*  vue  state  */
 const registrations = ref([])
+const registration = ref(null)
 const status = reactive({
   loading: false,
   success: false,
@@ -98,19 +110,38 @@ const getRegistrations = async () => {
   status.error = null
 
   const { data, error } = await supabase
-    .from('registrations')
+    .from("registrations")
     .select()
 
   if (error) {
     status.error = error.message
-    console.error('Error in getRegistrations: ', error.message)
+    console.error("Error in getRegistrations: ", error.message)
   } else {
-    console.log('getRegistrations: ', data)
+    console.log("getRegistrations: ", data)
     registrations.value = data
     status.success = true
   }
 
   status.loading = false
+}
+
+const handleGroup = (group) => {
+  switch (group) {
+    case REGISTRATION_GROUPS[1].code:
+      return REGISTRATION_GROUPS[1]
+    case REGISTRATION_GROUPS[2].code:
+     return REGISTRATION_GROUPS[2]
+    case REGISTRATION_GROUPS[3].code:
+      return REGISTRATION_GROUPS[3]
+    case REGISTRATION_GROUPS[4].code:
+      return REGISTRATION_GROUPS[4]
+    default:
+      return REGISTRATION_GROUPS[0]
+  }
+}
+
+const handleRegistration = (element) => {
+  registration.value = element
 }
 </script>
 
