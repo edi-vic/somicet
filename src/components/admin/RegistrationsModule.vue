@@ -195,6 +195,9 @@ const handleRegistration = (element) => {
   &--pending {
     background-color: yellow;
   }
+  &--approved {
+    background-color: green;
+  }
 }
 .action {
   padding: 8px 12px;

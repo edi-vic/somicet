@@ -100,6 +100,8 @@
 <script setup>
 import { ref } from 'vue'
 import { parseDate } from "@helpers/dates"
+import { REGISTRATION_STATUS } from "@helpers/constants"
+import { supabase } from "@helpers/supabase"
 
 /*  vue  emits  */
 const emit = defineEmits(["close"])
@@ -115,6 +117,18 @@ const { registration, handleGroup } = defineProps({
     required: true,
   },
 })
+
+/*  vue  methods  */
+const handleApprove = async () => {
+  const { data, error } = await supabase
+    .from("registrations")
+    .update({ 
+      "status": REGISTRATION_STATUS[1]
+    })
+    .eq("id", registration.id)
+
+  console.log("handleApprove", data, error)
+}
 </script>
 
 <style lang="scss">

@@ -8,7 +8,7 @@ export const REGISTER_STEPS = {
 
 export const REGISTRATION_STATUS = {
   0: "pending",
-  1: "aproved",
+  1: "approved",
   2: "rejected",
 }
 
