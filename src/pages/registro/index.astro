@@ -1,0 +1,103 @@
+---
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Proceso de Registro">
+  <main class="reg-procs">
+    <h1 class="reg-procs__title">Proceso de registro</h1>
+    <ul class="reg-procs__list">
+      <li class="reg-procs__element">
+        <div class="reg-procs__instruction">
+          <span class="reg-procs__bullet">1</span>
+          <p>
+            Realiza el pago de tu aportación según el 
+            grupo al que pertenezcas.
+          </p>
+        </div>
+        <a 
+          class="reg-procs__button"
+          href="/registro/datos-bancarios"
+        >
+          Obtener datos de pago
+        </a>
+      </li>
+      <li class="reg-procs__element">
+        <div class="reg-procs__instruction">
+          <span class="reg-procs__bullet">2</span>
+          <p>
+            Llena el formulario de registro con los 
+            datos necesarios para tu asistencia.
+          </p>
+        </div>
+        <a 
+          class="reg-procs__button"
+          href="/registro/formulario"
+        >
+          Llenar formulario
+        </a>
+      </li>
+    </ul>
+    <!-- <RegisterModule client:only='vue' /> -->
+  </main>
+</Layout>
+
+<style lang="scss">
+@import "@assets/library";
+.reg-procs {
+  margin: 0 auto;
+  max-width: 880px;
+  padding: 60px 0;
+  &__title {
+    color: $black;
+    margin-bottom: 20px;
+  }
+  &__list {
+    font-size: 20px;
+    list-style: none;
+  }
+  &__element {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 12px;
+  }
+  &__instruction {
+    display: flex;
+    align-items: center;
+    color: $black;
+  }
+  &__bullet {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary-color;
+    color: $white;
+    margin-right: 8px;
+  }
+  &__button {
+    width: 300px;
+    height: 60px;
+    text-decoration: none;
+    background: $white;
+    color: $black;
+    border: 3px solid $primary-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 20px;
+    margin: 12px auto;
+    cursor: pointer;
+    &:visited {
+      color: $black;
+    }
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+  }
+}
+</style>

@@ -31,12 +31,12 @@
 </template>
 
 <script setup>
-import EmailStep from '@components/register/00EmailStep.vue'
-import OtpStep from '@components/register/01OtpStep.vue'
-import NameStep from '@components/register/02NameStep.vue'
-import RegistrationStep from '@components/register/03RegistrationStep.vue'
-import ValidationStep from '@components/register/04ValidationStep.vue'
-import BillStep from '@components/register/05BillStep.vue'
+import EmailStep from '@components/registration/00EmailStep.vue'
+import OtpStep from '@components/registration/01OtpStep.vue'
+import NameStep from '@components/registration/02NameStep.vue'
+import RegistrationStep from '@components/registration/03RegistrationStep.vue'
+import ValidationStep from '@components/registration/04ValidationStep.vue'
+import BillStep from '@components/registration/05BillStep.vue'
 import { ref, reactive, onMounted } from 'vue'
 import { REGISTER_STEPS } from '@helpers/constants'
 import { session } from '@stores/session'

@@ -1,0 +1,24 @@
+---
+import Layout from "@layouts/Layout.astro";
+import RegistrationModule from "@components/registration/RegistrationModule.vue";
+---
+
+<Layout>
+  <main class="registration">
+    <h1 class="registration__title">Registro</h1>
+    <RegistrationModule client:only="vue" />
+  </main>
+</Layout>
+
+<style lang="scss">
+@import "@assets/library";
+.registration {
+  margin: 0 auto;
+  max-width: 880px;
+  padding: 60px 0;
+  &__title {
+    color: $black;
+    margin-bottom: 20px;
+  }
+}
+</style>
