@@ -24,6 +24,10 @@
     :profile="profile"
     :registration="registration"
   />
+  <BillStep
+    v-if="step === REGISTER_STEPS[4]"
+    :registration="registration"
+  />
 </template>
 
 <script setup>
@@ -32,10 +36,11 @@ import OtpStep from '@components/register/01OtpStep.vue'
 import NameStep from '@components/register/02NameStep.vue'
 import RegistrationStep from '@components/register/03RegistrationStep.vue'
 import ValidationStep from '@components/register/04ValidationStep.vue'
+import BillStep from '@components/register/05BillStep.vue'
 import { ref, reactive, onMounted } from 'vue'
+import { REGISTER_STEPS } from '@helpers/constants'
 import { session } from '@stores/session'
 import { supabase } from '@helpers/supabase'
-import { REGISTER_STEPS } from '@helpers/constants'
 
 /*  vue  state  */
 const step = ref(null)
