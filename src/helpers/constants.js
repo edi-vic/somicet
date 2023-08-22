@@ -39,7 +39,3 @@ export const REGISTRATION_GROUPS = {
     price: "$1,000",
   },
 }
-
-export const PROJECT_STEPS = {
-  0: "no_user",
-}
