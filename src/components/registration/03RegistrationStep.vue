@@ -68,7 +68,7 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { REGISTER_STEPS, REGISTRATION_GROUPS } from '@helpers/constants'
+import { REGISTRATION_STEPS, REGISTRATION_GROUPS } from '@helpers/constants'
 import { supabase } from '@helpers/supabase'
 
 /*  vue  emits  */
@@ -177,7 +177,7 @@ const saveRegistration = async () => {
     console.error("Error in saveRegistration: ", error.message)
   } else {
     status.success = true
-    emit("success", REGISTER_STEPS[4])
+    emit("success", REGISTRATION_STEPS[4])
   }
 
   status.loading = false

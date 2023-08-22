@@ -1,4 +1,4 @@
-export const REGISTER_STEPS = {
+export const REGISTRATION_STEPS = {
   0: "no_user",
   1: "otp",
   2: "user_name",
@@ -38,4 +38,8 @@ export const REGISTRATION_GROUPS = {
     copy: "Público en general",
     price: "$1,000",
   },
+}
+
+export const PROJECT_STEPS = {
+  0: "no_user",
 }

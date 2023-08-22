@@ -1,24 +1,31 @@
 <template>
   <section class="email-step">
-    <label for="email">
-      Correo electrónico
+    <label
+      class="email-step__label"
+      for="email"
+    >
+      Ingresa tu correo electrónico
     </label>
-    <input 
+    <input
+      class="email-step__input"
       id="email"
       type="text"
-      placeholder="Correo electrónico"
+      placeholder="ejemplo@correo.com"
       v-model="email"
       :disabled="status.loading"
       @input="validateEmail"
     >
-    <span v-if="status.error">
-      {{ status.error }}
-    </span>
-    <button 
+    <div class="email-step__input-error">
+      <span v-show="inputErrors.email">
+        {{ inputErrors.email }}
+      </span>
+    </div>
+    <button
+      class="email-step__button"
       @click="sendAuthCode"
       :disabled="status.loading || !isEmailValid"
     >
-      Enviar código
+      Enviar
     </button>
   </section>
 </template>
@@ -26,7 +33,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue"
 import { session } from "@stores/session"
-import { REGISTER_STEPS } from "@helpers/constants"
+import { REGISTRATION_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 import { isEmpty, isEmail } from "@helpers/validators"
 
@@ -35,6 +42,9 @@ const emit = defineEmits(["success"])
 
 /*  vue  state  */
 const email = ref("")
+const inputErrors = reactive({
+  email: null,
+})
 const status = reactive({
   loading: false,
   success: false,
@@ -57,11 +67,11 @@ const validateEmail = () => {
   const valid = isEmail(email.value)
 
   if (empty)
-    status.error = "El campo de correo electrónico no puede estar vacío."
+    inputErrors.email = "El campo de correo electrónico no puede estar vacío."
   else if (!valid)
-    status.error = "Por favor, ingresa un correo electrónico válido."
+    inputErrors.email = "Por favor, ingresa un correo electrónico válido."
   else
-    status.error = null
+    inputErrors.email = null
 }
 
 const sendAuthCode = async () => {
@@ -82,7 +92,7 @@ const sendAuthCode = async () => {
     console.error("Error in sendAuthCode: ", error.message)
   } else {
     status.success = true
-    emit("success", REGISTER_STEPS[1])
+    emit("success", REGISTRATION_STEPS[1])
   }
 
   status.loading = false
@@ -90,10 +100,56 @@ const sendAuthCode = async () => {
 </script>
 
 <style lang="scss">
+@import "@assets/library";
 .email-step {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  &__label {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  &__input {
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  &__input-error {
+    height: 16px;
+    color: red;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  &__button {
+    height: 50px;
+    width: 100%;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 8px;
+    color: $white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  @media (min-width: 992px) {
+    max-width: 440px;
+    &__label {
+      font-size: 20px;
+    }
+    &__input {
+      width: 440px;
+      height: 60px;
+    }
+    &__input {
+      font-size: 20px;
+    }
+    &__button {
+      width: 440px;
+      font-size: 20px;
+    }
+  }
 }
 </style>
