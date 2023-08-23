@@ -79,6 +79,9 @@ const validateAuthCode = async () => {
     // TODO: find errors ej. wrong code
     console.error("Error in validateAuthCode: ", error.message)
   } else {
+
+    handleLogin(data)
+
     const { user: { id } } = data
     session.set({ 
       user_id: id,
@@ -89,6 +92,21 @@ const validateAuthCode = async () => {
   }
 
   status.loading = false
+}
+
+const handleLogin = async ({ session }) => {
+  try {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: new Headers({"Content-Type": "application/json"}),
+      credentials: "same-origin",
+      body: JSON.stringify(session),
+    })
+
+    console.log(response)
+  } catch (error) {
+    console.error("Error in handleLogin: ", error)
+  }
 }
 </script>
 

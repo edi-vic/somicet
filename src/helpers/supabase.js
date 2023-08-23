@@ -8,15 +8,8 @@ export const supabase = createClient(
   sbKey,
 )
 
-export async function getUser() {
-  const { data, error, data: { user } } = await supabase.auth.getUser()
-  console.log(data, error)
-  if (!user || user.role !== "authenticated") return null
-  return user
+export async function getUser(req) {
+  console.log('getUser', req)
 }
 
-// export async function isLoggedIn() {
-//   return await getUser() != null
-// }
-
-export const isLoggedIn = () => false;
+export const isLoggedIn = async () => getUser() != null;

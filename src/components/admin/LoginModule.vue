@@ -14,6 +14,7 @@ import { ref, reactive, onMounted } from "vue"
 import EmailStep from '@components/registration/00EmailStep.vue'
 import OtpStep from '@components/registration/01OtpStep.vue'
 import { REGISTRATION_STEPS } from '@helpers/constants'
+import { supabase } from '@helpers/supabase'
 import { session, getUserId } from '@stores/session'
 
 /*  vue  state  */
