@@ -1,11 +1,11 @@
 ---
-import AdminLayout from '@layouts/AdminLayout.astro'
-import BillsModule from '@components/admin/BillsModule.vue';
+import AdminLayout from "@layouts/AdminLayout.astro";
+import BillsModule from "@components/admin/BillsModule.vue";
 ---
 
-<AdminLayout title='Panel'>
+<AdminLayout title="Panel">
   <h1>Facturas</h1>
-  <BillsModule client:only='vue' />
+  <BillsModule client:only="vue" />
 </AdminLayout>
 
 <style lang="scss">
