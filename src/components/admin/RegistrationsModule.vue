@@ -3,7 +3,7 @@
     <ul class="registrations__header">
       <li class="registrations__titles">
         <div class="registrations__title registrations__title--status">
-          Estatus
+          Estado
         </div>
         <div class="registrations__title registrations__title--actions">
           Acciones
@@ -114,6 +114,7 @@ const getRegistrations = async () => {
   const { data, error } = await supabase
     .from("registrations")
     .select()
+    .order("serial_number", { ascending: false })
 
   if (error) {
     status.error = error.message
@@ -152,10 +153,6 @@ const handleRegistration = (element) => {
   &__table {
     border: 1px solid lightgray;
   }
-  &__rows {
-    max-height: 78vh;
-    overflow-y: scroll;
-  }
   &__titles, &__row {
     display: flex;
     align-items: center;
@@ -163,6 +160,10 @@ const handleRegistration = (element) => {
   }
   &__titles {
     font-weight: bold;
+  }
+  &__rows {
+    max-height: 78vh;
+    overflow-y: scroll;
   }
   &__row {
     &:last-child {

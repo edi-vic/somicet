@@ -1,0 +1,11 @@
+projects
+- id
+- serial_number
+- title
+- authors
+- secondment
+- summary
+- aknowledgements
+- status
+- created_at
+- user_id

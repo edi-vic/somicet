@@ -1,7 +1,12 @@
 ---
-import AdminLayout from '@layouts/AdminLayout.astro'
+import { isLoggedIn } from "@helpers/supabase";
+import AdminLayout from "@layouts/AdminLayout.astro"
+
+if (!isLoggedIn()) {
+  return Astro.redirect('/admin/login');
+}
 ---
 
-<AdminLayout title='Panel'>
+<AdminLayout title="Panel">
   <h1>Panel</h1>
 </AdminLayout>

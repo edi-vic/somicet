@@ -1,0 +1,139 @@
+---
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Proceso de Registro">
+  <main class="reg-procs">
+    <h1 class="reg-procs__title">Proceso de registro</h1>
+    <ul class="reg-procs__list">
+      <li class="reg-procs__element">
+        <div class="reg-procs__instruction">
+          <span class="reg-procs__bullet">a</span>
+          <p>
+            Realiza el pago de tu aportación según el 
+            grupo al que pertenezcas.
+          </p>
+        </div>
+        <a 
+          class="reg-procs__button"
+          href="/registro/datos-bancarios"
+        >
+          Obtener datos bancarios
+        </a>
+      </li>
+      <li class="reg-procs__element">
+        <div class="reg-procs__instruction">
+          <span class="reg-procs__bullet">b</span>
+          <p>
+            Llena el formulario de registro con los 
+            datos necesarios para tu asistencia.
+          </p>
+        </div>
+        <a 
+          class="reg-procs__button"
+          href="/registro/formulario"
+        >
+          Llenar formulario
+        </a>
+      </li>
+      <li class="reg-procs__element">
+        <div class="reg-procs__instruction">
+          <span class="reg-procs__bullet">c</span>
+          <p>
+            ¿Tienes un proyecto para presentar?
+            Inscríbelo aquí.
+          </p>
+        </div>
+        <a 
+          class="reg-procs__button"
+          href="/registro/proyecto"
+        >
+          Inscribir proyecto
+        </a>
+      </li>
+    </ul>
+    <!-- <RegisterModule client:only='vue' /> -->
+  </main>
+</Layout>
+
+<style lang="scss">
+@import "@assets/library";
+.reg-procs {
+  margin: 0 auto;
+  padding: 30px 16px;
+  &__title {
+    color: $black;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  &__list {
+    font-size: 16px;
+    list-style: none;
+  }
+  &__element {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 12px;
+  }
+  &__instruction {
+    display: flex;
+    color: $black;
+  }
+  &__bullet {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary-color;
+    color: $white;
+    flex-shrink: 0;
+    margin-right: 8px;
+  }
+  &__button {
+    width: 90%;
+    height: 50px;
+    text-decoration: none;
+    background: $white;
+    color: $black;
+    border: 3px solid $primary-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 16px;
+    margin: 12px auto;
+    cursor: pointer;
+    &:visited {
+      color: $black;
+    }
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+  }
+  @media (min-width: 992px) {
+    max-width: 880px;
+    padding: 60px 0;
+    &__title {
+      font-size: 32px;
+    }
+    &__list {
+      font-size: 20px;
+    }
+    &__instruction {
+      align-items: center;
+    }
+    &__bullet {
+      width: 30px;
+      height: 30px;
+    }
+    &__button {
+      width: 300px;
+      height: 60px;
+      font-size: 20px;
+    }
+  }
+}
+</style>

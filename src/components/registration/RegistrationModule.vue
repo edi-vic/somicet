@@ -1,41 +1,46 @@
 <template>
   <EmailStep
-    v-if="step === REGISTER_STEPS[0]"
+    v-if="step === REGISTRATION_STEPS[0]"
     @success="handleNextStep"
   />
   <OtpStep
-    v-if="step === REGISTER_STEPS[1]"
+    v-if="step === REGISTRATION_STEPS[1]"
     @success="handleNextStep"
   />
   <NameStep 
-    v-if="step === REGISTER_STEPS[2]"
+    v-if="step === REGISTRATION_STEPS[2]"
     :profile="profile"
     :getUserId="getUserId"
     @success="handleNextStep"
   />
   <RegistrationStep
-    v-if="step === REGISTER_STEPS[3]"
+    v-if="step === REGISTRATION_STEPS[3]"
     :profile="profile"
     :getUserId="getUserId"
     @success="handleNextStep"
   />
   <ValidationStep
-    v-if="step === REGISTER_STEPS[4]"
+    v-if="step === REGISTRATION_STEPS[4]"
     :profile="profile"
+    :registration="registration"
+  />
+  <BillStep
+    v-if="step === REGISTRATION_STEPS[4]"
     :registration="registration"
   />
 </template>
 
 <script setup>
-import EmailStep from '@components/register/00EmailStep.vue'
-import OtpStep from '@components/register/01OtpStep.vue'
-import NameStep from '@components/register/02NameStep.vue'
-import RegistrationStep from '@components/register/03RegistrationStep.vue'
-import ValidationStep from '@components/register/04ValidationStep.vue'
+import EmailStep from '@components/registration/00EmailStep.vue'
+import OtpStep from '@components/registration/01OtpStep.vue'
+import NameStep from '@components/registration/02NameStep.vue'
+import RegistrationStep from '@components/registration/03RegistrationStep.vue'
+import ValidationStep from '@components/registration/04ValidationStep.vue'
+import BillStep from '@components/registration/05BillStep.vue'
 import { ref, reactive, onMounted } from 'vue'
+import { REGISTRATION_STEPS } from '@helpers/constants'
 import { session } from '@stores/session'
 import { supabase } from '@helpers/supabase'
-import { REGISTER_STEPS } from '@helpers/constants'
 
 /*  vue  state  */
 const step = ref(null)
@@ -58,7 +63,7 @@ const getUserId = () => session.get()?.user_id
 const getUserProfile = async () => {
   const userId = getUserId()
   if (!userId) {
-    step.value = REGISTER_STEPS[0]
+    step.value = REGISTRATION_STEPS[0]
     return
   }
 
@@ -81,7 +86,7 @@ const getUserProfile = async () => {
       user_email: email,
     })
     if (!first_name || !last_name) {
-      step.value = REGISTER_STEPS[2]
+      step.value = REGISTRATION_STEPS[2]
     } else {
       profile.value = {
         firstName: first_name,
@@ -109,11 +114,11 @@ const getRegistration = async () => {
   
   if (error) {
     console.log('here', error, error.message)
-    step.value = REGISTER_STEPS[3]
+    step.value = REGISTRATION_STEPS[3]
   } else {
     console.log('there', data)
     registration.value = data
-    step.value = REGISTER_STEPS[4]
+    step.value = REGISTRATION_STEPS[4]
   }
   
 }

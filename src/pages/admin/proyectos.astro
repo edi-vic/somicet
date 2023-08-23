@@ -1,0 +1,15 @@
+---
+import AdminLayout from "@layouts/AdminLayout.astro";
+import ProjectsModule from "@components/admin/ProjectsModule.vue";
+---
+
+<AdminLayout title="Proyectos">
+  <h1>Proyectos</h1>
+  <ProjectsModule client:only="vue" />
+</AdminLayout>
+
+<style lang="scss">
+  h1 {
+    margin-bottom: 20px;
+  }
+</style>

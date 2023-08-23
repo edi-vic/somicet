@@ -26,7 +26,7 @@
 <script setup>
 import { ref, reactive, computed } from "vue"
 import { session } from "@stores/session"
-import { REGISTER_STEPS } from "@helpers/constants"
+import { REGISTRATION_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 import { isEmpty, isLength } from "@helpers/validators"
 
@@ -85,7 +85,7 @@ const validateAuthCode = async () => {
       user_email: email,
     })
     status.success = true
-    emit("success", REGISTER_STEPS[2])
+    emit("success", REGISTRATION_STEPS[2])
   }
 
   status.loading = false
