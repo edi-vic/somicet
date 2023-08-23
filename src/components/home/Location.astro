@@ -1,0 +1,99 @@
+---
+
+---
+<section class="location">
+  <div class="location__container">
+    <div class="location__text">
+      <h2>
+        Sede <br>
+        <span>
+          CINVESTAV Sede Sur
+        </span>
+      </h2> 
+      <p>
+        Calz. de los Tenorios 235, Coapa, 
+        Rinconada de las Hadas, Tlalpan, 
+        14330, CDMX
+      </p>
+    </div>
+    <div class="location__map">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3765.7054333794235!2d-99.12177882478915!3d19.295171981955164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce019e7bcbec7d%3A0x4496a0d5d7555453!2sCentro%20de%20Investigaci%C3%B3n%20y%20de%20Estudios%20Avanzados%20sede%20Sur!5e0!3m2!1ses!2smx!4v1692813391406!5m2!1ses!2smx" 
+        width="100%" 
+        height="" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+@import "@assets/library";
+.location{
+  width: 100%;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bg-location;
+  @media (max-width: 768px){
+    height: 340px;
+    padding: 0 40px;
+  }
+  &__container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+    @media (max-width: 768px){
+      flex-direction: column;
+    }
+  }
+  &__text{
+    width: 50%;
+    max-width: 200px;
+    text-align: center;
+    @media (max-width: 768px){
+      width: 100%;
+    }
+    & h2{
+      font-size: 32px;
+      line-height: 36px;
+      font-weight: 700;
+      @media (max-width: 768px){
+        font-size: 20px;
+        line-height: 24px;
+      }
+      & span{
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 400;
+        @media (max-width: 768px){
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+    }
+    & p{
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+  &__map{
+    max-width: 570px;
+    width: 50%;
+    & iframe{
+      height: 300px;
+      @media (max-width: 768px){
+        height: 165px;
+      }
+    }
+    @media (max-width: 768px){
+      width: 100%;
+    }
+  }
+}
+</style>
