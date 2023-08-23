@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js'
-import { session } from '@stores/session'
 
 const sbUrl = import.meta.env.PUBLIC_SUPABASE_URL
 const sbKey = import.meta.env.PUBLIC_SUPABASE_KEY
@@ -16,6 +15,8 @@ export async function getUser() {
   return user
 }
 
-export async function isLoggedIn() {
-  return await getUser() != null
-}
+// export async function isLoggedIn() {
+//   return await getUser() != null
+// }
+
+export const isLoggedIn = () => false;
