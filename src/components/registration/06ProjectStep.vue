@@ -14,6 +14,62 @@
         placeholder="Título"
         v-model="project.title"
       />
+      <label
+        class="project-step__label"
+        for="authors"
+      >
+        Autores
+      </label>
+      <input
+        id="authors"
+        class="project-step__input"
+        type="text"
+        placeholder="Autores"
+        v-model="project.authors"
+      />
+      <label
+        class="project-step__label"
+        for="secondment"
+      >
+        Adscripción
+      </label>
+      <input
+        id="secondment"
+        class="project-step__input"
+        type="text"
+        placeholder="Adscripción"
+        v-model="project.secondment"
+      />
+      <label
+        class="project-step__label"
+        for="summary"
+      >
+        Resumen
+      </label>
+      <textarea
+        id="summary"
+        class="project-step__textarea"
+        placeholder="Resumen"
+        v-model="project.summary"
+      />
+      <label
+        class="project-step__label"
+        for="acknowledgements"
+      >
+        Agradecimientos
+      </label>
+      <textarea
+        id="acknowledgements"
+        class="project-step__textarea"
+        placeholder="Agradecimientos"
+        v-model="project.acknowledgements"
+      />
+      <button
+        class="project-step__button"
+        @click="saveProject"
+      >
+        Enviar
+      </button>
     </div>
   </section>
 </template>
@@ -66,6 +122,34 @@ const getProject = async () => {
   } else {
     console.log("getProject: ", data)
     project.value = data
+  }
+
+  status.loading = false
+}
+
+const saveProject = async () => {
+  status.loading = true
+  status.success = false
+  status.error = null
+
+  const record = {
+    "user_id": registration.user_id,
+    "title": project.value.title,
+    "authors": project.value.authors,
+    "secondment": project.value.secondment,
+    "summary": project.value.summary,
+    "acknowledgements": project.value.acknowledgements,
+  }
+
+  const { data, error } = await supabase
+    .from("projects")
+    .upsert(record)
+
+  if (error) {
+    console.error("Error in saveProject: ", error)
+  } else {
+    console.log("saveProject: ", data)
+    status.success = true
   }
 
   status.loading = false

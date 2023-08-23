@@ -8,6 +8,7 @@
     @success="handleNextStep"
   />
   <ProjectStep
+    v-if="step === REGISTRATION_STEPS[4]"
     :registration="registration"
   />
 </template>
