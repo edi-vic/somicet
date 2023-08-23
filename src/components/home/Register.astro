@@ -1,0 +1,128 @@
+---
+import PriceCard from "@components/register/PriceCard.astro";
+import check from "@assets/check.svg"
+---
+<section class="register-section">
+  <h2>
+    Registro
+  </h2>
+  <div class="register-section__div" />
+  <div class="register-section__cards">
+    <PriceCard 
+      title="Investigadores"
+      price="$1000 MXN"
+    />
+    <PriceCard 
+      title="Estudiantes miembros"
+      subtitle="(Hasta el 2019)"
+      price="$200 MXN"
+    />
+    <PriceCard 
+      title="Estudiantes no miembros"
+      price="$300 MXN"
+    />
+    <PriceCard 
+      title="Público en general"
+      price="$1000 MXN"
+    />
+  </div>
+  <div class="register-section__info">
+    <div>
+      <img src={check}>
+      <p>
+        Las cuotas incluyen las actividades del congreso y constancia de asistencia ó participación (en presentación de cartel).
+      </p>
+    </div>
+    <button>
+      <a href="/registro">
+        Inscribirme
+      </a>
+    </button>
+  </div>
+  
+
+</section>
+
+<style lang="scss">
+  @import "@assets/library";
+  .register-section{
+    width: 100%;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: $bg-register;
+    padding: 60px 0;
+    position: relative;
+    @media (max-width: 768px){
+      height: 570px;
+      padding: 40px 0;
+      justify-content: flex-start;
+    }
+    & h2{
+      text-align: center;
+      font-size: 32px;
+
+    }
+    &__div{
+      width: 100%;
+      height: 115px;
+      background: $primary-color;
+      @media (max-width: 768px){
+        height: 65px;
+      }
+    }
+    &__cards{
+      width: 100%;
+      max-width: 880px;
+      height: auto;
+      display: flex;
+      justify-content: space-between;
+      top: 245px;
+      position: absolute;
+      @media (max-width: 768px){
+        flex-wrap: wrap;
+        top: 110px;
+      }
+    }
+    &__info{
+      width: 100%;
+      max-width: 880px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & div{
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        & p{
+          max-width: 803px;
+          font-size: 18px;
+          line-height: 24px;
+          @media (max-width: 768px){
+            font-size: 12px;
+            line-height: 16px;
+          }
+        }
+      }
+      & button{
+        width: 350px;
+        height: 60px;
+        border-radius: 16px;
+        background:$primary-color;
+        border: none;
+        margin-top: 45px;
+
+        & a{
+          text-decoration: none;
+          color: $background-color;
+          font-weight:600;
+          font-size: 20px
+        }
+      }
+    }
+  }
+
+</style>

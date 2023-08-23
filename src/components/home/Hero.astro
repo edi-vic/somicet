@@ -3,13 +3,150 @@
 
 ---
 <section class="home">
+  <div class="home__circles">
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+  </div>
+  <div class="home__center-section">
+    <div class="home__text">
+      <h2>
+        <span>
+          Simposio
+        </span> <br>
+        Células Troncales, Medicina Regenerativa y Envejecimiento
+      </h2>
+      <br>
+      <p>
+        19 y 20 de Octubre de 2023 <br>
+        <span>
+          CINVESTAV sede sur, CDMX
+        </span>
+      </p>
 
+    </div>
+
+  </div>
+  <div class="home__circles-right">
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+    <div class="home__circle"/>
+  </div>
 
 </section>
 
 <style lang="scss">
+  @import "@assets/library";
   .home{
-    
+    width: 100%;
+    height: 788px;
+    margin-top: 50px;
+    background-color: $bg-hero;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__circles{
+      position: relative;
+      height: 100%;
+    }
+    &__circle{
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      top: 65vh;
+      left: 6vw;
+      background: linear-gradient(to right, #F15, #F15A2A);
+      transform-origin: top left;
+      border-radius: 50%;
+      transform: scale(0) rotate(0deg) translate(-50%, -50%);
+      animation: cube 20s ease-in forwards infinite;
+      &:nth-child(2) {
+        background: radial-gradient(circle, rgba(251,72,63,1) 0%, rgba(64,12,12,1) 94%);
+        top: 30vh;
+        left: 20vw;
+        animation-delay: 3s;
+        width: 10px;
+        height: 10px;
+        z-index: 1;
+      }
+      &:nth-child(3){
+        width: 15px;
+        height: 15px;
+        top: 15vh;
+        left: 5vw;
+        animation-delay: 6s;
+        background: radial-gradient(circle, rgba(191,38,4,1) 0%, rgba(217,125,104,1) 94%);
+      }
+      &:nth-child(4){
+        width: 15px;
+        height: 15px;
+        top: 25vh;
+        left: 5vw;
+        animation-delay: 10s;
+        background: radial-gradient(circle, rgba(64,12,12,1) 0%, rgba(191,38,4,1) 94%);
+      }
+      &:nth-child(5){
+        width: 15px;
+        height: 15px;
+        top: 40vh;
+        left: 9vw;
+        animation-delay: 30s;
+      }
+    }
+    &__center-section{
+      width: 45%;
+      height: 420px;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(5px);
+      border: 4px solid $background-color;
+      border-radius: 40px;
+      z-index: 1;
+    }
+    &__text{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      & h2{
+        font-size: 40px;
+        line-height: 42px;
+        font-weight: 600;
+        & span{
+          font-weight: 400;
+          font-size: 32px;
+          line-height: 40px;
+        }
+      }
+      & p{
+        font-size: 30px;
+        line-height: 36px;
+        font-weight: 500;
+        margin-top: 20px;
+        & span{
+          font-size: 20px;
+          line-height: 24px;
+          font-weight: 400;
+        }
+      }
+    }
   }
+  @keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);   
+    opacity: 1;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%); 
+    opacity: 0;
+  }
+  
+}
 
 </style>
