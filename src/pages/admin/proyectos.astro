@@ -1,6 +1,11 @@
 ---
-import AdminLayout from "@layouts/AdminLayout.astro";
+import { isLoggedIn } from "@helpers/supabase";
 import ProjectsModule from "@components/admin/ProjectsModule.vue";
+import AdminLayout from "@layouts/AdminLayout.astro";
+
+if (!isLoggedIn()) {
+  return Astro.redirect('/admin/login');
+}
 ---
 
 <AdminLayout title="Proyectos">
