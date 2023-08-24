@@ -77,6 +77,7 @@ const getUserProfile = async () => {
 
   if (error) {
     console.error('Error in getUserProfile: ', error)
+    step.value = REGISTRATION_STEPS[0]
   } else {
     const { id, email, first_name, last_name } = data
     session.set({ 
@@ -99,7 +100,13 @@ const getUserProfile = async () => {
   status.loading = false
 }
 
-const handleNextStep = (val) => step.value = val
+const handleNextStep = (val) => {
+  if (val === REGISTRATION_STEPS[2]) {
+    getUserProfile()
+  } else {
+    step.value = val
+  }
+}
 
 const getRegistration = async () => {
   const userId = getUserId()

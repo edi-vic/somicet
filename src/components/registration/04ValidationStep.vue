@@ -1,23 +1,6 @@
 <template>
   <section>
-    <article class="user">
-      <div class="user__element">
-        <h5>
-          Nombre
-        </h5>
-        <p>
-          {{ profile.firstName }} {{ profile.lastName }}
-        </p>
-      </div>
-      <div class="user__element">
-        <h5>
-          Correo electrónico
-        </h5>
-        <p>
-          {{ profile.email }}
-        </p>
-      </div>
-    </article>
+    <User :profile="profile" />
   </section>
   <section class="validation">
     <div v-if="registration.status === REGISTRATION_STATUS[0] ">
@@ -39,6 +22,7 @@
 </template>
 
 <script setup>
+import User from '@components/core/User.vue';
 import { REGISTRATION_STATUS } from '@helpers/constants';
 
 /*  vue  props  */
