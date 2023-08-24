@@ -1,6 +1,5 @@
 <template>
   <section class="project-step">
-    <div class="project-step__form">
       <label
         class="project-step__label"
         for="title"
@@ -70,7 +69,6 @@
       >
         Enviar
       </button>
-    </div>
   </section>
 </template>
 
@@ -157,11 +155,56 @@ const saveProject = async () => {
 </script>
 
 <style scoped lang="scss">
+@import "@assets/library";
 .project-step {
-  &__form {
-    width: 440px; // temporal
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &__label {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  &__input, &__textarea {
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  &__input-error {
+    height: 16px;
+    color: red;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  &__button {
+    height: 50px;
+    width: 100%;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 8px;
+    color: $white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  @media (min-width: 992px) {
+    max-width: 440px;
+    &__label {
+      font-size: 20px;
+    }
+    &__input {
+      width: 440px;
+      height: 60px;
+    }
+    &__input {
+      font-size: 20px;
+    }
+    &__button {
+      width: 440px;
+      font-size: 20px;
+    }
   }
 }
 </style>
