@@ -1,0 +1,169 @@
+---
+import stemCells1 from "@assets/cells/stemCells1.png"
+import stemCells2 from "@assets/cells/stemCells2.png"
+import stemCells3 from "@assets/cells/stemCells3.png"
+import stemCells4 from "@assets/cells/stemCells4.png"
+import stemCells5 from "@assets/cells/stemCells5.png"
+
+const arrInfoCells = [
+  {
+    img: stemCells1,
+    title: "Células Estromales Mesenquimales",
+    info: "Las Células Troncales/Estromales Mesenquimales (MSCs) son células multipotenciales con la capacidad de generar diversos tipos celulares como adipocitos, osteoblastos y condroblastos. Estudios han demostrado que también desempeñan un papel importante en la formación de células hematopoyéticas y en la regulación de la respuesta inmunológica antitumoral."
+  },
+  // {
+  //   img: stemCells2,
+  //   title: "Células Troncales Neurales y Hematopoyéticas.",
+  //   info: "Las células troncales neurales desempeñan un papel clave en la investigación al generar varios tipos de neuronas y células gliales en el sistema nervioso. Su capacidad para reparar tejido neural dañado es prometedora para trastornos neurológicos y lesiones cerebrales. Las células troncales hematopoyéticas son esenciales para producir células sanguíneas e inmunitarias, abriendo posibilidades en el estudio de trastornos sanguíneos y el desarrollo de tratamientos innovadores. Ambos tipos de células troncales avanzan en la medicina regenerativa y mejoran la comprensión de sus respectivas áreas"
+  // },
+  // {
+  //   img: stemCells3,
+  //   title: "Células Troncales y Regeneración",
+  //   info: "'Célula Troncal' y 'Regeneración' son conceptos interrelacionados. Las células troncales, con su capacidad de transformación, fundamentan las estrategias de regeneración en Medicina Regenerativa. Los investigadores, ampliando el conocimiento, están superando límites y haciendo posible lo que parecía imposible."
+  // },
+  // {
+  //   img: stemCells4,
+  //   title: "Células Troncales Pluripotenciales.",
+  //   info: "Las células embrionarias humanas y las células inducidas son tipos de células troncales pluripotentes. Su capacidad de reprogramación y diferenciación en tres linajes germinales ha mejorado la comprensión de enfermedades genéticas, desarrollo y creación de fármacos. Las células iPSC también han posibilitado la terapia personalizada y podrían ser utilizadas en tratamientos futuros."
+  // },
+];
+
+---
+<section 
+  class="topics"
+>
+  <div 
+    class="topics__photo-section"
+  >
+    {arrInfoCells.map((data) =>
+    <img 
+      src={data.img} 
+      alt=""
+    >
+    <div 
+      class="topics__info-section"
+    >
+      <h2>
+        {data.title}
+      </h2>
+      <p>
+        {data.info}
+      </p>
+    </div>
+    )}
+  </div>
+  <div 
+    class="topics__dot-imgs"
+  >
+  {arrInfoCells.map((data) =>
+    <img src={data.img} alt="">
+  )}
+  </div>
+</section>
+<script>
+  {
+    const sliders = document.querySelectorAll('.topics');
+    const interval = 2800;
+    const animDuration = 600;
+    for (let i = 0; i < sliders.length; ++i){
+      const slider = sliders[i];
+      const dots = document.querySelector('.topics__dot-imgs');
+      const sliderImgs = document.querySelectorAll('.topics__photo-section');
+    
+      let currImg = 0;
+      let prevImg = sliders.length - 1;
+      let intrvl;
+      let timeout;
+      for(let i = 0; i < sliderImgs.length; ++ i){
+        
+      }
+    }
+  }
+</script>
+<style lang="scss">
+  @import "@assets/library";
+  .topics{
+    width: 100%;
+    height: 820px;
+    background: $background-color;
+    @media (max-width: 768px){
+      height: auto;
+      background: $primary-color-600;
+    }
+    &__photo-section{
+      display: flex;
+      width: 100%;
+      height: 580px;
+      @media (max-width: 768px){
+        height: auto;
+        flex-direction: column;
+      }
+      & img{
+        width: 60%;
+        padding: 40px 40px 20px;
+        @media (max-width: 768px){
+          width: 100%;
+          height: auto;
+        }
+      }
+      
+    }
+    &__info-section{
+      background:$primary-color-600;
+      width: 40%;
+      display:flex;
+      flex-direction:column;
+      
+      justify-content: flex-end;
+      color: $white;
+      @media (max-width: 768px){
+        width: 100%;
+        padding: 0 40px 20px;
+        justify-content: center;
+      }
+      & h2{
+        font-size: 32px;
+        line-height: 36px;
+        font-weight:700;
+        margin-bottom: 30px;
+        @media (max-width: 768px){
+          font-size: 20px;
+          line-height: 24px;
+          margin-bottom: 10px;
+        }
+      }
+      & p{
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 400;
+        @media (max-width: 768px){
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+    }
+    &__dot-imgs{
+      width: 100%;
+      height: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $background-color;
+      @media (max-width: 768px){
+        height: 85px;
+      }
+      & img{
+        width: 210px;
+        height: 150px;
+        margin-right: 25px;
+        @media (max-width: 768px){
+          width: 70px;
+          height: 50px;
+          margin-right: 13px;
+          
+        }
+      }
+    }
+  }
+
+</style>
