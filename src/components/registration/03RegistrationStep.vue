@@ -1,36 +1,37 @@
 <template>
   <section>
-    <p>
-      Correo
-    </p>
-    <p>
-      {{ profile.email }}
-    </p>
-    <p>
-      Nombre
-    </p>
-    <p>
-      {{ profile.firstName }} {{ profile.lastName }}
-    </p>
+    <User :profile="profile" />
   </section>
   <section class="registration-step">
-    <label for="secondment">
+    <label
+      class="registration-step__label"
+      for="secondment"
+    >
       Adscripción
     </label>
-    <input 
+    <input
+      class="registration-step__input"
       id="secondment"
       type="text"
       placeholder="Adscripción"
       v-model="secondment"
       :disabled="status.loading"
     >
-    <span v-if="status.error">
-      {{ status.error }}
-    </span>
-    <label for="group">
+    <div class="registration-step__input-error">
+      <span v-if="status.error">
+        {{ status.error }}
+      </span>
+    </div>
+    <label
+      class="registration-step__label"
+      for="group"
+    >
       Grupo
     </label>
-    <select v-model="group">
+    <select
+      class="registration-step__input"
+      v-model="group"
+    >
       <option
         v-for="option in groups"
         :key="option.code"
@@ -40,33 +41,47 @@
         {{ option.copy }}
       </option>
     </select>
-    <label for="receipt">
+    <div class="registration-step__input-error">
+      <span v-if="status.error">
+        {{ status.error }}
+      </span>
+    </div>
+    <label
+      class="registration-step__label"
+      for="receipt"
+    >
       Recibo
     </label>
-    <input 
+    <input
+      v-if="!receiptUrl"
+      class="registration-step__input"
       id="receipt"
       type="file"
       accept="image/*"
       @change="handleFile"
     >
-    <span v-if="status.error">
-      {{ status.error }}
-    </span>
-    <button 
-      @click="saveRegistration"
-      :disabled="status.loading"
-    >
-      Guardar registro
-    </button>
     <img
       v-if="receiptUrl"
       :src="receiptUrl"
       alt=""
     >
+    <div class="registration-step__input-error">
+      <span v-if="status.error">
+        {{ status.error }}
+      </span>
+    </div>
+    <button
+      class="registration-step__button"
+      @click="saveRegistration"
+      :disabled="status.loading"
+    >
+      Guardar registro
+    </button>
   </section>
 </template>
 
 <script setup>
+import User from '@components/core/User.vue';
 import { ref, reactive, computed } from 'vue'
 import { REGISTRATION_STEPS, REGISTRATION_GROUPS } from '@helpers/constants'
 import { supabase } from '@helpers/supabase'
@@ -186,10 +201,56 @@ const saveRegistration = async () => {
 </script>
 
 <style lang="scss">
+@import "@assets/library";
 .registration-step {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  &__label {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  &__input {
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  &__input-error {
+    height: 16px;
+    color: red;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  &__button {
+    height: 50px;
+    width: 100%;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 8px;
+    color: $white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  @media (min-width: 992px) {
+    max-width: 440px;
+    &__label {
+      font-size: 20px;
+    }
+    &__input {
+      width: 440px;
+      height: 60px;
+    }
+    &__input {
+      font-size: 20px;
+    }
+    &__button {
+      width: 440px;
+      font-size: 20px;
+    }
+  }
 }
 </style>

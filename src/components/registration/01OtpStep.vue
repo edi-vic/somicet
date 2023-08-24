@@ -1,9 +1,13 @@
 <template>
   <section class="otp-step">
-    <label for="code">
+    <label
+      class="otp-step__label"
+      for="code"
+    >
       Código
     </label>
-    <input 
+    <input
+      class="otp-step__input" 
       id="code"
       type="text"
       placeholder="Código"
@@ -11,10 +15,13 @@
       :disabled="status.loading"
       @input="validateCode"
     >
-    <span v-if="status.error">
-      {{ status.error }}
-    </span>
-    <button 
+    <div class="otp-step__input-error">
+      <span v-show="inputErrors.code">
+        {{ status.error }}
+      </span>
+    </div>
+    <button
+      class="otp-step__button"
       @click="validateAuthCode"
       :disabled="status.loading || !isCodeValid"
     >
@@ -35,6 +42,9 @@ const emit = defineEmits(["success"])
 
 /*  vue  state  */
 const code = ref("")
+const inputErrors = reactive({
+  code: null,
+})
 const status = reactive({
   loading: false,
   success: false,
@@ -79,6 +89,9 @@ const validateAuthCode = async () => {
     // TODO: find errors ej. wrong code
     console.error("Error in validateAuthCode: ", error.message)
   } else {
+
+    handleLogin(data)
+
     const { user: { id } } = data
     session.set({ 
       user_id: id,
@@ -90,13 +103,75 @@ const validateAuthCode = async () => {
 
   status.loading = false
 }
+
+const handleLogin = async ({ session }) => {
+  try {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: new Headers({"Content-Type": "application/json"}),
+      credentials: "same-origin",
+      body: JSON.stringify(session),
+    })
+
+    console.log(response)
+  } catch (error) {
+    console.error("Error in handleLogin: ", error)
+  }
+}
 </script>
 
 <style lang="scss">
+@import "@assets/library";
+
 .otp-step {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  &__label {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  &__input {
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  &__input-error {
+    height: 16px;
+    color: red;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  &__button {
+    height: 50px;
+    width: 100%;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 8px;
+    color: $white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  @media (min-width: 992px) {
+    max-width: 440px;
+    &__label {
+      font-size: 20px;
+    }
+    &__input {
+      width: 440px;
+      height: 60px;
+    }
+    &__input {
+      font-size: 20px;
+    }
+    &__button {
+      width: 440px;
+      font-size: 20px;
+    }
+  }
 }
 </style>

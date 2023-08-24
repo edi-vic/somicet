@@ -1,6 +1,14 @@
 ---
-import AdminLayout from '@layouts/AdminLayout.astro'
+import { getUser } from "@helpers/supabase";
 import RegistrationsModule from '@components/admin/RegistrationsModule.vue'
+import AdminLayout from '@layouts/AdminLayout.astro'
+
+const user = await getUser(Astro.request);
+const isLoggedIn = user !== null;
+
+if (!isLoggedIn) {
+  return Astro.redirect('/admin/login');
+}
 ---
 
 <AdminLayout title='Panel'>

@@ -1,8 +1,11 @@
 ---
-import { isLoggedIn } from "@helpers/supabase";
+import { getUser } from "@helpers/supabase";
 import AdminLayout from "@layouts/AdminLayout.astro"
 
-if (!isLoggedIn()) {
+const user = await getUser(Astro.request);
+const isLoggedIn = user !== null;
+
+if (!isLoggedIn) {
   return Astro.redirect('/admin/login');
 }
 ---

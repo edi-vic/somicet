@@ -31,16 +31,16 @@
 </template>
 
 <script setup>
+import { ref, reactive, onMounted } from 'vue'
 import EmailStep from '@components/registration/00EmailStep.vue'
 import OtpStep from '@components/registration/01OtpStep.vue'
 import NameStep from '@components/registration/02NameStep.vue'
 import RegistrationStep from '@components/registration/03RegistrationStep.vue'
 import ValidationStep from '@components/registration/04ValidationStep.vue'
 import BillStep from '@components/registration/05BillStep.vue'
-import { ref, reactive, onMounted } from 'vue'
 import { REGISTRATION_STEPS } from '@helpers/constants'
-import { session } from '@stores/session'
 import { supabase } from '@helpers/supabase'
+import { session, getUserId } from '@stores/session'
 
 /*  vue  state  */
 const step = ref(null)
@@ -58,8 +58,6 @@ onMounted(async () => {
 })
 
 /*  vue  methods  */
-const getUserId = () => session.get()?.user_id
-
 const getUserProfile = async () => {
   const userId = getUserId()
   if (!userId) {
@@ -79,6 +77,7 @@ const getUserProfile = async () => {
 
   if (error) {
     console.error('Error in getUserProfile: ', error)
+    step.value = REGISTRATION_STEPS[0]
   } else {
     const { id, email, first_name, last_name } = data
     session.set({ 
@@ -87,6 +86,9 @@ const getUserProfile = async () => {
     })
     if (!first_name || !last_name) {
       step.value = REGISTRATION_STEPS[2]
+      profile.value = {
+        email
+      }
     } else {
       profile.value = {
         firstName: first_name,
@@ -101,7 +103,17 @@ const getUserProfile = async () => {
   status.loading = false
 }
 
-const handleNextStep = (val) => step.value = val
+const handleNextStep = (val) => {
+  if (
+    val === REGISTRATION_STEPS[2] || 
+    val === REGISTRATION_STEPS[3] ||
+    val === REGISTRATION_STEPS[4]
+  ) {
+    getUserProfile()
+  } else {
+    step.value = val
+  }
+}
 
 const getRegistration = async () => {
   const userId = getUserId()

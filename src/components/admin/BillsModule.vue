@@ -106,9 +106,14 @@ const getBills = async () => {
 </script>
 
 <style lang="scss" scoped>
+@import "@assets/library";
 .bills {
   &__table {
     border: 1px solid lightgray;
+  }
+  &__header {
+    background: $primary-color;
+    color: white;
   }
   &__titles, &__row {
     display: flex;
