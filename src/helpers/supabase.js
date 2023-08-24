@@ -10,6 +10,7 @@ export const supabase = createClient(
 
 export async function getUser(req) {
   const cookie = req.headers.get("cookie");
+  if (!cookie) return null;
   const match = cookie.match(/sbat=([^;]+)/);
   const sbat = match?.[1];
   if (!sbat) return null;

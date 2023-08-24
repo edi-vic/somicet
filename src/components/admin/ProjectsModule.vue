@@ -101,9 +101,14 @@ const getProjects = async () => {
 </script>
 
 <style scoped lang="scss">
+@import "@assets/library";
 .projects {
   &__table {
     border: 1px solid lightgray;
+  }
+  &__header {
+    background: $primary-color;
+    color: white;
   }
   &__titles, &__row {
     display: flex;
