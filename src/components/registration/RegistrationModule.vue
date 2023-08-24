@@ -104,7 +104,11 @@ const getUserProfile = async () => {
 }
 
 const handleNextStep = (val) => {
-  if (val === REGISTRATION_STEPS[2]) {
+  if (
+    val === REGISTRATION_STEPS[2] || 
+    val === REGISTRATION_STEPS[3] ||
+    val === REGISTRATION_STEPS[4]
+  ) {
     getUserProfile()
   } else {
     step.value = val
