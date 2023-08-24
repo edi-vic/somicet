@@ -1,5 +1,6 @@
 ---
 import GlobalStyles from '@components/GlobalStyles.astro'
+import logo from "@assets/logo.png"
 
 const { title } = Astro.props
 ---
@@ -17,6 +18,7 @@ const { title } = Astro.props
   <body>
     <div class="admin">
       <div class="top-bar">
+        <img class="top-bar__logo" src={logo} alt="logo">
         SOMICET
       </div>
       <div class="content">
@@ -34,7 +36,7 @@ const { title } = Astro.props
   </body>
 </html>
 
-<style lang="scss">
+<style scoped lang="scss">
 .admin {
   height: 100vh;
   overflow: hidden;
@@ -42,11 +44,15 @@ const { title } = Astro.props
 .top-bar {
   width: 100%;
   height: 75px;
-  background-color: lightgray;
+  border-bottom: 3px solid lightgray;
   color: black;
   display: flex;
   align-items: center;
   padding: 0 20px;
+  &__logo {
+    width: 50px;
+    margin-right: 10px;
+  }
 }
 .content {
   flex: 1;
@@ -59,6 +65,9 @@ aside {
   display: flex;
   flex-direction: column;
   border-right: 1px solid lightgray;
+  & a {
+    margin-bottom: 12px;
+  }
 }
 main {
   flex: 1;

@@ -148,10 +148,15 @@ const handleRegistration = (element) => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+@import "@assets/library";
 .registrations {
   &__table {
     border: 1px solid lightgray;
+  }
+  &__header {
+    background: $primary-color;
+    color: white;
   }
   &__titles, &__row {
     display: flex;
