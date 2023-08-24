@@ -86,6 +86,9 @@ const getUserProfile = async () => {
     })
     if (!first_name || !last_name) {
       step.value = REGISTRATION_STEPS[2]
+      profile.value = {
+        email
+      }
     } else {
       profile.value = {
         firstName: first_name,

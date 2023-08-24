@@ -1,6 +1,9 @@
 <template>
   <article class="user">
-    <div class="user__element">
+    <div 
+      class="user__element"
+      v-if="profile.firstName && profile.lastName"
+    >
       <h5>
         Nombre
       </h5>
