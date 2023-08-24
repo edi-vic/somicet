@@ -1,8 +1,8 @@
 <template>
-  <section class="bill-step">
-    <h2 class="bill-step__title">
-      Datos de facturación
-    </h2>
+  <details class="bill-step">
+    <summary class="bill-step__summary">
+        Datos de facturación
+    </summary>
     <div class="bill-step__form">
       <label 
         class="bill-step__label"
@@ -63,7 +63,7 @@
         Enviar
     </button>
     </div>
-  </section>
+  </details>
 </template>
 
 <script setup>
@@ -151,11 +151,16 @@ const saveBill = async () => {
 </script>
 
 <style lang="scss" scoped>
+@import "@assets/library";
 .bill-step {
+  &__summary {
+    cursor: pointer;
+  }
   &__title {
     margin-bottom: 16px;
   }
   &__form {
+    padding: 20px 0;
     width: 440px; // temporal
     display: flex;
     flex-direction: column;
@@ -165,15 +170,22 @@ const saveBill = async () => {
     margin-bottom: 8px;
   }
   &__input {
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    padding: 0 12px;
     font-size: 16px;
-    height: 60px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   &__button {
+    height: 50px;
+    width: 100%;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 8px;
+    color: $white;
     font-size: 16px;
-    height: 60px;
-    margin-top: 4px;
-  
+    cursor: pointer;
   }
 }
 </style>
