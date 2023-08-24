@@ -35,6 +35,32 @@ import Layout from "@layouts/Layout.astro";
         >
           Llenar formulario
         </a>
+        <ol class="reg-procs__sub-list">
+          <li class="reg-procs__sub-element">
+            <p>
+              Registra tu correo electrónico.
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Te enviaremos un código para iniciar sesión.
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Sube tu comprobante de pago y completa el 
+              formulario con los detalles necesarios para 
+              tu asistencia y constancia.
+
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Posteriormente recibirás un correo confirmando
+              tu lugar en el evento.
+            </p>
+          </li>
+        </ol>
       </li>
       <li class="reg-procs__element">
         <div class="reg-procs__instruction">
@@ -111,6 +137,16 @@ import Layout from "@layouts/Layout.astro";
     &:hover {
       background: $primary-color;
       color: $white;
+    }
+  }
+  &__sub-list {
+    width: 80%;
+    margin-left: 10%;
+  }
+  &__sub-element {
+    margin-bottom: 8px;
+    &::marker {
+      color: $primary-color;
     }
   }
   @media (min-width: 992px) {
