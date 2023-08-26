@@ -1,15 +1,47 @@
 <template>
   <section class="registrations__table">
+    <div class="registrations__control">
+      <input
+        class="registrations__search"
+        type="text"
+        placeholder="Buscar"
+        v-model="search"
+      />
+      <select
+        class="registrations__select"
+        v-model="registrationsStatusSelect"
+      >
+        <option
+          v-for="option in registrationStatus"
+          :key="option.code"
+          :value="option.code"
+        >
+          {{ option.copy }}
+        </option>
+      </select>
+      <select
+        class="registrations__select"
+        v-model="registrationsGroupSelect"
+      >
+        <option
+          v-for="option in registrationGroups"
+          :key="option.code"
+          :value="option.code"
+        >
+          {{ option.copy }}
+        </option>
+      </select>
+    </div>
     <ul class="registrations__header">
       <li class="registrations__titles">
+        <div class="registrations__title registrations__title--folio">
+          Folio
+        </div>
         <div class="registrations__title registrations__title--status">
           Estado
         </div>
         <div class="registrations__title registrations__title--actions">
           Acciones
-        </div>
-        <div class="registrations__title registrations__title--folio">
-          Folio
         </div>
         <div class="registrations__title registrations__title--name">
           Nombre
@@ -20,17 +52,17 @@
         <div class="registrations__title registrations__title--group">
           Grupo
         </div>
-        <div class="registrations__title registrations__title--secondment">
-          Adscripción
-        </div>
       </li>
     </ul>
     <ul class="registrations__rows">
       <li
         class="registrations__row"
-        v-for="registration in registrations" 
+        v-for="registration in filteredRegistrations" 
         :key="registration.id"
       >
+        <div class="registrations__cell registrations__cell--folio">
+          {{ registration.serial_number }}
+        </div>
         <div class="registrations__cell registrations__cell--status">
           <div :class="`status-tag status-tag--${registration.status}`" />
         </div>
@@ -44,9 +76,6 @@
           </button>
           <span v-else>-</span>
         </div>
-        <div class="registrations__cell registrations__cell--folio">
-          {{ registration.serial_number }}
-        </div>
         <div class="registrations__cell registrations__cell--name">
           {{ registration.name }}
         </div>
@@ -56,10 +85,7 @@
         <div class="registrations__cell registrations__cell--group">
           {{ handleGroup(registration.group).copy }}
         </div>
-        <div class="registrations__cell registrations__cell--secondment">
-          {{ registration.secondment || "-" }}
-        </div>
-      </li>
+      </li> 
     </ul>
   </section>
   <ValidationDialog
@@ -72,13 +98,16 @@
 
 <script setup>
 import ValidationDialog from "@components/admin/ValidationDialog.vue"
-import { ref, reactive, onMounted } from "vue"
-import { REGISTRATION_GROUPS } from "@helpers/constants"
+import { ref, reactive, computed, onMounted } from "vue"
+import { REGISTRATION_STATUS_FULL, REGISTRATION_GROUPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 
 /*  vue  state  */
 const registrations = ref([])
 const registration = ref(null)
+const search = ref("")
+const registrationsStatusSelect = ref("no_status")
+const registrationsGroupSelect = ref("no_group")
 const status = reactive({
   loading: false,
   success: false,
@@ -88,21 +117,29 @@ const status = reactive({
 /*  vue  lifecycle  */
 onMounted(() => {
   getRegistrations()
-  // const obj = {
-  //   "id": "0dbc37c9-06a7-4189-a4bc-1de609e5d812",
-  //   "created_at": "2023-08-21T02:43:23.964578+00:00",
-  //   "name": "Víctor Peña Romero",
-  //   "email": "vic.pero@icloud.com",
-  //   "secondment": "UNAM",
-  //   "group": "student",
-  //   "receipt_url": "https://dvehcomkytvfptmklezb.supabase.co/storage/v1/object/public/receipts/receipts/23SIM1/071bf837-f3a7-41d9-bee5-7f042d4d1bcb-2023-08-21-02:43:21",
-  //   "status": "pending",
-  //   "user_id": "071bf837-f3a7-41d9-bee5-7f042d4d1bcb",
-  //   "event": "23SIM1",
-  //   "serial_number": 1
-  // }
-  // const array = Array(100).fill().map(() => ({ ...obj }));
-  // registrations.value = array
+})
+
+/*  vue  computed  */
+const registrationStatus = computed(() => Object.values(REGISTRATION_STATUS_FULL))
+const registrationGroups = computed(() => Object.values(REGISTRATION_GROUPS))
+
+const filteredRegistrations = computed(() => {
+  const searchValue = search.value.toLowerCase()
+  const statusValue = registrationsStatusSelect.value
+  const groupValue = registrationsGroupSelect.value
+
+  return registrations.value.filter((registration) => {
+    const name = registration.name.toLowerCase()
+    const email = registration.email.toLowerCase()
+    const status = registration.status
+    const group = registration.group
+
+    const searchMatch = name.includes(searchValue) || email.includes(searchValue)
+    const statusMatch = statusValue === "no_status" || statusValue === status
+    const groupMatch = groupValue === "no_group" || groupValue === group
+
+    return searchMatch && statusMatch && groupMatch
+  })
 })
 
 /*  vue  methods  */
@@ -152,7 +189,22 @@ const handleRegistration = (element) => {
 @import "@assets/library";
 .registrations {
   &__table {
-    border: 1px solid lightgray;
+    border: 1px solid $gray;
+    border-radius: 8px;
+  }
+  &__control {
+    padding: 16px;
+    display: flex;
+  }
+  &__search, &__select {
+    width: 300px;
+    height: 50px;
+    border: 1px solid $gray;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin-right: 12px;
+    appearance:none;
   }
   &__header {
     background: $primary-color;
@@ -167,7 +219,7 @@ const handleRegistration = (element) => {
     font-weight: bold;
   }
   &__rows {
-    max-height: 78vh;
+    max-height: 70vh;
     overflow-y: scroll;
   }
   &__row {
@@ -184,14 +236,14 @@ const handleRegistration = (element) => {
     justify-content: center;
     align-items: center;
     border-right: 1px solid lightgray;
-    &--status, &--actions, &--folio {
+    &:last-child {
+      border-right: none;
+    }
+    &--folio, &--status {
       width: 10%;
     }
-    &--name, &--email {
+    &--actions, &--name, &--email, &--group {
       width: 20%;
-    }
-    &--group, &--secondment {
-      width: 15%;
     }
   }
 }
@@ -199,12 +251,15 @@ const handleRegistration = (element) => {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid lightgray;
+  border: 1px solid $gray;
   &--pending {
-    background-color: yellow;
+    background: $yellow;
   }
   &--approved {
-    background-color: green;
+    background: $green;
+  }
+  &--rejected {
+    background: $red;
   }
 }
 .action {
