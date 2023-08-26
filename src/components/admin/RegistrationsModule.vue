@@ -54,7 +54,22 @@
         </div>
       </li>
     </ul>
-    <ul class="registrations__rows">
+    <div 
+      class="registrations__status"
+      v-if="status.loading"
+    >
+      <Loader />
+    </div>
+    <div 
+      class="registrations__status"
+      v-else-if="!status.loading && !filteredRegistrations.length"
+    >
+      <span>No hay registros</span>
+    </div>
+    <ul 
+      class="registrations__rows"
+      v-else-if="!status.loading"
+    >
       <li
         class="registrations__row"
         v-for="registration in filteredRegistrations" 
@@ -97,6 +112,7 @@
 </template>
 
 <script setup>
+import Loader from "@components/core/Loader.vue"
 import ValidationDialog from "@components/admin/ValidationDialog.vue"
 import { ref, reactive, computed, onMounted } from "vue"
 import { REGISTRATION_STATUS_FULL, REGISTRATION_GROUPS } from "@helpers/constants"
@@ -209,6 +225,13 @@ const handleRegistration = (element) => {
   &__header {
     background: $primary-color;
     color: white;
+  }
+  &__status {
+    width: 100%;
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__titles, &__row {
     display: flex;
