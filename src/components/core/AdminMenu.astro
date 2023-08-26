@@ -5,69 +5,89 @@ import registration from "@assets/icons/registration.svg"
 import registration_fill from "@assets/icons/registration_fill.svg"
 import bills from "@assets/icons/bills.svg"
 import bills_fill from "@assets/icons/bills_fill.svg"
+import posters from "@assets/icons/posters.svg"
+import posters_fill from "@assets/icons/posters_fill.svg"
+import users from "@assets/icons/users.svg"
+import users_fill from "@assets/icons/users_fill.svg"
 
 const { section } = Astro.props;
 
 const dashboardActive = section === "Panel";
 const registrationActive = section === "Registros";
 const billsActive = section === "Facturas";
+const postersActive = section === "Carteles";
+const usersActive = section === "Usuarios";
 ---
 
 <aside class="menu">
   <a
-    class="menu__item"
+    class:list={["menu__item", {"menu__item--active": dashboardActive}]}
     href="/admin"
   >
     {dashboardActive 
-      ? <img class="menu__icon" src={dashboard_fill} alt="icono panel"> 
+      ? <img class="menu__icon menu__icon--active" src={dashboard_fill} alt="icono panel"> 
       : <img class="menu__icon" src={dashboard} alt="icono panel">}
     <p>Panel</p>
   </a>
   <a
-    class="menu__item"
+    class:list={["menu__item", {"menu__item--active": registrationActive}]}
     href="/admin/registros"
   >
   {registrationActive 
-      ? <img class="menu__icon" src={registration_fill} alt="icono panel"> 
-      : <img class="menu__icon" src={registration} alt="icono panel">}
+      ? <img class="menu__icon menu__icon--active" src={registration_fill} alt="icono registros"> 
+      : <img class="menu__icon" src={registration} alt="icono registros">}
     <p>Registros</p>
   </a>
   <a
-    class="menu__item"
+    class:list={["menu__item", {"menu__item--active": billsActive}]}
     href="/admin/facturas"
   >
   {billsActive 
-      ? <img class="menu__icon" src={bills_fill} alt="icono panel"> 
-      : <img class="menu__icon" src={bills} alt="icono panel">}
+      ? <img class="menu__icon menu__icon--active" src={bills_fill} alt="icono facturas"> 
+      : <img class="menu__icon" src={bills} alt="icono facturas">}
     <p>Facturas</p>
   </a>
   <a
-    class="menu__item"
-    href="/admin/proyectos"
+    class:list={["menu__item", {"menu__item--active": postersActive}]}
+    href="/admin/carteles"
   >
-    <p>Proyectos</p>
+  {postersActive 
+      ? <img class="menu__icon menu__icon--active" src={posters_fill} alt="icono carteles"> 
+      : <img class="menu__icon" src={posters} alt="icono carteles">}
+    <p>Carteles</p>
+  </a>
+  <a
+    class:list={["menu__item", {"menu__item--active": usersActive}]}
+    href="/admin/usuarios"
+  >
+  {usersActive 
+      ? <img class="menu__icon menu__icon--active" src={users_fill} alt="icono usuarios"> 
+      : <img class="menu__icon" src={users} alt="icono usuarios">}
+    <p>Usuarios</p>
   </a>
 </aside>
 
 <style lang="scss">
-aside {
+@import "@assets/library";
+
+.menu {
+  width: 200px;
+  height: calc(100vh - 75px);
+  padding: 20px;
   display: flex;
   flex-direction: column;
   border-right: 1px solid lightgray;
-  & a {
-    margin-bottom: 12px;
-  }
-}
-.menu {
-  width: 150px;
-  height: calc(100vh - 75px);
   &__item {
     text-decoration: none;
     display: flex;
     align-items: center;
     padding: 8px 12px;
-    &:active {
-      background-color: lightgray;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    color: black;
+    &--active {
+      background-color: $primary-color;
+      color: white;
     }
     &:hover {
       background-color: lightgray;
@@ -76,6 +96,9 @@ aside {
   &__icon {
     width: 32px;
     margin-right: 8px;
+    &--active {
+      filter: invert(1);
+    }
   }
 }
 </style>
