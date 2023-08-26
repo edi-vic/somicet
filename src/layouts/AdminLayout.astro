@@ -1,8 +1,10 @@
 ---
 import GlobalStyles from '@components/GlobalStyles.astro'
 import logo from "@assets/logo.png"
+import AdminMenu from '@components/core/AdminMenu.astro'
 
 const { title } = Astro.props
+
 ---
 
 <html lang='es'>
@@ -22,12 +24,7 @@ const { title } = Astro.props
         SOMICET
       </div>
       <div class="content">
-        <aside>
-          <a href="/admin">Panel</a>
-          <a href="/admin/registros">Registros</a>
-          <a href="/admin/facturas">Facturas</a>
-          <a href="/admin/proyectos">Proyectos</a>
-        </aside>
+        <AdminMenu section={title} />
         <main>
           <slot />
         </main>
@@ -57,17 +54,6 @@ const { title } = Astro.props
 .content {
   flex: 1;
   display: flex;
-}
-aside {
-  width: 150px;
-  height: calc(100vh - 75px);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid lightgray;
-  & a {
-    margin-bottom: 12px;
-  }
 }
 main {
   flex: 1;

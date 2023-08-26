@@ -1,0 +1,81 @@
+---
+import dashboard from "@assets/icons/dashboard.svg"
+import dashboard_fill from "@assets/icons/dashboard_fill.svg"
+import registration from "@assets/icons/registration.svg"
+import registration_fill from "@assets/icons/registration_fill.svg"
+import bills from "@assets/icons/bills.svg"
+import bills_fill from "@assets/icons/bills_fill.svg"
+
+const { section } = Astro.props;
+
+const dashboardActive = section === "Panel";
+const registrationActive = section === "Registros";
+const billsActive = section === "Facturas";
+---
+
+<aside class="menu">
+  <a
+    class="menu__item"
+    href="/admin"
+  >
+    {dashboardActive 
+      ? <img class="menu__icon" src={dashboard_fill} alt="icono panel"> 
+      : <img class="menu__icon" src={dashboard} alt="icono panel">}
+    <p>Panel</p>
+  </a>
+  <a
+    class="menu__item"
+    href="/admin/registros"
+  >
+  {registrationActive 
+      ? <img class="menu__icon" src={registration_fill} alt="icono panel"> 
+      : <img class="menu__icon" src={registration} alt="icono panel">}
+    <p>Registros</p>
+  </a>
+  <a
+    class="menu__item"
+    href="/admin/facturas"
+  >
+  {billsActive 
+      ? <img class="menu__icon" src={bills_fill} alt="icono panel"> 
+      : <img class="menu__icon" src={bills} alt="icono panel">}
+    <p>Facturas</p>
+  </a>
+  <a
+    class="menu__item"
+    href="/admin/proyectos"
+  >
+    <p>Proyectos</p>
+  </a>
+</aside>
+
+<style lang="scss">
+aside {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid lightgray;
+  & a {
+    margin-bottom: 12px;
+  }
+}
+.menu {
+  width: 150px;
+  height: calc(100vh - 75px);
+  &__item {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    &:active {
+      background-color: lightgray;
+    }
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+  &__icon {
+    width: 32px;
+    margin-right: 8px;
+  }
+}
+</style>
