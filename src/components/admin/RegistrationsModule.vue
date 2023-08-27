@@ -223,7 +223,7 @@ const handleRegistration = (element) => {
   }
   &__header {
     background: $primary-color;
-    color: white;
+    color: $white;
   }
   &__status {
     width: 100%;
@@ -235,7 +235,7 @@ const handleRegistration = (element) => {
   &__titles, &__row {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid $gray;
   }
   &__titles {
     font-weight: bold;
@@ -254,7 +254,7 @@ const handleRegistration = (element) => {
       border-bottom: none;
     }
     &:hover {
-      background-color: #f5f5f5;
+      background-color: $lightgray;
     }
   }
   &__title, &__cell {
@@ -262,7 +262,7 @@ const handleRegistration = (element) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid lightgray;
+    border-right: 1px solid $gray;
     &:last-child {
       border-right: none;
     }
@@ -291,12 +291,12 @@ const handleRegistration = (element) => {
 }
 .action {
   padding: 8px 12px;
-  border: 1px solid lightgray;
+  border: 1px solid $gray;
   border-radius: 4px;
-  background-color: white;
+  background-color: $white;
   cursor: pointer;
   &:hover {
-    background-color: #f5f5f5;
+    background-color: $lightgray;
   }
 }
 </style>

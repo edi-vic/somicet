@@ -58,3 +58,22 @@ export const REGISTRATION_GROUPS = {
     price: "$1,000",
   },
 }
+
+export const BILL_STATUS = {
+  0: {
+    code: "no_status",
+    copy: "Estado",
+  },
+  1: {
+    code: "pending",
+    copy: "Pendiente",
+  },
+  2: {
+    code: "sent",
+    copy: "Enviada",
+  },
+  3: {
+    code: "rejected",
+    copy: "Rechazada",
+  },
+}

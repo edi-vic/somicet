@@ -28,7 +28,6 @@ const status = reactive({
 
 /*  vue  lifecycle  */
 onMounted(async () => {
-  // await getUserProfile()
   await getSession()
 })
 
@@ -45,7 +44,12 @@ const getSession = async () => {
     console.error('Error in getSession: ', error)
   } else {
     console.log('data: ', data)
-    handleLogin(data)
+    if (data.session === null) {
+      console.log('session is null')
+      step.value = REGISTRATION_STEPS[0]
+    } else {
+      await handleLogin(data)
+    }
     status.success = true
   }
   status.loading = false
@@ -65,38 +69,6 @@ const handleLogin = async ({ session }) => {
   } catch (error) {
     console.error("Error in handleLogin: ", error)
   }
-}
-
-const getUserProfile = async () => {
-  const userId = getUserId()
-  if (!userId) {
-    step.value = REGISTRATION_STEPS[0]
-    return
-  }
-
-  status.loading = true
-  status.success = false
-  status.error = null
-
-  const { data, error } = await supabase
-    .from('profiles')
-    .select()
-    .eq('id', userId)
-    .single()
-
-  if (error) {
-    console.error('Error in getUserProfile: ', error)
-  } else {
-    const { id, email, first_name, last_name } = data
-    session.set({ 
-      user_id: id,
-      user_email: email,
-    })
-    // validación de admin
-    status.success = true
-  }
-
-  status.loading = false
 }
 
 const handleNextStep = (val) => step.value = val
