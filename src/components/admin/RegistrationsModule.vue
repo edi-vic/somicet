@@ -173,7 +173,6 @@ const getRegistrations = async () => {
     status.error = error.message
     console.error("Error in getRegistrations: ", error.message)
   } else {
-    console.log("getRegistrations: ", data)
     registrations.value = data
     status.success = true
   }
