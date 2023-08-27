@@ -12,10 +12,29 @@ export const REGISTRATION_STATUS = {
   2: "rejected",
 }
 
+export const REGISTRATION_STATUS_FULL = {
+  0: {
+    code: "no_status",
+    copy: "Estado",
+  },
+  1: {
+    code: "pending",
+    copy: "Pendiente",
+  },
+  2: {
+    code: "approved",
+    copy: "Aprobado",
+  },
+  3: {
+    code: "rejected",
+    copy: "Rechazado",
+  },
+}
+
 export const REGISTRATION_GROUPS = {
   0: {
     code: "no_group",
-    copy: "Selecciona uno",
+    copy: "Grupo",
     price: "$0",
   },
   1: {

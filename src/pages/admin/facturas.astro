@@ -1,5 +1,5 @@
 ---
-import { getUser } from "@helpers/supabase";
+import { getUser, getAdmin } from "@helpers/supabase";
 import BillsModule from "@components/admin/BillsModule.vue";
 import AdminLayout from "@layouts/AdminLayout.astro";
 
@@ -9,9 +9,15 @@ const isLoggedIn = user !== null;
 if (!isLoggedIn) {
   return Astro.redirect('/admin/login');
 }
+
+const isAdmin = await getAdmin(user);
+
+if (!isAdmin) {
+  return Astro.redirect('/');
+}
 ---
 
-<AdminLayout title="Panel">
+<AdminLayout title="Facturas">
   <h1>Facturas</h1>
   <BillsModule client:only="vue" />
 </AdminLayout>
