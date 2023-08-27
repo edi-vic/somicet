@@ -7,7 +7,7 @@ const user = await getUser(Astro.request);
 const isLoggedIn = user !== null;
 
 if (!isLoggedIn) {
-  return Astro.redirect('/admin/login');
+  return Astro.redirect('/admin/inicio');
 }
 
 const isAdmin = await getAdmin(user);
