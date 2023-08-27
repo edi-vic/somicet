@@ -7,17 +7,29 @@
         placeholder="Buscar"
         v-model="search"
       />
+      <select
+        class="bills__select"
+        v-model="billsStatusSelect"
+      >
+        <option
+          v-for="option in billStatus"
+          :key="option.code"
+          :value="option.code"
+        >
+          {{ option.copy }}
+        </option>
+      </select>
     </div>
     <ul class="bills__header">
       <li class="bills__titles">
+        <div class="bills__title bills__title--folio">
+          Folio
+        </div>
         <div class="bills__title bills__title--status">
           Estado
         </div>
         <div class="bills__title bills__title--actions">
           Acciones
-        </div>
-        <div class="bills__title bills__title--folio">
-          Folio
         </div>
         <div class="bills__title bills__title--name">
           Nombre
@@ -28,17 +40,32 @@
         <div class="bills__title bills__title--rfc">
           RFC
         </div>
-        <div class="bills__title bills__title--address">
-          Dirección
-        </div>
       </li>
     </ul>
-    <ul class="bills__rows">
+    <div 
+      class="bills__status"
+      v-if="status.loading"
+    >
+      <Loader />
+    </div>
+    <div 
+      class="bills__status"
+      v-else-if="!status.loading && !filteredBills.length"
+    >
+      <span>No hay registros</span>
+    </div>
+    <ul
+      class="bills__rows"
+      v-else-if="!status.loading"
+    >
       <li
         class="bills__row"
-        v-for="bill in bills" 
+        v-for="bill in filteredBills" 
         :key="bill.id"
       >
+        <div class="bills__cell bills__cell--folio">
+          {{ bill.serial_number }}
+        </div>
         <div class="bills__cell bills__cell--status">
           <div :class="`status-tag status-tag--${bill.status}`" />
         </div>
@@ -51,9 +78,6 @@
           </button>
           <span v-else>-</span>
         </div>
-        <div class="bills__cell bills__cell--folio">
-          {{ bill.serial_number }}
-        </div>
         <div class="bills__cell bills__cell--name">
           {{ bill.name }}
         </div>
@@ -63,22 +87,22 @@
         <div class="bills__cell bills__cell--rfc">
           {{ bill.rfc  }}
         </div>
-        <div class="bills__cell bills__cell--address">
-          {{ bill.address }}
-        </div>
       </li>
     </ul>
   </section>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue"
+import Loader from "@components/core/Loader.vue"
+import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from "@helpers/supabase"
+import { BILL_STATUS } from "@helpers/constants";
 
 /*  vue  state  */
 const bills = ref([])
 const bill = ref(null)
 const search = ref("")
+const billsStatusSelect = ref("no_status")
 const status = reactive({
   loading: false,
   success: false,
@@ -88,6 +112,28 @@ const status = reactive({
 /*  vue  lifecycle  */
 onMounted(() => {
   getBills()
+})
+
+/*  vue  computed  */
+const billStatus = computed(() => Object.values(BILL_STATUS))
+
+const filteredBills = computed(() => {
+  const searchValue = search.value.toLowerCase()
+  const statusValue = billsStatusSelect.value
+
+  return bills.value.filter((bill) => {
+    const name = bill.name.toLowerCase()
+    const denomination = bill.denomination.toLowerCase()
+    const rfc = bill.rfc.toLowerCase()
+    const status = bill.status.toLowerCase()
+
+    const searchMatch = name.includes(searchValue)
+      || denomination.includes(searchValue)
+      || rfc.includes(searchValue)
+    const statusMatch = statusValue === "no_status" || status === statusValue
+
+    return searchMatch && statusMatch
+  })
 })
 
 /*  vue  methods  */
@@ -137,26 +183,38 @@ const getBills = async () => {
   }
   &__header {
     background: $primary-color;
-    color: white;
+    color: $white;
+  }
+  &__status {
+    width: 100%;
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__titles, &__row {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid $gray;
   }
   &__titles {
     font-weight: bold;
   }
   &__rows {
-    max-height: 78vh;
+    max-height: 70vh;
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   &__row {
     &:last-child {
       border-bottom: none;
     }
     &:hover {
-      background-color: #f5f5f5;
+      background-color: $lightgray;
     }
   }
   &__title, &__cell {
@@ -164,15 +222,15 @@ const getBills = async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid lightgray;
-    &--status, &--actions, &--folio {
+    border-right: 1px solid $gray;
+    &:last-child {
+      border-right: none;
+    }
+    &--folio, &--status {
       width: 10%;
     }
-    &--name, &--denomination {
+    &--actions, &--name, &--denomination, &--rfc {
       width: 20%;
-    }
-    &--rfc, &--address {
-      width: 15%;
     }
   }
 }
@@ -180,12 +238,25 @@ const getBills = async () => {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid lightgray;
-  &--requested {
-    background-color: yellow;
+  border: 1px solid $gray;
+  &--pending {
+    background: $yellow;
   }
-  &--approved {
-    background-color: green;
+  &--sent {
+    background: $green;
+  }
+  &--rejected {
+    background: $red;
+  }
+}
+.action {
+  padding: 8px 12px;
+  border: 1px solid $gray;
+  border-radius: 4px;
+  background-color: $white;
+  cursor: pointer;
+  &:hover {
+    background-color: $lightgray;
   }
 }
 </style>
