@@ -20,12 +20,13 @@ export async function getUser(req) {
   return user;
 }
 
-export async function getUserRole(user) {
+export async function getAdmin(user) {
   const { data, error } = await supabase
-    .from('profiles')
+    .from('admins')
     .select()
-    .eq('user_id', user.id)
+    .eq('id', user.id)
     .single();
 
     console.log(data, error)
+    return !!data
 }
