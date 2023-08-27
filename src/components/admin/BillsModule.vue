@@ -1,5 +1,13 @@
 <template>
   <section class="bills__table">
+    <div class="bills__control">
+      <input
+        class="bills__search"
+        type="text"
+        placeholder="Buscar"
+        v-model="search"
+      />
+    </div>
     <ul class="bills__header">
       <li class="bills__titles">
         <div class="bills__title bills__title--status">
@@ -70,6 +78,7 @@ import { supabase } from "@helpers/supabase"
 /*  vue  state  */
 const bills = ref([])
 const bill = ref(null)
+const search = ref("")
 const status = reactive({
   loading: false,
   success: false,
@@ -109,7 +118,22 @@ const getBills = async () => {
 @import "@assets/library";
 .bills {
   &__table {
-    border: 1px solid lightgray;
+    border: 1px solid $gray;
+    border-radius: 8px;
+  }
+  &__control {
+    padding: 16px;
+    display: flex;
+  }
+  &__search, &__select {
+    width: 300px;
+    height: 50px;
+    border: 1px solid $gray;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin-right: 12px;
+    appearance:none;
   }
   &__header {
     background: $primary-color;

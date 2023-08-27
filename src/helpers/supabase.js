@@ -27,6 +27,5 @@ export async function getAdmin(user) {
     .eq('id', user.id)
     .single();
 
-    console.log(data, error)
     return !!data
 }

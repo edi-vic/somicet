@@ -243,6 +243,11 @@ const handleRegistration = (element) => {
   &__rows {
     max-height: 70vh;
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   &__row {
     &:last-child {
