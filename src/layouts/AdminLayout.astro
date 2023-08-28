@@ -1,37 +1,26 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro"
-import GlobalStyles from "@components/GlobalStyles.astro"
 import logo from "@assets/logo.png"
 import AdminMenu from "@components/core/AdminMenu.astro"
 
 const { title } = Astro.props
+const adminTitle = `Admin - ${title}`
 ---
 
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <!--  TODO:  Change favicon -->
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>SOMICET - Admin | {title}</title>
-    <GlobalStyles />
-  </head>
-  <body>
-    <div class="admin">
-      <div class="top-bar">
-        <img class="top-bar__logo" src={logo} alt="logo">
-        SOMICET
-      </div>
-      <div class="content">
-        <AdminMenu section={title} />
-        <main>
-          <slot />
-        </main>
-      </div>
+<BaseLayout title={adminTitle}>
+  <div class="admin">
+    <div class="top-bar">
+      <img class="top-bar__logo" src={logo} alt="logo">
+      SOMICET
     </div>
-  </body>
-</html>
+    <div class="content">
+      <AdminMenu section={title} />
+      <main>
+        <slot />
+      </main>
+    </div>
+  </div>
+</BaseLayout>
 
 <style scoped lang="scss">
 .admin {
