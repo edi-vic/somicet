@@ -1,0 +1,54 @@
+---
+
+---
+<section class="program">
+  <div class="program__bg"/>
+  <div class="program__content">
+    <div class="program__title">
+      Programa
+    </div>
+    <div class="program__topics">
+      <div class="">
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+<style lang="scss">
+  @import "@assets/library";
+  .program{
+    width: 100%;
+    height: 788px;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    &__bg{
+      width: 100%;
+      height: 100%;
+      background-image: url('../../assets/cells/stemCells2.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.4;
+      position: absolute;
+    }
+    &__content{
+      width: 100%;
+      height: 90%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+    &__title{
+      font-size: 32px;
+      line-height: 36px;
+      color: $white;
+      font-weight: 700;
+    } 
+  }
+
+</style>

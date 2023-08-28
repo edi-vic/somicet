@@ -1,5 +1,5 @@
 ---
-import { getUser } from "@helpers/supabase";
+import { getUser, getAdmin } from "@helpers/supabase";
 import RegistrationsModule from '@components/admin/RegistrationsModule.vue'
 import AdminLayout from '@layouts/AdminLayout.astro'
 
@@ -7,17 +7,23 @@ const user = await getUser(Astro.request);
 const isLoggedIn = user !== null;
 
 if (!isLoggedIn) {
-  return Astro.redirect('/admin/login');
+  return Astro.redirect('/admin/inicio');
+}
+
+const isAdmin = await getAdmin(user);
+
+if (!isAdmin) {
+  return Astro.redirect('/');
 }
 ---
 
-<AdminLayout title='Panel'>
+<AdminLayout title='Registros'>
   <h1>Registros</h1>
   <RegistrationsModule client:only='vue' />
 </AdminLayout>
 
 <style lang="scss">
-  h1 {
-    margin-bottom: 20px;
-  }
+h1 {
+  margin-bottom: 8px;
+}
 </style>

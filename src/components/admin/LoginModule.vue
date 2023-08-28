@@ -28,40 +28,47 @@ const status = reactive({
 
 /*  vue  lifecycle  */
 onMounted(async () => {
-  await getUserProfile()
+  await getSession()
 })
 
 /*  vue  methods  */
-const getUserProfile = async () => {
-  const userId = getUserId()
-  if (!userId) {
-    step.value = REGISTRATION_STEPS[0]
-    return
-  }
 
+const getSession = async () => {
   status.loading = true
   status.success = false
   status.error = null
 
-  const { data, error } = await supabase
-    .from('profiles')
-    .select()
-    .eq('id', userId)
-    .single()
+  const { data, error } = await supabase.auth.getSession()
 
   if (error) {
-    console.error('Error in getUserProfile: ', error)
+    console.error('Error in getSession: ', error)
   } else {
-    const { id, email, first_name, last_name } = data
-    session.set({ 
-      user_id: id,
-      user_email: email,
-    })
-    // validación de admin
+    console.log('data: ', data)
+    if (data.session === null) {
+      console.log('session is null')
+      step.value = REGISTRATION_STEPS[0]
+    } else {
+      await handleLogin(data)
+    }
     status.success = true
   }
-
   status.loading = false
+}
+
+const handleLogin = async ({ session }) => {
+  try {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: new Headers({"Content-Type": "application/json"}),
+      credentials: "same-origin",
+      body: JSON.stringify(session),
+    })
+
+    console.log(response)
+    window.location.href = '/admin';
+  } catch (error) {
+    console.error("Error in handleLogin: ", error)
+  }
 }
 
 const handleNextStep = (val) => step.value = val
