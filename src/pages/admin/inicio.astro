@@ -5,9 +5,32 @@ import logo from "@assets/logo.png"
 ---
 
 <BaseLayout title="Inicio">
-  <section>
-    <img class="" src={logo} alt="logo">
-    <h1>Sociedad Mexicana para la Investigación en Células Troncales</h1>
+  <section class="login">
+    <img class="login__image" src={logo} alt="logo">
+    <h1 class="login__title">Sociedad Mexicana para la Investigación en Células Troncales</h1>
     <LoginModule client:only="vue" />
   </section>
 </BaseLayout>
+
+<style scoped lang="scss">
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20vh;
+  height: 100vh;
+
+  &__image {
+    width: 150px;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    width: 400px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+}
+</style>
