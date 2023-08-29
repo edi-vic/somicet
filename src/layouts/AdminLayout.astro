@@ -2,6 +2,7 @@
 import BaseLayout from "@layouts/BaseLayout.astro"
 import logo from "@assets/logo.png"
 import AdminMenu from "@components/core/AdminMenu.astro"
+import Logout from "@components/core/Logout.vue"
 
 const { title } = Astro.props
 const adminTitle = `Admin - ${title}`
@@ -10,8 +11,13 @@ const adminTitle = `Admin - ${title}`
 <BaseLayout title={adminTitle}>
   <div class="admin">
     <div class="top-bar">
-      <img class="top-bar__logo" src={logo} alt="logo">
-      SOMICET
+      <div class="top-bar__left">
+        <img class="top-bar__logo" src={logo} alt="logo">
+        SOMICET
+      </div>
+      <div class="top-bar__right">
+        <Logout client:only="vue" />
+      </div>
     </div>
     <div class="content">
       <AdminMenu section={title} />
@@ -34,7 +40,12 @@ const adminTitle = `Admin - ${title}`
   color: black;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
+  &__left {
+    display: flex;
+    align-items: center;
+  }
   &__logo {
     width: 50px;
     margin-right: 10px;
