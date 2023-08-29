@@ -76,7 +76,7 @@ const usersActive = section === "Usuarios";
   padding: 20px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid $gray;
   &__item {
     text-decoration: none;
     display: flex;
@@ -84,13 +84,13 @@ const usersActive = section === "Usuarios";
     padding: 8px 12px;
     margin-bottom: 12px;
     border-radius: 4px;
-    color: black;
+    color: $black;
     &--active {
       background-color: $primary-color;
-      color: white;
+      color: $white;
     }
     &:hover {
-      background-color: lightgray;
+      background-color: $gray;
     }
   }
   &__icon {
