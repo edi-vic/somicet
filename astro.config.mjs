@@ -5,5 +5,8 @@ import netlify from "@astrojs/netlify/functions";
 export default defineConfig({
   output: 'server',
   integrations: [vue()],
-  adapter: netlify()
+  adapter: netlify(),
+  redirects: {
+    "/": "/mantenimiento"
+  }
 });
