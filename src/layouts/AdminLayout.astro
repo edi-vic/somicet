@@ -1,36 +1,32 @@
 ---
-import GlobalStyles from '@components/GlobalStyles.astro'
+import BaseLayout from "@layouts/BaseLayout.astro"
 import logo from "@assets/logo.png"
-import AdminMenu from '@components/core/AdminMenu.astro'
+import AdminMenu from "@components/core/AdminMenu.astro"
+import Logout from "@components/core/Logout.vue"
 
 const { title } = Astro.props
+const adminTitle = `Admin - ${title}`
 ---
 
-<html lang='es'>
-  <head>
-    <meta charset="utf-8" />
-    <!--  TODO:  Change favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>SOMICET - Admin | {title}</title>
-    <GlobalStyles />
-  </head>
-  <body>
-    <div class="admin">
-      <div class="top-bar">
+<BaseLayout title={adminTitle}>
+  <div class="admin">
+    <div class="top-bar">
+      <div class="top-bar__left">
         <img class="top-bar__logo" src={logo} alt="logo">
         SOMICET
       </div>
-      <div class="content">
-        <AdminMenu section={title} />
-        <main>
-          <slot />
-        </main>
+      <div class="top-bar__right">
+        <Logout client:only="vue" />
       </div>
     </div>
-  </body>
-</html>
+    <div class="content">
+      <AdminMenu section={title} />
+      <main>
+        <slot />
+      </main>
+    </div>
+  </div>
+</BaseLayout>
 
 <style scoped lang="scss">
 .admin {
@@ -44,7 +40,12 @@ const { title } = Astro.props
   color: black;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
+  &__left {
+    display: flex;
+    align-items: center;
+  }
   &__logo {
     width: 50px;
     margin-right: 10px;

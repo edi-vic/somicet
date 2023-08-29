@@ -5,7 +5,7 @@
   />
   <OtpStep
     v-if="step === REGISTRATION_STEPS[1]"
-    @success="handleNextStep"
+    @success="handleNextStep($event, true)"
   />
 </template>
 
@@ -71,5 +71,11 @@ const handleLogin = async ({ session }) => {
   }
 }
 
-const handleNextStep = (val) => step.value = val
+const handleNextStep = (val, end = false) => {
+  if (end) {
+    window.location.href = '/admin';
+  } else {
+    step.value = val
+  }
+}
 </script>

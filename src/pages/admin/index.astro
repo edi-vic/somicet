@@ -5,6 +5,8 @@ import AdminLayout from "@layouts/AdminLayout.astro"
 const user = await getUser(Astro.request);
 const isLoggedIn = user !== null;
 
+console.log(isLoggedIn);
+
 if (!isLoggedIn) {
   return Astro.redirect('/admin/inicio');
 }

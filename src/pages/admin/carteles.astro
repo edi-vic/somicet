@@ -1,6 +1,6 @@
 ---
 import { getUser, getAdmin } from "@helpers/supabase";
-import ProjectsModule from "@components/admin/ProjectsModule.vue";
+import ProjectsModule from "@components/admin/PostersModule.vue";
 import AdminLayout from "@layouts/AdminLayout.astro";
 
 const user = await getUser(Astro.request);
@@ -18,7 +18,7 @@ if (!isAdmin) {
 ---
 
 <AdminLayout title="Carteles">
-  <h1>Proyectos</h1>
+  <h1>Carteles</h1>
   <ProjectsModule client:only="vue" />
 </AdminLayout>
 

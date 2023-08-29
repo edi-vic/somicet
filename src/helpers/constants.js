@@ -77,3 +77,22 @@ export const BILL_STATUS = {
     copy: "Rechazada",
   },
 }
+
+export const POSTER_STATUS = {
+  0: {
+    code: "no_status",
+    copy: "Estado",
+  },
+  1: {
+    code: "pending",
+    copy: "Pendiente",
+  },
+  2: {
+    code: "approved",
+    copy: "Aprobado",
+  },
+  3: {
+    code: "rejected",
+    copy: "Rechazada",
+  },
+}

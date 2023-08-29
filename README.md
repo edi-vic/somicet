@@ -1,4 +1,4 @@
-projects
+posters
 - id
 - serial_number
 - title

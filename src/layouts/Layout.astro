@@ -1,29 +1,13 @@
 ---
-import GlobalStyles from "@components/GlobalStyles.astro";
+import BaseLayout from "@layouts/BaseLayout.astro"
 import Navbar from "@components/core/Navbar.astro";
 import Header from "@components/core/Header.astro";
-const { title } = Astro.props
 
+const { title } = Astro.props
 ---
 
-<html lang='es'>
-  <head>
-    <meta charset="utf-8" />
-    <!--  TODO:  Change favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>SOMICET | {title}</title>
-    <GlobalStyles />
-  </head>
-  <body>
-    <Header />
-    <Navbar 
-      active= {title}
-    />
-    <slot />
-  </body>
-</html>
-
-<style lang="scss">
-</style>
+<BaseLayout title={title}>
+  <Header />
+  <Navbar active={title}/>
+  <slot />
+</BaseLayout>
