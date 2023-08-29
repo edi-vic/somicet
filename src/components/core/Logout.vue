@@ -22,3 +22,18 @@ const logout = async () => {
   window.location.href = '/admin/inicio';
 }
 </script>
+
+<style scoped lang="scss">
+@import "@assets/library";
+
+button {
+  height: 50px;
+  width: 150px;
+  background-color: $primary-color;
+  border: none;
+  border-radius: 8px;
+  color: $white;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
