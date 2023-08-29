@@ -7,6 +7,12 @@ export default defineConfig({
   integrations: [vue()],
   adapter: netlify(),
   redirects: {
-    "/": "/mantenimiento"
+    "/": "/mantenimiento",
+    "/admin": "mantenimiento",
+    "/admin/carteles": "mantenimiento",
+    "/admin/facturas": "mantenimiento",
+    "/admin/inicio": "mantenimiento",
+    "/admin/registros": "mantenimiento",
+    "/registro": "mantenimiento",
   }
 });
