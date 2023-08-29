@@ -96,3 +96,36 @@ export const POSTER_STATUS = {
     copy: "Rechazada",
   },
 }
+
+export const POSTER_THEMES = {
+  0: {
+    code: "no_theme",
+    copy: "Tema",
+    short_copy: "Tema",
+  },
+  1: {
+    code: "neural_hematopoietic",
+    copy: "Células Troncales Neurales y Hematopoyéticas",
+    short_copy: "Neurales y Hematopoyéticas",
+  },
+  2: {
+    code: "mesenchymal",
+    copy: "Células Estromales Mesenquimales",
+    short_copy: "Estromales Mesenquimales",
+  },
+  3: {
+    code: "regeneration",
+    copy: "Células Troncales y de Regeneración",
+    short_copy: "Regeneración",
+  },
+  4: {
+    code: "cancer",
+    copy: "Células Troncales y Cáncer",
+    short_copy: "Cáncer",
+  },
+  5: {
+    code: "aging",
+    copy: "Envejecimiento",
+    short_copy: "Envejecimiento",
+  },
+}

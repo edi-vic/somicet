@@ -3,6 +3,7 @@ posters
 - serial_number
 - title
 - authors
+- theme
 - secondment
 - summary
 - aknowledgements

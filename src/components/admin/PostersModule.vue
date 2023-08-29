@@ -19,6 +19,18 @@
           {{ option.copy }}
         </option>
       </select>
+      <select
+        class="posters__select"
+        v-model="postersThemeSelect"
+      >
+      <option
+          v-for="option in posterThemes"
+          :key="option.code"
+          :value="option.code"
+        >
+          {{ option.short_copy }}
+        </option>
+      </select>
     </div>
     <ul class="posters__header">
       <li class="posters__titles">
@@ -30,6 +42,9 @@
         </div>
         <div class="posters__title posters__title--actions">
           Acciones
+        </div>
+        <div class="posters__title posters__title--theme">
+          Tema
         </div>
         <div class="posters__title posters__title--title">
           Título
@@ -72,6 +87,9 @@
           </button>
           <span v-else>-</span>
         </div>
+        <div class="posters__cell posters__cell--theme">
+          {{ getThemeCopy(poster.theme, 'short_copy') }}
+        </div>
         <div class="posters__cell posters__cell--title">
           {{ poster.title }}
         </div>
@@ -87,13 +105,14 @@
 import Loader from "@components/core/Loader.vue"
 import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from "@helpers/supabase"
-import { POSTER_STATUS } from "@helpers/constants";
+import { POSTER_STATUS, POSTER_THEMES } from "@helpers/constants";
 
 /*  vue  state  */
 const posters = ref([])
 const poster = ref(null)
 const search = ref("")
 const postersStatusSelect = ref("no_status")
+const postersThemeSelect = ref("no_theme")
 const status = reactive({
   loading: false,
   success: false,
@@ -107,20 +126,24 @@ onMounted(() => {
 
 /*  vue  computed  */
 const posterStatus = computed(() => Object.values(POSTER_STATUS))
+const posterThemes = computed(() => Object.values(POSTER_THEMES))
 
 const filteredPosters = computed(() => {
   const searchValue = search.value.toLowerCase()
   const statusValue = postersStatusSelect.value
+  const themeValue = postersThemeSelect.value
 
   return posters.value.filter((poster) => {
     const title = poster.title.toLowerCase()
     const authors = poster.authors.toLowerCase()
     const status = poster.status
+    const theme = poster.theme
 
-    return (
-      (title.includes(searchValue) || authors.includes(searchValue)) &&
-      (statusValue === "no_status" || statusValue === status)
-    )
+    const searchMatch = title.includes(searchValue) || authors.includes(searchValue)
+    const statusMatch = statusValue === "no_status" || status === statusValue
+    const themeMatch = themeValue === "no_theme" || theme === themeValue
+
+    return searchMatch && statusMatch && themeMatch
   })
 })
 
@@ -131,7 +154,7 @@ const getPosters = async () => {
   status.error = null
 
   const { data, error } = await supabase
-    .from("projects")
+    .from("posters")
     .select()
     .order("serial_number", { ascending: false })
 
@@ -145,6 +168,14 @@ const getPosters = async () => {
   }
 
   status.loading = false
+}
+
+const getThemeCopy = (code, type) => {
+  for (const key in POSTER_THEMES) {
+    if (POSTER_THEMES[key].code === code) {
+      return POSTER_THEMES[key][type];
+    }
+  }
 }
 </script>
 
@@ -220,8 +251,8 @@ const getPosters = async () => {
     &--actions {
       width: 20%;
     }
-    &--title, &--authors {
-      width: 30%;
+    &--theme, &--title, &--authors {
+      width: 20%;
     }
   }
 }
