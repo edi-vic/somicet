@@ -8,11 +8,11 @@ export default defineConfig({
   adapter: netlify(),
   redirects: {
     "/": "/mantenimiento",
-    "/admin": "mantenimiento",
-    "/admin/carteles": "mantenimiento",
-    "/admin/facturas": "mantenimiento",
-    "/admin/inicio": "mantenimiento",
-    "/admin/registros": "mantenimiento",
-    "/registro": "mantenimiento",
+    "/admin": "/mantenimiento",
+    "/admin/carteles": "/mantenimiento",
+    "/admin/facturas": "/mantenimiento",
+    "/admin/inicio": "/mantenimiento",
+    "/admin/registros": "/mantenimiento",
+    "/registro": "/mantenimiento",
   }
 });
