@@ -30,6 +30,15 @@ const usersActive = section === "Usuarios";
     <p>Panel</p>
   </a>
   <a
+    class:list={["menu__item", {"menu__item--active": usersActive}]}
+    href="/admin/usuarios"
+  >
+  {usersActive 
+      ? <img class="menu__icon menu__icon--active" src={users_fill} alt="icono usuarios"> 
+      : <img class="menu__icon" src={users} alt="icono usuarios">}
+    <p>Usuarios</p>
+  </a>
+  <a
     class:list={["menu__item", {"menu__item--active": registrationActive}]}
     href="/admin/registros"
   >
@@ -37,15 +46,6 @@ const usersActive = section === "Usuarios";
       ? <img class="menu__icon menu__icon--active" src={registration_fill} alt="icono registros"> 
       : <img class="menu__icon" src={registration} alt="icono registros">}
     <p>Registros</p>
-  </a>
-  <a
-    class:list={["menu__item", {"menu__item--active": billsActive}]}
-    href="/admin/facturas"
-  >
-  {billsActive 
-      ? <img class="menu__icon menu__icon--active" src={bills_fill} alt="icono facturas"> 
-      : <img class="menu__icon" src={bills} alt="icono facturas">}
-    <p>Facturas</p>
   </a>
   <a
     class:list={["menu__item", {"menu__item--active": postersActive}]}
@@ -57,13 +57,13 @@ const usersActive = section === "Usuarios";
     <p>Carteles</p>
   </a>
   <a
-    class:list={["menu__item", {"menu__item--active": usersActive}]}
-    href="/admin/usuarios"
+    class:list={["menu__item", {"menu__item--active": billsActive}]}
+    href="/admin/facturas"
   >
-  {usersActive 
-      ? <img class="menu__icon menu__icon--active" src={users_fill} alt="icono usuarios"> 
-      : <img class="menu__icon" src={users} alt="icono usuarios">}
-    <p>Usuarios</p>
+  {billsActive 
+      ? <img class="menu__icon menu__icon--active" src={bills_fill} alt="icono facturas"> 
+      : <img class="menu__icon" src={bills} alt="icono facturas">}
+    <p>Facturas</p>
   </a>
 </aside>
 
@@ -76,7 +76,7 @@ const usersActive = section === "Usuarios";
   padding: 20px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid $gray;
   &__item {
     text-decoration: none;
     display: flex;
@@ -84,13 +84,13 @@ const usersActive = section === "Usuarios";
     padding: 8px 12px;
     margin-bottom: 12px;
     border-radius: 4px;
-    color: black;
+    color: $black;
     &--active {
       background-color: $primary-color;
-      color: white;
+      color: $white;
     }
     &:hover {
-      background-color: lightgray;
+      background-color: $gray;
     }
   }
   &__icon {

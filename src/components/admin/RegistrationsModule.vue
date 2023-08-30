@@ -83,13 +83,29 @@
         </div>
         <div class="registrations__cell registrations__cell--actions">
           <button
-            v-if="registration.status === 'pending'"
             class="action"
+            v-if="registration.status === 'pending'"
             @click="handleRegistration(registration)"
           >
-            Validar
+            <img
+              class="action__image"
+              src="@assets/icons/check.svg"
+              alt="Validar"
+            />
+            <span>Validar</span>
           </button>
-          <span v-else>-</span>
+          <button
+            class="action"
+            v-else
+            @click="handleRegistration(registration)"
+          >
+            <img
+              class="action__image"
+              src="@assets/icons/view.svg"
+              alt="Ver"
+            />
+            <span>Ver</span>
+          </button>
         </div>
         <div class="registrations__cell registrations__cell--name">
           {{ registration.name }}
@@ -103,17 +119,18 @@
       </li> 
     </ul>
   </section>
-  <ValidationDialog
+  <RegistrationsValidation
     v-if="registration"
     :registration="registration"
     :handleGroup="handleGroup"
+    @update="handleUpdate"
     @close="registration = null"
   />
 </template>
 
 <script setup>
 import Loader from "@components/core/Loader.vue"
-import ValidationDialog from "@components/admin/ValidationDialog.vue"
+import RegistrationsValidation from "@components/admin/RegistrationsValidation.vue"
 import { ref, reactive, computed, onMounted } from "vue"
 import { REGISTRATION_STATUS_FULL, REGISTRATION_GROUPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
@@ -121,9 +138,11 @@ import { supabase } from "@helpers/supabase"
 /*  vue  state  */
 const registrations = ref([])
 const registration = ref(null)
+
 const search = ref("")
 const registrationsStatusSelect = ref("no_status")
 const registrationsGroupSelect = ref("no_group")
+
 const status = reactive({
   loading: false,
   success: false,
@@ -180,23 +199,18 @@ const getRegistrations = async () => {
   status.loading = false
 }
 
-const handleGroup = (group) => {
-  switch (group) {
-    case REGISTRATION_GROUPS[1].code:
-      return REGISTRATION_GROUPS[1]
-    case REGISTRATION_GROUPS[2].code:
-     return REGISTRATION_GROUPS[2]
-    case REGISTRATION_GROUPS[3].code:
-      return REGISTRATION_GROUPS[3]
-    case REGISTRATION_GROUPS[4].code:
-      return REGISTRATION_GROUPS[4]
-    default:
-      return REGISTRATION_GROUPS[0]
-  }
-}
+const handleGroup = (groupCode) => Object.values(REGISTRATION_GROUPS)
+  .find(group => group.code === groupCode)
+
 
 const handleRegistration = (element) => {
   registration.value = element
+}
+
+const handleUpdate = (element) => {
+  const index = registrations.value.findIndex((registration) => registration.id === element.id)
+  registrations.value[index] = element
+  registration.value = null
 }
 </script>
 
@@ -290,11 +304,17 @@ const handleRegistration = (element) => {
   }
 }
 .action {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
   border: 1px solid $gray;
   border-radius: 4px;
   background-color: $white;
   cursor: pointer;
+  &__image {
+    width: 16px;
+    margin-right: 8px;
+  }
   &:hover {
     background-color: $lightgray;
   }

@@ -19,6 +19,18 @@
           {{ option.copy }}
         </option>
       </select>
+      <select
+        class="posters__select"
+        v-model="postersThemeSelect"
+      >
+      <option
+          v-for="option in posterThemes"
+          :key="option.code"
+          :value="option.code"
+        >
+          {{ option.short_copy }}
+        </option>
+      </select>
     </div>
     <ul class="posters__header">
       <li class="posters__titles">
@@ -30,6 +42,9 @@
         </div>
         <div class="posters__title posters__title--actions">
           Acciones
+        </div>
+        <div class="posters__title posters__title--theme">
+          Tema
         </div>
         <div class="posters__title posters__title--title">
           Título
@@ -65,12 +80,32 @@
         </div>
         <div class="posters__cell posters__cell--actions">
           <button
-            v-if="poster.status === 'pending'"
             class="action"
+            v-if="poster.status === 'pending'"
+            @click="handlePoster(poster)"
           >
-            Validar
+            <img
+              class="action__image"
+              src="@assets/icons/check.svg"
+              alt="Validar"
+            />
+            <span>Validar</span>
           </button>
-          <span v-else>-</span>
+          <button
+            class="action"
+            v-else
+            @click="handlePoster(poster)"
+          >
+            <img
+              class="action__image"
+              src="@assets/icons/view.svg"
+              alt="Ver"
+            />
+            <span>Ver</span>
+          </button>
+        </div>
+        <div class="posters__cell posters__cell--theme">
+          {{ handleTheme(poster.theme, 'short_copy') }}
         </div>
         <div class="posters__cell posters__cell--title">
           {{ poster.title }}
@@ -81,19 +116,30 @@
       </li>
     </ul>
   </section>
+  <PostersValidation
+    v-if="poster"
+    :poster="poster"
+    :handleTheme="handleTheme"
+    @update="handleUpdate"
+    @close="poster = null"
+  />
 </template>
 
 <script setup>
 import Loader from "@components/core/Loader.vue"
+import PostersValidation from "./PostersValidation.vue";
 import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from "@helpers/supabase"
-import { POSTER_STATUS } from "@helpers/constants";
+import { POSTER_STATUS, POSTER_THEMES } from "@helpers/constants";
 
 /*  vue  state  */
 const posters = ref([])
 const poster = ref(null)
+
 const search = ref("")
 const postersStatusSelect = ref("no_status")
+const postersThemeSelect = ref("no_theme")
+
 const status = reactive({
   loading: false,
   success: false,
@@ -107,20 +153,24 @@ onMounted(() => {
 
 /*  vue  computed  */
 const posterStatus = computed(() => Object.values(POSTER_STATUS))
+const posterThemes = computed(() => Object.values(POSTER_THEMES))
 
 const filteredPosters = computed(() => {
   const searchValue = search.value.toLowerCase()
   const statusValue = postersStatusSelect.value
+  const themeValue = postersThemeSelect.value
 
   return posters.value.filter((poster) => {
     const title = poster.title.toLowerCase()
     const authors = poster.authors.toLowerCase()
     const status = poster.status
+    const theme = poster.theme
 
-    return (
-      (title.includes(searchValue) || authors.includes(searchValue)) &&
-      (statusValue === "no_status" || statusValue === status)
-    )
+    const searchMatch = title.includes(searchValue) || authors.includes(searchValue)
+    const statusMatch = statusValue === "no_status" || status === statusValue
+    const themeMatch = themeValue === "no_theme" || theme === themeValue
+
+    return searchMatch && statusMatch && themeMatch
   })
 })
 
@@ -131,7 +181,7 @@ const getPosters = async () => {
   status.error = null
 
   const { data, error } = await supabase
-    .from("projects")
+    .from("posters")
     .select()
     .order("serial_number", { ascending: false })
 
@@ -145,6 +195,24 @@ const getPosters = async () => {
   }
 
   status.loading = false
+}
+
+const handleTheme = (code, type) => {
+  for (const key in POSTER_THEMES) {
+    if (POSTER_THEMES[key].code === code) {
+      return POSTER_THEMES[key][type];
+    }
+  }
+}
+
+const handlePoster = (element) => {
+  poster.value = element
+}
+
+const handleUpdate = (element) => {
+  const index = posters.value.findIndex((poster) => poster.id === element.id)
+  posters.value[index] = element
+  poster.value = null
 }
 </script>
 
@@ -220,8 +288,8 @@ const getPosters = async () => {
     &--actions {
       width: 20%;
     }
-    &--title, &--authors {
-      width: 30%;
+    &--theme, &--title, &--authors {
+      width: 20%;
     }
   }
 }
@@ -243,11 +311,17 @@ const getPosters = async () => {
 }
 
 .action {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
   border: 1px solid $gray;
   border-radius: 4px;
   background-color: $white;
   cursor: pointer;
+  &__image {
+    width: 16px;
+    margin-right: 8px;
+  }
   &:hover {
     background-color: $lightgray;
   }
