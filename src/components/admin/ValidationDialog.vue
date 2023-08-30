@@ -2,11 +2,16 @@
   <dialog class="validation">
     <div class="validation__dialog">
       <div class="validation__close">
-        <button 
+        <button
           class="action"
           @click="$emit('close')"
         >
-          Cerrar
+          <img
+            class="action__image"
+            src="@assets/icons/close.svg"
+            alt="Cerrar"
+          />
+          <span>Cerrar</span>
         </button>
       </div>
       <h2 class="validation__title">
@@ -79,15 +84,17 @@
           alt="recibo"
         >
       </a>
-      <div class="validation__actions">
+      <div
+        v-if="registration.status === 'pending'"
+        class="validation__actions">
         <button 
-          class="validation__action validation__reject"
+          class="validation__action validation__action--reject"
           @click="handleReject"
         >
           Rechazar
         </button>
         <button 
-          class="validation__action validation__approve"
+          class="validation__action validation__action--approve"
           @click="handleApprove"
         >
           Aprobar
@@ -131,7 +138,8 @@ const handleApprove = async () => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+@import "@assets/library";
 .validation {
   position: absolute;
   display: block;
@@ -146,7 +154,7 @@ const handleApprove = async () => {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 600px;
-    background-color: white;
+    background-color: $white;
     padding: 20px;
     border-radius: 4px;
   }
@@ -159,22 +167,22 @@ const handleApprove = async () => {
     margin-bottom: 12px;
   }
   &__data {
-    border: 1px solid lightgray;
+    border: 1px solid $gray;
     border-radius: 4px 4px 0 0;
   }
   &__row {
     width: 100%;
     display: flex;
     padding: 12px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid $gray;
   }
   &__cell {
     width: 50%;
   }
   &__receipt {
     height: 400px;
-    border: 1px solid lightgray;
-    background: lightgray;
+    border: 1px solid $gray;
+    background: $lightgray;
     display: flex;
     justify-content: center;
     border-radius: 0 0 4px 4px;
@@ -187,13 +195,48 @@ const handleApprove = async () => {
   &__action {
     width: 48%;
     padding: 8px 12px;
-    border: 1px solid lightgray;
+    border: 1px solid $lightgray;
     border-radius: 4px;
-    background-color: white;
+    background-color: $white;
     cursor: pointer;
     &:hover {
-      background-color: #f5f5f5;
+      background-color: $lightgray;
+      color: $black;
     }
+    &--reject {
+      color: $white;
+      background: $red;
+      &:hover {
+        border: 1px solid $red;
+        background-color: $lightgray;
+        color: $red;
+      }
+    }
+    &--approve {
+      color: $black;
+      background: $green;
+      &:hover {
+        border: 1px solid $green;
+        background-color: $lightgray;
+        color: $green;
+      }
+    }
+  }
+}
+.action {
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  border: 1px solid $gray;
+  border-radius: 4px;
+  background-color: $white;
+  cursor: pointer;
+  &__image {
+    width: 16px;
+    margin-right: 8px;
+  }
+  &:hover {
+    background-color: $lightgray;
   }
 }
 </style>

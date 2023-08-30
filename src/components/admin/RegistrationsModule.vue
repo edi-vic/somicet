@@ -83,13 +83,29 @@
         </div>
         <div class="registrations__cell registrations__cell--actions">
           <button
-            v-if="registration.status === 'pending'"
             class="action"
+            v-if="registration.status === 'pending'"
             @click="handleRegistration(registration)"
           >
-            Validar
+            <img
+              class="action__image"
+              src="@assets/icons/check.svg"
+              alt="Validar"
+            />
+            <span>Validar</span>
           </button>
-          <span v-else>-</span>
+          <button
+            class="action"
+            v-if="registration.status === 'approved'"
+            @click="handleRegistration(registration)"
+          >
+            <img
+              class="action__image"
+              src="@assets/icons/view.svg"
+              alt="Ver"
+            />
+            <span>Ver</span>
+          </button>
         </div>
         <div class="registrations__cell registrations__cell--name">
           {{ registration.name }}
@@ -290,11 +306,17 @@ const handleRegistration = (element) => {
   }
 }
 .action {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
   border: 1px solid $gray;
   border-radius: 4px;
   background-color: $white;
   cursor: pointer;
+  &__image {
+    width: 16px;
+    margin-right: 8px;
+  }
   &:hover {
     background-color: $lightgray;
   }
