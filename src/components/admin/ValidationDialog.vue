@@ -218,7 +218,6 @@ const handleApprove = async () => {
       &:hover {
         border: 1px solid $green;
         background-color: $lightgray;
-        color: $green;
       }
     }
   }
