@@ -1,6 +1,6 @@
 <template>
   <dialog class="validation">
-    <!-- Main dialog -->
+    <!-- Main -->
     <div 
       class="validation__dialog"
       v-if="!status.loading && confirmation === ''"
@@ -90,7 +90,8 @@
       </a>
       <div
         v-if="registration.status === 'pending'"
-        class="validation__actions">
+        class="validation__actions"
+      >
         <button 
           class="validation__action validation__action--reject"
           @click="handleFlow('reject')"
@@ -104,7 +105,71 @@
           Aprobar
         </button>
       </div>
+      <div
+        :class="`validation__status validation__status--${registration.status}`"
+        v-else
+      >
+        <span>
+          {{ registration.status === 'rejected' ? "Rechazado" : "Aprobado" }}
+        </span>
+      </div>
+      <div
+        class="validation__note"
+        v-if="registration.note"
+      >
+        <h6>
+          Motivo de rechazo
+        </h6>
+        <p>
+          {{ registration.note }}
+        </p>
+      </div>
     </div>
+
+    <!-- Approve -->
+    <div
+      class="validation__dialog"
+      v-if="!status.loading && confirmation === 'approve'"
+    >
+    <div class="validation__close">
+        <button
+          class="action"
+          @click="$emit('close')"
+        >
+          <img
+            class="action__image"
+            src="@assets/icons/close.svg"
+            alt="Cerrar"
+          />
+          <span>Cerrar</span>
+        </button>
+      </div>
+      <h2 class="validation__title">
+        Validación de registro
+      </h2>
+      <p class="validation__copy">
+        ¿Estás segura de aprobar el registro?
+      </p>
+      <div
+        v-if="registration.status === 'pending'"
+        class="validation__actions"
+      >
+        <button 
+          class="validation__action validation__action--cancel"
+          @click="handleFlow('')"
+        >
+          Cancelar
+        </button>
+        <button 
+          class="validation__action validation__action--approve"
+          @click="handleApprove"
+        >
+          Aprobar
+        </button>
+      </div>
+    </div>
+
+    <!-- Reject -->
     <div 
       class="validation__dialog"
       v-if="!status.loading && confirmation === 'reject'"
@@ -152,8 +217,10 @@
         </button>
       </div>
     </div>
+
+    <!-- Loading -->
     <div
-    class="validation__dialog validation__dialog--loading"
+      class="validation__dialog validation__dialog--loading"
       v-if="status.loading"
     >
       <Loader />
@@ -169,7 +236,7 @@ import { REGISTRATION_STATUS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 
 /*  vue  emits  */
-const emit = defineEmits(["close"])
+const emit = defineEmits(["close", "update"])
 
 /*  vue  props  */
 const { registration, handleGroup } = defineProps({
@@ -198,15 +265,27 @@ const handleFlow = (value) => {
 }
 
 const handleApprove = async () => {
+  status.loading = true
+  status.success = false
+  status.error = null
+
   const { data, error } = await supabase
     .from("registrations")
     .update({ 
       "status": REGISTRATION_STATUS[1]
     })
     .eq("id", registration.id)
+    .select()
 
-  console.log("handleApprove", data, error)
-  sendEmail()
+    if (error) {
+      console.error("Error in handleApprove: ", error)
+      status.error = error.message
+    } else {
+      status.success = true
+      // sendEmail()
+      emit("update", data[0])
+      status.loading = false
+  }
 }
 
 const handleReject = async () => {
@@ -218,23 +297,20 @@ const handleReject = async () => {
       .from('registrations')
       .update({ 
         status: REGISTRATION_STATUS[2],
-        ...(reason && { note: reason })
+        ...(reason.value && { note: reason.value })
       })
       .eq('id', registration.id)
+      .select()
 
   if (error) {
     console.error("Error in handleReject: ", error)
     status.error = error.message
   } else {
     status.success = true
-    console.log("handleReject data: ", data)
-
     // sendEmail()
-    // update user locally to not fetch again
-    emit('close')
+    emit("update", data[0])
+    status.loading = false
   }
-
-  status.loading = false
 }
 
 
@@ -309,6 +385,7 @@ const sendEmail = async () => {
   &__receipt {
     height: 400px;
     border: 1px solid $gray;
+    border-top: none;
     background: $lightgray;
     display: flex;
     justify-content: center;
@@ -357,6 +434,34 @@ const sendEmail = async () => {
         border: 1px solid $gray;
         background-color: $lightgray;
       }
+    }
+  }
+  &__status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    border: 1px solid $gray;
+    border-radius: 4px;
+    background-color: $lightgray;
+    font-size: 16px;
+    font-weight: 600;
+    &--rejected {
+      background: $red;
+      color: $white;
+    }
+    &--approved {
+      background: $green;
+      color: $black;
+    }
+  }
+  &__note {
+    margin-top: 12px;
+    border: 1px solid $gray;
+    border-radius: 4px;
+    padding: 12px;
+    h6 {
+      margin-bottom: 8px;
     }
   }
 }

@@ -96,7 +96,7 @@
           </button>
           <button
             class="action"
-            v-if="registration.status === 'approved'"
+            v-else
             @click="handleRegistration(registration)"
           >
             <img
@@ -123,6 +123,7 @@
     v-if="registration"
     :registration="registration"
     :handleGroup="handleGroup"
+    @update="handleUpdate"
     @close="registration = null"
   />
 </template>
@@ -213,6 +214,12 @@ const handleGroup = (group) => {
 
 const handleRegistration = (element) => {
   registration.value = element
+}
+
+const handleUpdate = (element) => {
+  const index = registrations.value.findIndex((registration) => registration.id === element.id)
+  registrations.value[index] = element
+  registration.value = null
 }
 </script>
 
