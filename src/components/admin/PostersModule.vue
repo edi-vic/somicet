@@ -105,7 +105,7 @@
           </button>
         </div>
         <div class="posters__cell posters__cell--theme">
-          {{ getThemeCopy(poster.theme, 'short_copy') }}
+          {{ handleTheme(poster.theme, 'short_copy') }}
         </div>
         <div class="posters__cell posters__cell--title">
           {{ poster.title }}
@@ -116,10 +116,18 @@
       </li>
     </ul>
   </section>
+  <PostersValidation
+    v-if="poster"
+    :poster="poster"
+    :handleTheme="handleTheme"
+    @update="handleUpdate"
+    @close="poster = null"
+  />
 </template>
 
 <script setup>
 import Loader from "@components/core/Loader.vue"
+import PostersValidation from "./PostersValidation.vue";
 import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from "@helpers/supabase"
 import { POSTER_STATUS, POSTER_THEMES } from "@helpers/constants";
@@ -189,7 +197,7 @@ const getPosters = async () => {
   status.loading = false
 }
 
-const getThemeCopy = (code, type) => {
+const handleTheme = (code, type) => {
   for (const key in POSTER_THEMES) {
     if (POSTER_THEMES[key].code === code) {
       return POSTER_THEMES[key][type];

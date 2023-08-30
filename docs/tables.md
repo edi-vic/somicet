@@ -51,7 +51,7 @@ create table
 - theme
 - secondment
 - summary
-- aknowledgements
+- acknowledgements
 - status
 - misc
 - created_at

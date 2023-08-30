@@ -1,11 +1,11 @@
 <template>
   <dialog class="validation">
     <!-- Main -->
-    <div 
+    <div
       class="validation__dialog"
       v-if="!status.loading && confirmation === ''"
     >
-      <div class="validation__close">
+    <div class="validation__close">
         <button
           class="action"
           @click="$emit('close')"
@@ -20,25 +20,25 @@
       </div>
 
       <h2 class="validation__title">
-        Validación de registro
+        Validación de cartel
       </h2>
-
+  
       <div class="validation__data">
         <div class="validation__row">
           <div class="validation__cell">
             <h6>
-              Nombre
-            </h6>
-            <p>
-              {{ registration.name }}
-            </p>
+                Tema
+              </h6>
+              <p>
+                {{ handleTheme(poster.theme, 'copy') }}
+              </p>
           </div>
           <div class="validation__cell">
             <h6>
-              Correo
+              Fecha
             </h6>
             <p>
-              {{ registration.email }}
+              {{ parseDate(poster.created_at) }}
             </p>
           </div>
         </div>
@@ -46,55 +46,53 @@
         <div class="validation__row">
           <div class="validation__cell">
             <h6>
-              Adscripción
-            </h6>
-            <p>
-              {{ registration.secondment }}
-            </p>
+                Título
+              </h6>
+              <p>
+                {{ poster.title }}
+              </p>
           </div>
           <div class="validation__cell">
             <h6>
-              Grupo
-            </h6>
-            <p>
-              {{ handleGroup(registration.group).copy }}
-            </p>
+                Autores
+              </h6>
+              <p>
+                {{ poster.authors }}
+              </p>
           </div>
         </div>
-        
+
         <div class="validation__row">
           <div class="validation__cell">
             <h6>
-              Aportación a cubrir
-            </h6>
-            <p>
-              {{ handleGroup(registration.group).price }}
-            </p>
+                Adscripción
+              </h6>
+              <p>
+                {{ poster.secondment }}
+              </p>
           </div>
           <div class="validation__cell">
             <h6>
-              Fecha de registro
+              Agradecimientos
             </h6>
             <p>
-              {{ parseDate(registration.created_at) }}
+              {{ poster.acknowledgements }}
             </p>
           </div>
         </div>
       </div>
-      <a 
-        class="validation__receipt"
-        :href="registration.receipt_url" 
-        target="_blank" 
-        rel="noopener noreferrer"
-      >
-        <img
-          :src="registration.receipt_url" 
-          alt="recibo"
-        >
-      </a>
+
+      <div class="validation__resume">
+        <h6>
+          Resumen
+        </h6>
+        <p>
+          {{ poster.summary }}
+        </p>
+      </div>
 
       <div
-        v-if="registration.status === 'pending'"
+        v-if="poster.status === 'pending'"
         class="validation__actions"
       >
         <button 
@@ -119,18 +117,6 @@
           {{ registration.status === 'rejected' ? "Rechazado" : "Aprobado" }}
         </span>
       </div>
-
-      <div
-        class="validation__note"
-        v-if="registration.note"
-      >
-        <h6>
-          Motivo de rechazo
-        </h6>
-        <p>
-          {{ registration.note }}
-        </p>
-      </div>
     </div>
 
     <!-- Approve -->
@@ -152,13 +138,13 @@
         </button>
       </div>
       <h2 class="validation__title">
-        Validación de registro
+        Validación de cartel
       </h2>
       <p class="validation__copy">
-        ¿Estás segura de aprobar el registro?
+        ¿Estás segura de aprobar el cartel?
       </p>
       <div
-        v-if="registration.status === 'pending'"
+        v-if="poster.status === 'pending'"
         class="validation__actions"
       >
         <button 
@@ -195,19 +181,13 @@
         </button>
       </div>
       <h2 class="validation__title">
-        Validación de registro
+        Validación de cartel
       </h2>
       <p class="validation__copy">
-        ¿Estás segura de rechazar el registro? Ingresa un 
-        motivo para notificar al usuario.
+        ¿Estás segura de rechazar el cartel?
       </p>
-      <textarea
-        class="validation__reason"
-        placeholder="Motivo de rechazo"
-        v-model="reason"
-      />
       <div
-        v-if="registration.status === 'pending'"
+        v-if="poster.status === 'pending'"
         class="validation__actions"
       >
         <button 
@@ -232,6 +212,7 @@
     >
       <Loader />
     </div>
+
   </dialog>
 </template>
 
@@ -239,19 +220,17 @@
 import Loader from '@components/core/Loader.vue'
 import { ref, reactive } from 'vue'
 import { parseDate } from "@helpers/dates"
-import { REGISTRATION_STATUS } from "@helpers/constants"
-import { supabase } from "@helpers/supabase"
 
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
 
 /*  vue  props  */
-const { registration, handleGroup } = defineProps({
-  registration: {
+const { poster, handleTheme } = defineProps({
+  poster: {
     type: Object,
     required: true,
   },
-  handleGroup: {
+  handleTheme: {
     type: Function,
     required: true,
   },
@@ -259,82 +238,17 @@ const { registration, handleGroup } = defineProps({
 
 /*  vue  data  */
 const confirmation = ref("")
-const reason = ref("")
 const status = reactive({
   loading: false,
   success: false,
   error: null,
 })
 
-/*  vue  methods  */
-const handleFlow = (value) => {
-  confirmation.value = value
-}
-
-const handleApprove = async () => {
-  status.loading = true
-  status.success = false
-  status.error = null
-
-  const { data, error } = await supabase
-    .from("registrations")
-    .update({ 
-      "status": REGISTRATION_STATUS[1]
-    })
-    .eq("id", registration.id)
-    .select()
-
-    if (error) {
-      console.error("Error in handleApprove: ", error)
-      status.error = error.message
-    } else {
-      status.success = true
-      // sendEmail()
-      emit("update", data[0])
-      status.loading = false
-  }
-}
-
-const handleReject = async () => {
-  status.loading = true
-  status.success = false
-  status.error = null
-
-  const { data, error } = await supabase
-      .from('registrations')
-      .update({ 
-        status: REGISTRATION_STATUS[2],
-        ...(reason.value && { note: reason.value })
-      })
-      .eq('id', registration.id)
-      .select()
-
-  if (error) {
-    console.error("Error in handleReject: ", error)
-    status.error = error.message
-  } else {
-    status.success = true
-    // sendEmail()
-    emit("update", data[0])
-    status.loading = false
-  }
-}
-
-
-const sendEmail = async () => {
-  const { data, error } = await supabase
-    .functions
-    .invoke('mails', { body: JSON.stringify({ 
-      name: 'Víctor',
-      email: registration.email,
-    })})
-
-  console.log("sendEmail", data, error)
-}
 </script>
 
 <style scoped lang="scss">
 @import "@assets/library";
+
 .validation {
   position: absolute;
   display: block;
@@ -366,16 +280,6 @@ const sendEmail = async () => {
   &__title, &__copy {
     margin-bottom: 12px;
   }
-  &__reason {
-    width: 100%;
-    height: 100px;
-    border: 1px solid $gray;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    appearance:none;
-    margin-bottom: 12px;
-  }
   &__data {
     border: 1px solid $gray;
     border-radius: 4px 4px 0 0;
@@ -389,14 +293,15 @@ const sendEmail = async () => {
   &__cell {
     width: 50%;
   }
-  &__receipt {
+  &__resume {
     height: 400px;
     border: 1px solid $gray;
     border-top: none;
     background: $lightgray;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     border-radius: 0 0 4px 4px;
+    padding: 12px;
     margin-bottom: 12px;
   }
   &__actions {
@@ -462,16 +367,8 @@ const sendEmail = async () => {
       color: $black;
     }
   }
-  &__note {
-    margin-top: 12px;
-    border: 1px solid $gray;
-    border-radius: 4px;
-    padding: 12px;
-    h6 {
-      margin-bottom: 8px;
-    }
-  }
 }
+
 .action {
   display: flex;
   align-items: center;
