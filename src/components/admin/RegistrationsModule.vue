@@ -197,20 +197,9 @@ const getRegistrations = async () => {
   status.loading = false
 }
 
-const handleGroup = (group) => {
-  switch (group) {
-    case REGISTRATION_GROUPS[1].code:
-      return REGISTRATION_GROUPS[1]
-    case REGISTRATION_GROUPS[2].code:
-     return REGISTRATION_GROUPS[2]
-    case REGISTRATION_GROUPS[3].code:
-      return REGISTRATION_GROUPS[3]
-    case REGISTRATION_GROUPS[4].code:
-      return REGISTRATION_GROUPS[4]
-    default:
-      return REGISTRATION_GROUPS[0]
-  }
-}
+const handleGroup = (groupCode) => Object.values(REGISTRATION_GROUPS)
+  .find(group => group.code === groupCode)
+
 
 const handleRegistration = (element) => {
   registration.value = element
