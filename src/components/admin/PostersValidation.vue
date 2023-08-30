@@ -110,11 +110,11 @@
       </div>
 
       <div
-        :class="`validation__status validation__status--${registration.status}`"
+        :class="`validation__status validation__status--${poster.status}`"
         v-else
       >
         <span>
-          {{ registration.status === 'rejected' ? "Rechazado" : "Aprobado" }}
+          {{ poster.status === 'rejected' ? "Rechazado" : "Aprobado" }}
         </span>
       </div>
     </div>
@@ -220,6 +220,8 @@
 import Loader from '@components/core/Loader.vue'
 import { ref, reactive } from 'vue'
 import { parseDate } from "@helpers/dates"
+import { REGISTRATION_STATUS } from "@helpers/constants"
+import { supabase } from "@helpers/supabase"
 
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
@@ -243,6 +245,59 @@ const status = reactive({
   success: false,
   error: null,
 })
+
+/*  vue  methods  */
+const handleFlow = (value) => {
+  confirmation.value = value
+}
+
+const handleApprove = async () => {
+  status.loading = true
+  status.success = false
+  status.error = null
+
+  const { data, error } = await supabase
+    .from("posters")
+    .update({ 
+      "status": REGISTRATION_STATUS[1]
+    })
+    .eq("id", poster.id)
+    .select()
+
+    if (error) {
+      console.error("Error in handleApprove: ", error)
+      status.error = error.message
+    } else {
+      status.success = true
+      // sendEmail()
+      emit("update", data[0])
+      status.loading = false
+  }
+}
+
+const handleReject = async () => {
+  status.loading = true
+  status.success = false
+  status.error = null
+
+  const { data, error } = await supabase
+      .from('posters')
+      .update({ 
+        status: REGISTRATION_STATUS[2],
+      })
+      .eq('id', poster.id)
+      .select()
+
+  if (error) {
+    console.error("Error in handleReject: ", error)
+    status.error = error.message
+  } else {
+    status.success = true
+    // sendEmail()
+    emit("update", data[0])
+    status.loading = false
+  }
+}
 
 </script>
 
