@@ -1,12 +1,4 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
-
-const SUBJECTS = {
-  "payment-accepted": "Confirmación de Pago - Simposio SOMICET",
-}
-
-const TEMPLATES = {
+export default TEMPLATES = {
   "payment-accepted": `
     <!DOCTYPE html>
     <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -50,8 +42,8 @@ const TEMPLATES = {
                   <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                     <tr>
                       <td style="padding:0 0 36px 0;color:#153643;">
-                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimado [[user_name]]:</p>
-                        <p style="font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Su pago para el Simposio "Células Troncales, Medicina Regenerativa y Envejecimiento" ha sido confirmado con éxito.</p>
+                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimado participante</p>
+                        <p style="font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Su pago para el Simposio 'Células Troncales, Medicina Regenerativa y Envejecimiento' ha sido confirmado con éxito.</p>
                         <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Si desea registrar un cartel, por favor haga clic en el botón a continuación.
                           
                         </p>
@@ -81,7 +73,7 @@ const TEMPLATES = {
               </tr>
               <tr>
                 <td style="padding:0 9% 6%;font-weight:light; font-size:14px;">
-                  Saludos Cordiales,
+                  Saludos Cordiales 
               
                   
                 </td>
@@ -132,50 +124,6 @@ const TEMPLATES = {
       </table>
     </body>
     </html>
+    </html>
   `
 }
-
-const handler = async (_request: Request): Promise<Response> => {
-  if (_request.method === "OPTIONS"){
-    return new Response (null, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*", // <-- change here
-      }
-    })
-  }
-
-  const req = await _request.json()
-  const { template, name, email } = req
-  let templateHTML = TEMPLATES[template]
-  if (name) templateHTML = templateHTML.replace("[[user_name]]", name)
-  const subject = SUBJECTS[template]
-  
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-    },
-    body: JSON.stringify({
-      from: "no-reply@somicet.org",
-      to: email,
-      reply_to: "somicet@gmail.com",
-      subject: subject,
-      html: templateHTML,
-    }),
-  })
-
-  const data = await res.json()
-
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*", // <-- change here
-    },
-  })
-}
-
-serve(handler)
