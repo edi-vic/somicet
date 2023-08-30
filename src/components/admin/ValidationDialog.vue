@@ -1,6 +1,10 @@
 <template>
   <dialog class="validation">
-    <div class="validation__dialog">
+    <!-- Main dialog -->
+    <div 
+      class="validation__dialog"
+      v-if="!status.loading && confirmation === ''"
+    >
       <div class="validation__close">
         <button
           class="action"
@@ -89,23 +93,77 @@
         class="validation__actions">
         <button 
           class="validation__action validation__action--reject"
-          @click="handleReject"
+          @click="handleFlow('reject')"
         >
           Rechazar
         </button>
         <button 
           class="validation__action validation__action--approve"
-          @click="handleApprove"
+          @click="handleFlow('approve')"
         >
           Aprobar
         </button>
       </div>
     </div>
+    <div 
+      class="validation__dialog"
+      v-if="!status.loading && confirmation === 'reject'"
+    >
+      <div class="validation__close">
+        <button
+          class="action"
+          @click="$emit('close')"
+        >
+          <img
+            class="action__image"
+            src="@assets/icons/close.svg"
+            alt="Cerrar"
+          />
+          <span>Cerrar</span>
+        </button>
+      </div>
+      <h2 class="validation__title">
+        Validación de registro
+      </h2>
+      <p class="validation__copy">
+        ¿Estás segura de rechazar el registro? Ingresa un 
+        motivo para notificar al usuario.
+      </p>
+      <textarea
+        class="validation__reason"
+        placeholder="Motivo de rechazo"
+        v-model="reason"
+      />
+      <div
+        v-if="registration.status === 'pending'"
+        class="validation__actions"
+      >
+        <button 
+          class="validation__action validation__action--cancel"
+          @click="handleFlow('')"
+        >
+          Cancelar
+        </button>
+        <button 
+          class="validation__action validation__action--reject"
+          @click="handleReject"
+        >
+          Rechazar
+        </button>
+      </div>
+    </div>
+    <div
+    class="validation__dialog validation__dialog--loading"
+      v-if="status.loading"
+    >
+      <Loader />
+    </div>
   </dialog>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import Loader from '@components/core/Loader.vue'
+import { ref, reactive } from 'vue'
 import { parseDate } from "@helpers/dates"
 import { REGISTRATION_STATUS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
@@ -125,7 +183,20 @@ const { registration, handleGroup } = defineProps({
   },
 })
 
+/*  vue  data  */
+const confirmation = ref("")
+const reason = ref("")
+const status = reactive({
+  loading: false,
+  success: false,
+  error: null,
+})
+
 /*  vue  methods  */
+const handleFlow = (value) => {
+  confirmation.value = value
+}
+
 const handleApprove = async () => {
   const { data, error } = await supabase
     .from("registrations")
@@ -137,6 +208,35 @@ const handleApprove = async () => {
   console.log("handleApprove", data, error)
   sendEmail()
 }
+
+const handleReject = async () => {
+  status.loading = true
+  status.success = false
+  status.error = null
+
+  const { data, error } = await supabase
+      .from('registrations')
+      .update({ 
+        status: REGISTRATION_STATUS[2],
+        ...(reason && { note: reason })
+      })
+      .eq('id', registration.id)
+
+  if (error) {
+    console.error("Error in handleReject: ", error)
+    status.error = error.message
+  } else {
+    status.success = true
+    console.log("handleReject data: ", data)
+
+    // sendEmail()
+    // update user locally to not fetch again
+    emit('close')
+  }
+
+  status.loading = false
+}
+
 
 const sendEmail = async () => {
   const { data, error } = await supabase
@@ -169,13 +269,28 @@ const sendEmail = async () => {
     background-color: $white;
     padding: 20px;
     border-radius: 4px;
+    &--loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   &__close {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 12px;
   }
-  &__title {
+  &__title, &__copy {
+    margin-bottom: 12px;
+  }
+  &__reason {
+    width: 100%;
+    height: 100px;
+    border: 1px solid $gray;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    appearance:none;
     margin-bottom: 12px;
   }
   &__data {
@@ -231,6 +346,15 @@ const sendEmail = async () => {
       background: $green;
       &:hover {
         border: 1px solid $green;
+        background-color: $lightgray;
+      }
+    }
+    &--cancel {
+      padding: 12px;
+      color: $black;
+      background: $gray;
+      &:hover {
+        border: 1px solid $gray;
         background-color: $lightgray;
       }
     }
