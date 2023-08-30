@@ -85,7 +85,7 @@
         >
       </a>
       <div
-        v-if="registration.status === 'pending'"
+
         class="validation__actions">
         <button 
           class="validation__action validation__action--reject"
@@ -135,6 +135,18 @@ const handleApprove = async () => {
     .eq("id", registration.id)
 
   console.log("handleApprove", data, error)
+  sendEmail()
+}
+
+const sendEmail = async () => {
+  const { data, error } = await supabase
+    .functions
+    .invoke('mails', { body: JSON.stringify({ 
+      name: 'Víctor',
+      email: registration.email,
+    })})
+
+  console.log("sendEmail", data, error)
 }
 </script>
 
@@ -204,6 +216,7 @@ const handleApprove = async () => {
       color: $black;
     }
     &--reject {
+      padding: 12px;
       color: $white;
       background: $red;
       &:hover {
@@ -213,6 +226,7 @@ const handleApprove = async () => {
       }
     }
     &--approve {
+      padding: 12px;
       color: $black;
       background: $green;
       &:hover {
