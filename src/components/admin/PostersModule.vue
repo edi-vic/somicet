@@ -80,12 +80,29 @@
         </div>
         <div class="posters__cell posters__cell--actions">
           <button
-            v-if="poster.status === 'pending'"
             class="action"
+            v-if="poster.status === 'pending'"
+            @click="handlePoster(poster)"
           >
-            Validar
+            <img
+              class="action__image"
+              src="@assets/icons/check.svg"
+              alt="Validar"
+            />
+            <span>Validar</span>
           </button>
-          <span v-else>-</span>
+          <button
+            class="action"
+            v-else
+            @click="handlePoster(poster)"
+          >
+            <img
+              class="action__image"
+              src="@assets/icons/view.svg"
+              alt="Ver"
+            />
+            <span>Ver</span>
+          </button>
         </div>
         <div class="posters__cell posters__cell--theme">
           {{ getThemeCopy(poster.theme, 'short_copy') }}
@@ -110,9 +127,11 @@ import { POSTER_STATUS, POSTER_THEMES } from "@helpers/constants";
 /*  vue  state  */
 const posters = ref([])
 const poster = ref(null)
+
 const search = ref("")
 const postersStatusSelect = ref("no_status")
 const postersThemeSelect = ref("no_theme")
+
 const status = reactive({
   loading: false,
   success: false,
@@ -176,6 +195,16 @@ const getThemeCopy = (code, type) => {
       return POSTER_THEMES[key][type];
     }
   }
+}
+
+const handlePoster = (element) => {
+  poster.value = element
+}
+
+const handleUpdate = (element) => {
+  const index = posters.value.findIndex((poster) => poster.id === element.id)
+  posters.value[index] = element
+  poster.value = null
 }
 </script>
 
@@ -274,11 +303,17 @@ const getThemeCopy = (code, type) => {
 }
 
 .action {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
   border: 1px solid $gray;
   border-radius: 4px;
   background-color: $white;
   cursor: pointer;
+  &__image {
+    width: 16px;
+    margin-right: 8px;
+  }
   &:hover {
     background-color: $lightgray;
   }

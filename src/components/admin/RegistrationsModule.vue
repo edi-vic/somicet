@@ -119,7 +119,7 @@
       </li> 
     </ul>
   </section>
-  <ValidationDialog
+  <RegistrationsValidation
     v-if="registration"
     :registration="registration"
     :handleGroup="handleGroup"
@@ -130,7 +130,7 @@
 
 <script setup>
 import Loader from "@components/core/Loader.vue"
-import ValidationDialog from "@components/admin/ValidationDialog.vue"
+import RegistrationsValidation from "@components/admin/RegistrationsValidation.vue"
 import { ref, reactive, computed, onMounted } from "vue"
 import { REGISTRATION_STATUS_FULL, REGISTRATION_GROUPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
@@ -138,9 +138,11 @@ import { supabase } from "@helpers/supabase"
 /*  vue  state  */
 const registrations = ref([])
 const registration = ref(null)
+
 const search = ref("")
 const registrationsStatusSelect = ref("no_status")
 const registrationsGroupSelect = ref("no_group")
+
 const status = reactive({
   loading: false,
   success: false,
