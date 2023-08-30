@@ -85,7 +85,7 @@
         >
       </a>
       <div
-
+        v-if="registration.status === 'pending'"
         class="validation__actions">
         <button 
           class="validation__action validation__action--reject"
