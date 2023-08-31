@@ -240,7 +240,7 @@ import Loader from '@components/core/Loader.vue'
 import { ref, reactive } from 'vue'
 import { parseDate } from "@helpers/dates"
 import { REGISTRATION_STATUS } from "@helpers/constants"
-import { supabase } from "@helpers/supabase"
+import { supabase, sendEmail } from "@helpers/supabase"
 
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
@@ -289,7 +289,7 @@ const handleApprove = async () => {
       status.error = error.message
     } else {
       status.success = true
-      // sendEmail()
+      sendEmail('payment-accepted', registration.email, registration.name)
       emit("update", data[0])
       status.loading = false
   }
@@ -314,23 +314,12 @@ const handleReject = async () => {
     status.error = error.message
   } else {
     status.success = true
-    // sendEmail()
+    sendEmail('payment-rejected', registration.email, registration.name)
     emit("update", data[0])
     status.loading = false
   }
 }
 
-
-const sendEmail = async () => {
-  const { data, error } = await supabase
-    .functions
-    .invoke('mails', { body: JSON.stringify({ 
-      name: 'Víctor',
-      email: registration.email,
-    })})
-
-  console.log("sendEmail", data, error)
-}
 </script>
 
 <style scoped lang="scss">

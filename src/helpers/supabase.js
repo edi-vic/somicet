@@ -29,3 +29,19 @@ export async function getAdmin(user) {
 
     return !!data
 }
+
+export async function sendEmail(template, email, name) {
+  const { data, error } = await supabase
+    .functions
+    .invoke('mails', { body: JSON.stringify({
+      template,
+      email,
+      name,
+    })})
+  
+  if (error) {
+    console.error("Error in sendEmail: ", error)
+  } else {
+    console.log("Email sent: ", data)
+  }
+}
