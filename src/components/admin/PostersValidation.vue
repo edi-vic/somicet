@@ -117,6 +117,25 @@
           {{ poster.status === 'rejected' ? "Rechazado" : "Aprobado" }}
         </span>
       </div>
+
+      <div
+        class="validation__note"
+        v-if="poster.approval_number"
+      >
+        <h6>
+          Número de cartel
+        </h6>
+        <p class="validation__copy">
+          {{ poster.approval_number }}
+        </p>
+
+        <h6>
+          Fecha y hora de presentación
+        </h6>
+        <p>
+          {{ poster.presentation_date }}, {{ poster.presentation_time }}
+        </p>
+      </div>
     </div>
 
     <!-- Approve -->
@@ -313,7 +332,7 @@ const handleApprove = async () => {
     "date": posterDate.value,
     "time": posterTime.value,
   }
-  
+
   status.loading = true
   status.success = false
   status.error = null
@@ -525,6 +544,15 @@ const handleReject = async () => {
     padding: 0 12px;
     font-size: 16px;
     margin-bottom: 12px;
+  }
+  &__note {
+    margin-top: 12px;
+    border: 1px solid $gray;
+    border-radius: 4px;
+    padding: 12px;
+    h6 {
+      margin-bottom: 8px;
+    }
   }
 }
 
