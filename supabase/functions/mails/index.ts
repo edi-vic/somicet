@@ -539,9 +539,15 @@ const handler = async (_request: Request): Promise<Response> => {
   }
 
   const req = await _request.json()
-  const { template, name, email } = req
+  const { template, name, email, poster } = req
   let templateHTML = TEMPLATES[template]
   if (name) templateHTML = templateHTML.replace("[[user_name]]", name)
+  console.log(poster)
+  if (poster) {
+    templateHTML = templateHTML.replace("[[poster_number]]", poster.number)
+    templateHTML = templateHTML.replace("[[poster_date]]", poster.date)
+    templateHTML = templateHTML.replace("[[poster_time]]", poster.time)
+  }
   const subject = SUBJECTS[template]
   
   const res = await fetch("https://api.resend.com/emails", {

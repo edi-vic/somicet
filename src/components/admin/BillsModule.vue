@@ -182,7 +182,6 @@ const getBills = async () => {
     status.error = error.message
     console.error("Error in getBills: ", error.message)
   } else {
-    console.log("getBills: ", data)
     bills.value = data
     status.success = true
   }

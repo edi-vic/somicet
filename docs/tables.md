@@ -83,6 +83,9 @@ create table
 - summary
 - acknowledgements
 - status
+- approval_number
+- presentation_date
+- presentation_time
 - misc
 - created_at
 - user_id
@@ -100,6 +103,9 @@ create table
     summary text not null,
     acknowledgements text not null,
     status text not null default 'pending'::text,
+    approval_number bigint null,
+    presentation_date date null,
+    presentation_time time without time zone null,
     misc text null,
     created_at timestamp with time zone not null default now(),
     user_id uuid not null,
