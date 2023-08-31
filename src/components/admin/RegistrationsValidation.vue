@@ -314,7 +314,7 @@ const handleReject = async () => {
     status.error = error.message
   } else {
     status.success = true
-    // sendEmail()
+    sendEmail('payment-rejected', registration.email, registration.name)
     emit("update", data[0])
     status.loading = false
   }
