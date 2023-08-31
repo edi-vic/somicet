@@ -67,6 +67,25 @@
             </p>
           </div>
         </div>
+
+        <div class="validation__row">
+          <div class="validation__cell">
+            <h6>
+              Correo electrónico
+            </h6>
+            <p>
+              {{ bill.registrations.email }}
+            </p>
+          </div>
+          <div class="validation__cell">
+            <h6>
+              Aportación cubierta
+            </h6>
+            <p>
+              {{ handleGroup(bill.registrations.group).price }}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div
@@ -157,7 +176,7 @@
 <script setup>
 import Loader from '@components/core/Loader.vue'
 import { ref, reactive } from 'vue'
-import { REGISTRATION_STATUS } from "@helpers/constants"
+import { REGISTRATION_STATUS, REGISTRATION_GROUPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 
 /*  vue  emits  */
@@ -184,6 +203,9 @@ const handleFlow = (value) => {
   confirmation.value = value
 }
 
+const handleGroup = (groupCode) => Object.values(REGISTRATION_GROUPS)
+  .find(group => group.code === groupCode)
+
 const handleApprove = async () => {
   status.loading = true
   status.success = false
@@ -195,7 +217,12 @@ const handleApprove = async () => {
       "status": REGISTRATION_STATUS[1]
     })
     .eq("id", bill.id)
-    .select()
+    .select(`*,
+      registrations (
+        email,
+        group
+      )
+    `)
 
     if (error) {
       console.error("Error in handleApprove: ", error)

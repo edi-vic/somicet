@@ -170,7 +170,12 @@ const getBills = async () => {
 
   const { data, error } = await supabase
     .from("bills")
-    .select()
+    .select(`*,
+      registrations (
+        email,
+        group
+      )
+    `)
     .order("serial_number", { ascending: false })
 
   if (error) {
