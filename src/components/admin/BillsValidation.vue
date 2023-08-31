@@ -20,7 +20,7 @@
       </div>
 
       <h2 class="validation__title">
-        Validación de registro
+        Envío de factura
       </h2>
 
       <div class="validation__data">
@@ -30,15 +30,7 @@
               Nombre
             </h6>
             <p>
-              {{ registration.name }}
-            </p>
-          </div>
-          <div class="validation__cell">
-            <h6>
-              Correo
-            </h6>
-            <p>
-              {{ registration.email }}
+              {{ bill.name }}
             </p>
           </div>
         </div>
@@ -46,90 +38,81 @@
         <div class="validation__row">
           <div class="validation__cell">
             <h6>
-              Adscripción
+              Razón social
             </h6>
             <p>
-              {{ registration.secondment }}
-            </p>
-          </div>
-          <div class="validation__cell">
-            <h6>
-              Grupo
-            </h6>
-            <p>
-              {{ handleGroup(registration.group).copy }}
+              {{ bill.denomination }}
             </p>
           </div>
         </div>
-        
+
         <div class="validation__row">
           <div class="validation__cell">
             <h6>
-              Aportación a cubrir
+              RFC
             </h6>
             <p>
-              {{ handleGroup(registration.group).price }}
+              {{ bill.rfc }}
+            </p>
+          </div>
+        </div>
+
+        <div class="validation__row">
+          <div class="validation__cell">
+            <h6>
+              Dirección
+            </h6>
+            <p>
+              {{ bill.address }}
+            </p>
+          </div>
+        </div>
+
+        <div class="validation__row">
+          <div class="validation__cell">
+            <h6>
+              Correo electrónico
+            </h6>
+            <p>
+              {{ bill.registrations.email }}
             </p>
           </div>
           <div class="validation__cell">
             <h6>
-              Fecha de registro
+              Aportación cubierta
             </h6>
             <p>
-              {{ parseDate(registration.created_at) }}
+              {{ handleGroup(bill.registrations.group).price }}
             </p>
           </div>
         </div>
       </div>
-      <a 
-        class="validation__receipt"
-        :href="registration.receipt_url" 
-        target="_blank" 
-        rel="noopener noreferrer"
-      >
-        <img
-          :src="registration.receipt_url" 
-          alt="recibo"
-        >
-      </a>
 
       <div
-        v-if="registration.status === 'pending'"
+        v-if="bill.status === 'pending'"
         class="validation__actions"
       >
         <button 
-          class="validation__action validation__action--reject"
-          @click="handleFlow('reject')"
+          class="validation__action validation__action--cancel"
+          @click="$emit('close')"
         >
-          Rechazar
+          Cancelar
         </button>
         <button 
           class="validation__action validation__action--approve"
           @click="handleFlow('approve')"
         >
-          Aprobar
+          Enviada
         </button>
       </div>
 
       <div
-        :class="`validation__status validation__status--${registration.status}`"
+        :class="`validation__status validation__status--${bill.status}`"
         v-else
       >
         <span>
-          {{ registration.status === 'rejected' ? "Rechazado" : "Aprobado" }}
+          {{ bill.status === 'rejected' ? "Rechazado" : "Enviada" }}
         </span>
-      </div>
-
-      <div
-        class="validation__note"
-        v-if="registration.note"
-      >
-        <h6>
-          Motivo de rechazo
-        </h6>
-        <p>
-          {{ registration.note }}
-        </p>
       </div>
     </div>
 
@@ -151,14 +134,17 @@
           <span>Cerrar</span>
         </button>
       </div>
+
       <h2 class="validation__title">
-        Validación de registro
+        Envío de factura
       </h2>
+
       <p class="validation__copy">
-        ¿Estás segura de aprobar el registro?
+        ¿Estás segura que quieres marcar la factura como enviada?
       </p>
+
       <div
-        v-if="registration.status === 'pending'"
+        v-if="bill.status === 'pending'"
         class="validation__actions"
       >
         <button 
@@ -171,56 +157,7 @@
           class="validation__action validation__action--approve"
           @click="handleApprove"
         >
-          Aprobar
-        </button>
-      </div>
-    </div>
-
-    <!-- Reject -->
-    <div 
-      class="validation__dialog"
-      v-if="!status.loading && confirmation === 'reject'"
-    >
-      <div class="validation__close">
-        <button
-          class="action"
-          @click="$emit('close')"
-        >
-          <img
-            class="action__image"
-            src="@assets/icons/close.svg"
-            alt="Cerrar"
-          />
-          <span>Cerrar</span>
-        </button>
-      </div>
-      <h2 class="validation__title">
-        Validación de registro
-      </h2>
-      <p class="validation__copy">
-        ¿Estás segura de rechazar el registro? Ingresa un 
-        motivo para notificar al usuario.
-      </p>
-      <textarea
-        class="validation__reason"
-        placeholder="Motivo de rechazo"
-        v-model="reason"
-      />
-      <div
-        v-if="registration.status === 'pending'"
-        class="validation__actions"
-      >
-        <button 
-          class="validation__action validation__action--cancel"
-          @click="handleFlow('')"
-        >
-          Cancelar
-        </button>
-        <button 
-          class="validation__action validation__action--reject"
-          @click="handleReject"
-        >
-          Rechazar
+          Enviada
         </button>
       </div>
     </div>
@@ -232,34 +169,29 @@
     >
       <Loader />
     </div>
+
   </dialog>
 </template>
 
 <script setup>
 import Loader from '@components/core/Loader.vue'
 import { ref, reactive } from 'vue'
-import { parseDate } from "@helpers/dates"
-import { REGISTRATION_STATUS } from "@helpers/constants"
-import { supabase, sendEmail } from "@helpers/supabase"
+import { REGISTRATION_STATUS, REGISTRATION_GROUPS } from "@helpers/constants"
+import { supabase } from "@helpers/supabase"
 
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
 
 /*  vue  props  */
-const { registration, handleGroup } = defineProps({
-  registration: {
+const { bill } = defineProps({
+  bill: {
     type: Object,
-    required: true,
-  },
-  handleGroup: {
-    type: Function,
     required: true,
   },
 })
 
 /*  vue  data  */
 const confirmation = ref("")
-const reason = ref("")
 const status = reactive({
   loading: false,
   success: false,
@@ -271,55 +203,36 @@ const handleFlow = (value) => {
   confirmation.value = value
 }
 
+const handleGroup = (groupCode) => Object.values(REGISTRATION_GROUPS)
+  .find(group => group.code === groupCode)
+
 const handleApprove = async () => {
   status.loading = true
   status.success = false
   status.error = null
 
   const { data, error } = await supabase
-    .from("registrations")
+    .from("bills")
     .update({ 
       "status": REGISTRATION_STATUS[1]
     })
-    .eq("id", registration.id)
-    .select()
+    .eq("id", bill.id)
+    .select(`*,
+      registrations (
+        email,
+        group
+      )
+    `)
 
     if (error) {
       console.error("Error in handleApprove: ", error)
       status.error = error.message
     } else {
       status.success = true
-      sendEmail('payment-accepted', registration.email, registration.name)
       emit("update", data[0])
       status.loading = false
   }
 }
-
-const handleReject = async () => {
-  status.loading = true
-  status.success = false
-  status.error = null
-
-  const { data, error } = await supabase
-      .from('registrations')
-      .update({ 
-        status: REGISTRATION_STATUS[2],
-        ...(reason.value && { note: reason.value })
-      })
-      .eq('id', registration.id)
-      .select()
-
-  if (error) {
-    console.error("Error in handleReject: ", error)
-    status.error = error.message
-  } else {
-    status.success = true
-    sendEmail('payment-rejected', registration.email, registration.name)
-    emit("update", data[0])
-    status.loading = false
-  }
-}
-
 </script>
 
 <style scoped lang="scss">
@@ -355,19 +268,10 @@ const handleReject = async () => {
   &__title, &__copy {
     margin-bottom: 12px;
   }
-  &__reason {
-    width: 100%;
-    height: 100px;
-    border: 1px solid $gray;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    appearance:none;
-    margin-bottom: 12px;
-  }
   &__data {
     border: 1px solid $gray;
-    border-radius: 4px 4px 0 0;
+    border-radius: 4px;
+    margin-bottom: 12px;
   }
   &__row {
     width: 100%;
@@ -379,17 +283,8 @@ const handleReject = async () => {
     }
   }
   &__cell {
-    width: 50%;
-  }
-  &__receipt {
-    height: 400px;
-    border: 1px solid $gray;
-    border-top: none;
-    background: $lightgray;
-    display: flex;
-    justify-content: center;
-    border-radius: 0 0 4px 4px;
-    margin-bottom: 12px;
+    width: 100%;
+    
   }
   &__actions {
     display: flex;
@@ -454,16 +349,8 @@ const handleReject = async () => {
       color: $black;
     }
   }
-  &__note {
-    margin-top: 12px;
-    border: 1px solid $gray;
-    border-radius: 4px;
-    padding: 12px;
-    h6 {
-      margin-bottom: 8px;
-    }
-  }
 }
+
 .action {
   display: flex;
   align-items: center;

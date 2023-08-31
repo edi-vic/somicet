@@ -181,10 +181,14 @@ const getPosters = async () => {
   status.error = null
 
   const { data, error } = await supabase
-    .from("posters")
-    .select()
-    .order("serial_number", { ascending: false })
-
+    .from('posters')
+    .select(`*,
+      registrations (
+        email,
+        name
+      )
+    `)
+  
   if (error) {
     status.error = error.message
     console.error("Error in getPosters: ", error.message)

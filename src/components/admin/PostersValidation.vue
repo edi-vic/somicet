@@ -117,6 +117,25 @@
           {{ poster.status === 'rejected' ? "Rechazado" : "Aprobado" }}
         </span>
       </div>
+
+      <div
+        class="validation__note"
+        v-if="poster.approval_number"
+      >
+        <h6>
+          Número de cartel
+        </h6>
+        <p class="validation__copy">
+          {{ poster.approval_number }}
+        </p>
+
+        <h6>
+          Fecha y hora de presentación
+        </h6>
+        <p>
+          {{ poster.presentation_date }}, {{ poster.presentation_time }}
+        </p>
+      </div>
     </div>
 
     <!-- Approve -->
@@ -141,8 +160,51 @@
         Validación de cartel
       </h2>
       <p class="validation__copy">
-        ¿Estás segura de aprobar el cartel?
+        ¿Estás segura de aprobar el cartel? Ingresa el número de cartel y
+        la fecha de presentación.
       </p>
+      <div class="validation__cell validation__cell--full">
+        <label 
+          class="validation__label" 
+          for="poster-number"
+        >
+          Número de cartel
+        </label>
+        <input 
+          class="validation__input"
+          id="poster-number" 
+          type="text"
+          v-model="posterNumber"
+        >
+      </div>
+      <div class="validation__cell validation__cell--full">
+        <label 
+          class="validation__label" 
+          for="poster-number"
+        >
+          Fecha de presentación
+        </label>
+        <input 
+          class="validation__input"
+          id="poster-number" 
+          type="date"
+          v-model="posterDate"
+        >
+      </div>
+      <div class="validation__cell validation__cell--full">
+        <label 
+          class="validation__label" 
+          for="poster-number"
+        >
+          Hora de presentación
+        </label>
+        <input 
+          class="validation__input"
+          id="poster-number" 
+          type="time"
+          v-model="posterTime"
+        >
+      </div>
       <div
         v-if="poster.status === 'pending'"
         class="validation__actions"
@@ -156,6 +218,7 @@
         <button 
           class="validation__action validation__action--approve"
           @click="handleApprove"
+          :disabled="!validConfirmation"
         >
           Aprobar
         </button>
@@ -218,10 +281,10 @@
 
 <script setup>
 import Loader from '@components/core/Loader.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { parseDate } from "@helpers/dates"
 import { REGISTRATION_STATUS } from "@helpers/constants"
-import { supabase } from "@helpers/supabase"
+import { supabase, sendEmail } from "@helpers/supabase"
 
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
@@ -240,10 +303,22 @@ const { poster, handleTheme } = defineProps({
 
 /*  vue  data  */
 const confirmation = ref("")
+const posterNumber = ref("")
+const posterDate = ref("")
+const posterTime = ref("")
 const status = reactive({
   loading: false,
   success: false,
   error: null,
+})
+
+/*  vue  computed  */
+const validConfirmation = computed(() => {
+  if (confirmation.value === "approve") {
+    return posterNumber.value !== "" && posterDate.value !== "" && posterTime.value !== ""
+  } else {
+    return true
+  }
 })
 
 /*  vue  methods  */
@@ -252,6 +327,12 @@ const handleFlow = (value) => {
 }
 
 const handleApprove = async () => {
+  const posterData = {
+    "number": posterNumber.value,
+    "date": posterDate.value,
+    "time": posterTime.value,
+  }
+
   status.loading = true
   status.success = false
   status.error = null
@@ -259,17 +340,31 @@ const handleApprove = async () => {
   const { data, error } = await supabase
     .from("posters")
     .update({ 
-      "status": REGISTRATION_STATUS[1]
+      "status": REGISTRATION_STATUS[1],
+      "approval_number": posterData.number,
+      "presentation_date": posterData.date,
+      "presentation_time": posterData.time,
     })
     .eq("id", poster.id)
-    .select()
+    .select(`*,
+      registrations (
+        email,
+        name
+      )
+    `)
+
 
     if (error) {
       console.error("Error in handleApprove: ", error)
       status.error = error.message
     } else {
       status.success = true
-      // sendEmail()
+      sendEmail(
+        'poster-accepted',
+        poster.registrations.email, 
+        poster.registrations.name,
+        posterData
+      )
       emit("update", data[0])
       status.loading = false
   }
@@ -286,14 +381,19 @@ const handleReject = async () => {
         status: REGISTRATION_STATUS[2],
       })
       .eq('id', poster.id)
-      .select()
+      .select(`*,
+        registrations (
+          email,
+          name
+        )
+      `)
 
   if (error) {
     console.error("Error in handleReject: ", error)
     status.error = error.message
   } else {
     status.success = true
-    // sendEmail()
+    sendEmail('poster-rejected', poster.registrations.email, poster.registrations.name)
     emit("update", data[0])
     status.loading = false
   }
@@ -347,6 +447,9 @@ const handleReject = async () => {
   }
   &__cell {
     width: 50%;
+    &--full {
+      width: 100%;
+    }
   }
   &__resume {
     height: 400px;
@@ -392,6 +495,11 @@ const handleReject = async () => {
         border: 1px solid $green;
         background-color: $lightgray;
       }
+      &:disabled {
+        background-color: $gray;
+        border: 1px solid $gray;
+        cursor: not-allowed;
+      }
     }
     &--cancel {
       padding: 12px;
@@ -420,6 +528,30 @@ const handleReject = async () => {
     &--approved {
       background: $green;
       color: $black;
+    }
+  }
+  &__label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  &__input {
+    height: 50px;
+    width: 100%;
+    border: 1px solid $gray;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  &__note {
+    margin-top: 12px;
+    border: 1px solid $gray;
+    border-radius: 4px;
+    padding: 12px;
+    h6 {
+      margin-bottom: 8px;
     }
   }
 }

@@ -71,12 +71,29 @@
         </div>
         <div class="bills__cell bills__cell--actions">
           <button
-            v-if="bill.status === 'pending'"
             class="action"
+            v-if="bill.status === 'pending'"
+            @click="handleBill(bill)"
           >
-            Validar
+            <img
+              class="action__image"
+              src="@assets/icons/check.svg"
+              alt="Validar"
+            />
+            <span>Revisar</span>
           </button>
-          <span v-else>-</span>
+          <button
+            class="action"
+            v-else
+            @click="handleBill(bill)"
+          >
+            <img
+              class="action__image"
+              src="@assets/icons/view.svg"
+              alt="Ver"
+            />
+            <span>Ver</span>
+          </button>
         </div>
         <div class="bills__cell bills__cell--name">
           {{ bill.name }}
@@ -90,10 +107,17 @@
       </li>
     </ul>
   </section>
+  <BillsValidation
+    v-if="bill"
+    :bill="bill"
+    @update="handleUpdate"
+    @close="bill = null"
+  />
 </template>
 
 <script setup>
 import Loader from "@components/core/Loader.vue"
+import BillsValidation from "@components/admin/BillsValidation.vue"
 import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from "@helpers/supabase"
 import { BILL_STATUS } from "@helpers/constants";
@@ -101,8 +125,10 @@ import { BILL_STATUS } from "@helpers/constants";
 /*  vue  state  */
 const bills = ref([])
 const bill = ref(null)
+
 const search = ref("")
 const billsStatusSelect = ref("no_status")
+
 const status = reactive({
   loading: false,
   success: false,
@@ -144,19 +170,33 @@ const getBills = async () => {
 
   const { data, error } = await supabase
     .from("bills")
-    .select()
+    .select(`*,
+      registrations (
+        email,
+        group
+      )
+    `)
     .order("serial_number", { ascending: false })
 
   if (error) {
     status.error = error.message
     console.error("Error in getBills: ", error.message)
   } else {
-    console.log("getBills: ", data)
     bills.value = data
     status.success = true
   }
 
   status.loading = false
+}
+
+const handleBill = (element) => {
+  bill.value = element
+}
+
+const handleUpdate = (element) => {
+  const index = bills.value.findIndex((bill) => bill.id === element.id)
+  bills.value[index] = element
+  bill.value = null
 }
 </script>
 
@@ -242,7 +282,7 @@ const getBills = async () => {
   &--pending {
     background: $yellow;
   }
-  &--sent {
+  &--approved {
     background: $green;
   }
   &--rejected {
@@ -250,11 +290,17 @@ const getBills = async () => {
   }
 }
 .action {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
   border: 1px solid $gray;
   border-radius: 4px;
   background-color: $white;
   cursor: pointer;
+  &__image {
+    width: 16px;
+    margin-right: 8px;
+  }
   &:hover {
     background-color: $lightgray;
   }
