@@ -138,7 +138,7 @@ const saveName = async () => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "@assets/library";
 .name-step {
   width: 100%;
