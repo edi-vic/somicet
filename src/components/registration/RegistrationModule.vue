@@ -50,7 +50,7 @@ import { supabase } from '@helpers/supabase'
 import { session, getUserId } from '@stores/session'
 
 /*  vue  state  */
-const step = ref(null)
+const step = ref(REGISTRATION_STEPS[1])
 const profile = ref({})
 const registration = ref({})
 
@@ -62,7 +62,7 @@ const status = reactive({
 
 /*  vue  lifecycle  */
 onMounted(async () => {
-  await getUserProfile()
+  // await getUserProfile()
 })
 
 /*  vue  methods  */

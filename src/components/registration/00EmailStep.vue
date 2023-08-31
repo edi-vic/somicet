@@ -5,7 +5,7 @@
   >
     <Loader />
   </section>
-  <section 
+  <form
     class="email-step"
     v-else
   >
@@ -13,7 +13,7 @@
       class="email-step__label"
       for="email"
     >
-      Ingresa tu correo electrónico
+      Ingresa tu correo electrónico:
     </label>
     <input
       class="email-step__input"
@@ -36,7 +36,7 @@
     >
       Enviar
     </button>
-  </section>
+  </form>
 </template>
 
 <script setup>

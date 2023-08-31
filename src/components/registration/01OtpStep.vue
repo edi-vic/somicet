@@ -1,10 +1,29 @@
 <template>
-  <section class="otp-step">
+  <section
+    class="otp-step otp-step--loading"
+    v-if="status.loading"
+  >
+    <Loader />
+  </section>
+
+  <form 
+    class="otp-step"
+    v-else
+  >
+    <article class="email">
+      <h5>
+        Correo electrónico
+      </h5>
+      <p>
+        {{ session.get()?.user_email }}
+      </p>
+    </article>
+
     <label
       class="otp-step__label"
       for="code"
     >
-      Código
+      Ingresa el código que recibiste en tu correo:
     </label>
     <input
       class="otp-step__input" 
@@ -27,11 +46,17 @@
     >
       Validar código
     </button>
-  </section>
+
+    <p class="otp-step__copy">
+      Si no has recibido el código, te sugerimos 
+      revisar la carpeta de correo no deseado.
+    </p>
+  </form>
 </template>
 
 <script setup>
 import { ref, reactive, computed } from "vue"
+import Loader from "@components/core/Loader.vue"
 import { session } from "@stores/session"
 import { REGISTRATION_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
@@ -120,7 +145,7 @@ const handleLogin = async ({ session }) => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "@assets/library";
 
 .otp-step {
@@ -155,6 +180,15 @@ const handleLogin = async ({ session }) => {
     color: $white;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 20px;
+    &:disabled {
+      background-color: $primary-color-600;
+      cursor: not-allowed;
+    }
+  }
+  &__copy {
+    font-size: 12px;
+    margin-bottom: 20px;
   }
   @media (min-width: 992px) {
     max-width: 440px;
@@ -171,6 +205,33 @@ const handleLogin = async ({ session }) => {
     &__button {
       width: 440px;
       font-size: 20px;
+    }
+  }
+}
+
+.email {
+  background-color: $lightgray;
+  border: 1px solid $gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  margin-bottom: 20px;
+  h5 {
+    color: $black;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  p {
+    color: $black;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  &__element {
+    margin-bottom: 12px;
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
