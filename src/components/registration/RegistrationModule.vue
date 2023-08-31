@@ -1,37 +1,44 @@
 <template>
-  <EmailStep
-    v-if="step === REGISTRATION_STEPS[0]"
-    @success="handleNextStep"
-  />
-  <OtpStep
-    v-if="step === REGISTRATION_STEPS[1]"
-    @success="handleNextStep"
-  />
-  <NameStep 
-    v-if="step === REGISTRATION_STEPS[2]"
-    :profile="profile"
-    :getUserId="getUserId"
-    @success="handleNextStep"
-  />
-  <RegistrationStep
-    v-if="step === REGISTRATION_STEPS[3]"
-    :profile="profile"
-    :getUserId="getUserId"
-    @success="handleNextStep"
-  />
-  <ValidationStep
-    v-if="step === REGISTRATION_STEPS[4]"
-    :profile="profile"
-    :registration="registration"
-  />
-  <BillStep
-    v-if="step === REGISTRATION_STEPS[4]"
-    :registration="registration"
-  />
+  <div
+    class="registration-container"
+    :class="{ 'registration-container--loading': status.loading }"
+  >
+    <Loader v-if="status.loading" />
+    <EmailStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[0]"
+      @success="handleNextStep"
+    />
+    <OtpStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[1]"
+      @success="handleNextStep"
+    />
+    <NameStep 
+      v-if="!status.loading && step === REGISTRATION_STEPS[2]"
+      :profile="profile"
+      :getUserId="getUserId"
+      @success="handleNextStep"
+    />
+    <RegistrationStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[3]"
+      :profile="profile"
+      :getUserId="getUserId"
+      @success="handleNextStep"
+    />
+    <ValidationStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[4]"
+      :profile="profile"
+      :registration="registration"
+    />
+    <BillStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[4]"
+      :registration="registration"
+    />
+  </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import Loader from '@components/core/Loader.vue'
 import EmailStep from '@components/registration/00EmailStep.vue'
 import OtpStep from '@components/registration/01OtpStep.vue'
 import NameStep from '@components/registration/02NameStep.vue'
@@ -46,6 +53,7 @@ import { session, getUserId } from '@stores/session'
 const step = ref(null)
 const profile = ref({})
 const registration = ref({})
+
 const status = reactive({
   loading: false,
   success: false,
@@ -118,6 +126,10 @@ const handleNextStep = (val) => {
 const getRegistration = async () => {
   const userId = getUserId()
 
+  status.loading = true
+  status.success = false
+  status.error = null
+
   const { data, error } = await supabase
     .from('registrations')
     .select()
@@ -132,7 +144,20 @@ const getRegistration = async () => {
     registration.value = data
     step.value = REGISTRATION_STEPS[4]
   }
-  
+  status.loading = false
 }
 
 </script>
+
+<style scoped lang="scss">
+.registration-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &--loading {
+    height: 300px;
+  }
+}
+</style>
