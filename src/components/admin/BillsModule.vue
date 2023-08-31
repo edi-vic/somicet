@@ -85,7 +85,7 @@
           <button
             class="action"
             v-else
-            @click="handleRegistration(registration)"
+            @click="handleBill(bill)"
           >
             <img
               class="action__image"
@@ -278,7 +278,7 @@ const handleUpdate = (element) => {
   &--pending {
     background: $yellow;
   }
-  &--sent {
+  &--approved {
     background: $green;
   }
   &--rejected {

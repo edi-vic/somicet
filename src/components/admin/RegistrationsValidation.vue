@@ -374,6 +374,9 @@ const handleReject = async () => {
     display: flex;
     padding: 12px;
     border-bottom: 1px solid $gray;
+    &:last-child {
+      border-bottom: none;
+    }
   }
   &__cell {
     width: 50%;
