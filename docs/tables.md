@@ -86,6 +86,7 @@ create table
 - misc
 - created_at
 - user_id
+- registration_id
 
 ```sql
 create table
@@ -102,9 +103,11 @@ create table
     misc text null,
     created_at timestamp with time zone not null default now(),
     user_id uuid not null,
+    registration_id uuid not null,
     constraint projects_pkey primary key (id),
     constraint projects_serial_number_key unique (serial_number),
     constraint projects_user_id_key unique (user_id),
+    constraint posters_registration_id_fkey foreign key (registration_id) references registrations (id),
     constraint posters_user_id_fkey foreign key (user_id) references auth.users (id)
   ) tablespace pg_default;
 ```

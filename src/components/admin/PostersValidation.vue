@@ -221,7 +221,7 @@ import Loader from '@components/core/Loader.vue'
 import { ref, reactive } from 'vue'
 import { parseDate } from "@helpers/dates"
 import { REGISTRATION_STATUS } from "@helpers/constants"
-import { supabase } from "@helpers/supabase"
+import { supabase, sendEmail } from "@helpers/supabase"
 
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
@@ -262,7 +262,12 @@ const handleApprove = async () => {
       "status": REGISTRATION_STATUS[1]
     })
     .eq("id", poster.id)
-    .select()
+    .select(`*,
+      registrations (
+        email,
+        name
+      )
+    `)
 
     if (error) {
       console.error("Error in handleApprove: ", error)
@@ -286,14 +291,19 @@ const handleReject = async () => {
         status: REGISTRATION_STATUS[2],
       })
       .eq('id', poster.id)
-      .select()
+      .select(`*,
+        registrations (
+          email,
+          name
+        )
+      `)
 
   if (error) {
     console.error("Error in handleReject: ", error)
     status.error = error.message
   } else {
     status.success = true
-    // sendEmail()
+    sendEmail('poster-rejected', poster.registrations.email, poster.registrations.name)
     emit("update", data[0])
     status.loading = false
   }
