@@ -1,11 +1,14 @@
 <template>
-  <section>
+
+  <section class="validation">
     <User :profile="profile" />
   </section>
+
   <section class="validation">
     <div v-if="registration.status === REGISTRATION_STATUS[0] ">
       <p>
-        Tu registro está en proceso de validación
+        Tu registro está en proceso de validación,
+        te notificaremos por correo electrónico cuando esté listo.
       </p>
     </div>
     <div v-else-if="registration.status === REGISTRATION_STATUS[1] ">
@@ -15,7 +18,7 @@
     </div>
     <div v-else-if="registration.status === REGISTRATION_STATUS[2] ">
       <p>
-        Tu registro fue rechazado
+        Tu registro fue rechazado, por favor intenta nuevamente.
       </p>
     </div>
   </section>
@@ -40,37 +43,14 @@ const { registration } = defineProps({
 
 <style scoped lang="scss">
 @import "@assets/library";
-.user {
-  background-color: $white;
-  border-radius: 10px;
-  border: 3px solid lightgray;
+.validation {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  margin-bottom: 20px;
-  h5 {
-    color: $primary-color;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
+  justify-content: center;
   p {
     color: $black;
     font-size: 16px;
-    font-weight: 400;
-  }
-  &__element {
-    margin-bottom: 12px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-.validation {
-  margin-bottom: 20px;
-  p {
-    color: $black;
-    font-size: 20px;
     font-weight: 400;
   }
 }

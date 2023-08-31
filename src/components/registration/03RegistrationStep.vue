@@ -1,8 +1,22 @@
 <template>
-  <section>
+  <section
+    class="registration-step registration-step--loading"
+    v-if="status.loading"
+  >
+    <Loader />
+  </section>
+
+  <section 
+    class="registration-step"
+    v-if="!status.loading"
+  >
     <User :profile="profile" />
   </section>
-  <section class="registration-step">
+
+  <form 
+    class="registration-step"
+    v-if="!status.loading"
+  >
     <label
       class="registration-step__label"
       for="secondment"
@@ -73,18 +87,21 @@
     <button
       class="registration-step__button"
       @click="saveRegistration"
-      :disabled="status.loading"
+      :disabled="status.loading || !isFormComplete"
+      type="submit"
     >
       Guardar registro
     </button>
-  </section>
+  </form>
 </template>
 
 <script setup>
+import Loader from "@components/core/Loader.vue"
 import User from '@components/core/User.vue';
 import { ref, reactive, computed } from 'vue'
 import { REGISTRATION_STEPS, REGISTRATION_GROUPS } from '@helpers/constants'
 import { supabase } from '@helpers/supabase'
+import { isEmpty } from "@helpers/validators"
 
 /*  vue  emits  */
 const emit = defineEmits(["success"])
@@ -106,6 +123,7 @@ const secondment = ref('')
 const group = ref('no_group')
 const file = ref(null)
 const receiptUrl = ref('')
+
 const status = reactive({
   error: null,
   success: false,
@@ -114,6 +132,8 @@ const status = reactive({
 
 /*  vue  computed  */
 const groups = computed(() => Object.values(REGISTRATION_GROUPS))
+const isFormComplete = computed(() => 
+  !isEmpty(secondment.value) && group.value !== "no_group" && !isEmpty(receiptUrl.value))
 
 /*  vue  methods  */
 const handleFile = (event) => {
@@ -200,13 +220,17 @@ const saveRegistration = async () => {
 
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "@assets/library";
 .registration-step {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  &--loading {
+    align-items: center;
+    height: 300px;
+  }
   &__label {
     font-size: 16px;
     margin-bottom: 12px;
@@ -234,6 +258,10 @@ const saveRegistration = async () => {
     color: $white;
     font-size: 16px;
     cursor: pointer;
+    &:disabled {
+      background-color: $primary-color-600;
+      cursor: not-allowed;
+    }
   }
   @media (min-width: 992px) {
     max-width: 440px;

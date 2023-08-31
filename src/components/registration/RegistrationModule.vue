@@ -10,6 +10,7 @@
     />
     <OtpStep
       v-if="!status.loading && step === REGISTRATION_STEPS[1]"
+      @restart="handleRestart"
       @success="handleNextStep"
     />
     <NameStep 
@@ -30,7 +31,7 @@
       :registration="registration"
     />
     <BillStep
-      v-if="!status.loading && step === REGISTRATION_STEPS[4]"
+      v-if="!status.loading && step === REGISTRATION_STEPS[4] && registration.status === 'approved'"
       :registration="registration"
     />
   </div>
@@ -121,6 +122,14 @@ const handleNextStep = (val) => {
   } else {
     step.value = val
   }
+}
+
+const handleRestart = () => {
+  session.set({ 
+    user_id: "",
+    user_email: "",
+  })
+  step.value = REGISTRATION_STEPS[0]
 }
 
 const getRegistration = async () => {

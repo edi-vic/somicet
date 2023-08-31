@@ -5,7 +5,8 @@
   >
     <Loader />
   </section>
-  <section 
+
+  <form
     class="email-step"
     v-else
   >
@@ -13,7 +14,7 @@
       class="email-step__label"
       for="email"
     >
-      Ingresa tu correo electrónico
+      Ingresa tu correo electrónico:
     </label>
     <input
       class="email-step__input"
@@ -33,10 +34,11 @@
       class="email-step__button"
       @click="sendAuthCode"
       :disabled="status.loading || !isEmailValid"
+      type="submit"
     >
       Enviar
     </button>
-  </section>
+  </form>
 </template>
 
 <script setup>
@@ -84,7 +86,8 @@ const validateEmail = () => {
     inputErrors.email = null
 }
 
-const sendAuthCode = async () => {
+const sendAuthCode = async (e) => {
+  e.preventDefault()
   const _email = email.value.trim()
 
   status.loading = true
