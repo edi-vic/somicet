@@ -1,8 +1,22 @@
 <template>
-  <section>
+  <section
+    class="name-step name-step--loading"
+    v-if="status.loading"
+  >
+    <Loader />
+  </section>
+
+  <section
+    class="name-step"
+    v-if="!status.loading"
+  >
     <User :profile="profile" />
   </section>
-  <section class="name-step">
+
+  <form
+    class="name-step"
+    v-if="!status.loading"
+  >
     <label
       class="name-step__label"
       for="first-name"
@@ -44,18 +58,21 @@
     <button
       class="name-step__button"
       @click="saveName"
-      :disabled="status.loading"
+      :disabled="status.loading || !isFormComplete"
+      type="submit"
     >
       Guardar nombre
     </button>
-  </section>
+  </form>
 </template>
 
 <script setup>
+import Loader from "@components/core/Loader.vue"
 import User from '@components/core/User.vue';
-import { ref, reactive, onMounted } from "vue"
+import { ref, reactive, computed, onMounted } from "vue"
 import { REGISTRATION_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
+import { isEmpty } from "@helpers/validators"
 
 /*  vue  emits  */
 const emit = defineEmits(["success"])
@@ -86,6 +103,10 @@ onMounted(() => {
   if (profile.firstName) firstName.value = profile.firstName
   if (profile.lastName) lastName.value = profile.lastName
 })
+
+/*  vue  computed  */
+const isFormComplete = computed(() => 
+  !isEmpty(firstName.value) && !isEmpty(lastName.value))
 
 /*  vue  methods  */
 const saveName = async () => {
@@ -124,6 +145,10 @@ const saveName = async () => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  &--loading {
+    align-items: center;
+    height: 300px;
+  }
   &__label {
     font-size: 16px;
     margin-bottom: 12px;
@@ -151,6 +176,10 @@ const saveName = async () => {
     color: $white;
     font-size: 16px;
     cursor: pointer;
+    &:disabled {
+      background-color: $primary-color-600;
+      cursor: not-allowed;
+    }
   }
   @media (min-width: 992px) {
     max-width: 440px;

@@ -5,6 +5,7 @@
   >
     <Loader />
   </section>
+
   <form
     class="email-step"
     v-else
@@ -33,6 +34,7 @@
       class="email-step__button"
       @click="sendAuthCode"
       :disabled="status.loading || !isEmailValid"
+      type="submit"
     >
       Enviar
     </button>
@@ -84,7 +86,8 @@ const validateEmail = () => {
     inputErrors.email = null
 }
 
-const sendAuthCode = async () => {
+const sendAuthCode = async (e) => {
+  e.preventDefault()
   const _email = email.value.trim()
 
   status.loading = true

@@ -6,9 +6,9 @@
     <Loader />
   </section>
 
-  <form 
+  <section
     class="otp-step"
-    v-else
+    v-if="!status.loading"
   >
     <article class="email">
       <h5>
@@ -21,7 +21,12 @@
         Cambiar de correo
       </button>
     </article>
+  </section>
 
+  <form 
+    class="otp-step"
+    v-if="!status.loading"
+  >
     <label
       class="otp-step__label"
       for="code"
@@ -46,6 +51,7 @@
       class="otp-step__button"
       @click="validateAuthCode"
       :disabled="status.loading || !isCodeValid"
+      type="submit"
     >
       Validar código
     </button>
@@ -224,7 +230,7 @@ const handleLogin = async ({ session }) => {
 .email {
   background-color: $lightgray;
   border: 1px solid $gray;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
