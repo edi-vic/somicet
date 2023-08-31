@@ -17,6 +17,9 @@
       <p>
         {{ session.get()?.user_email }}
       </p>
+      <button @click="handleRestart">
+        Cambiar de correo
+      </button>
     </article>
 
     <label
@@ -63,7 +66,7 @@ import { supabase } from "@helpers/supabase"
 import { isEmpty, isLength } from "@helpers/validators"
 
 /*  vue  emits  */
-const emit = defineEmits(["success"])
+const emit = defineEmits(["restart", "success"])
 
 /*  vue  state  */
 const code = ref("")
@@ -91,6 +94,11 @@ const validateCode = () => {
     status.error = "El código debe tener 6 dígitos"
   else
     status.error = null
+}
+
+const handleRestart = (e) => {
+  e.preventDefault()
+  emit('restart')
 }
 
 const validateAuthCode = async () => {
@@ -153,6 +161,10 @@ const handleLogin = async ({ session }) => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  &--loading {
+    align-items: center;
+    height: 300px;
+  }
   &__label {
     font-size: 16px;
     margin-bottom: 12px;
@@ -215,6 +227,7 @@ const handleLogin = async ({ session }) => {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   padding: 8px;
   margin-bottom: 20px;
   h5 {
@@ -227,12 +240,16 @@ const handleLogin = async ({ session }) => {
     color: $black;
     font-size: 16px;
     font-weight: 400;
-  }
-  &__element {
     margin-bottom: 12px;
-    &:last-child {
-      margin-bottom: 0;
-    }
+  }
+  button {
+    background: transparent;
+    border: none;
+    color: $primary-color;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 600;
   }
 }
 </style>
