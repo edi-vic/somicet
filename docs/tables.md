@@ -146,3 +146,22 @@ create table
     constraint bills_user_id_fkey foreign key (user_id) references auth.users (id)
   ) tablespace pg_default;
 ```
+
+## Admins
+
+### Schema
+
+- id
+- name
+- created_at
+
+```sql
+create table
+  public.admins (
+    id uuid not null,
+    name text null,
+    created_at timestamp with time zone not null default now(),
+    constraint admins_pkey primary key (id),
+    constraint admins_id_fkey foreign key (id) references auth.users (id)
+  ) tablespace pg_default;
+```
