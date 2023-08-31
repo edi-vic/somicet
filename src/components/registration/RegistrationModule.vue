@@ -31,7 +31,7 @@
       :registration="registration"
     />
     <BillStep
-      v-if="!status.loading && step === REGISTRATION_STEPS[4]"
+      v-if="!status.loading && step === REGISTRATION_STEPS[4] && registration.status === 'approved'"
       :registration="registration"
     />
   </div>
