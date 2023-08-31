@@ -107,10 +107,17 @@
       </li>
     </ul>
   </section>
+  <BillsValidation
+    v-if="bill"
+    :bill="bill"
+    @update="handleUpdate"
+    @close="bill = null"
+  />
 </template>
 
 <script setup>
 import Loader from "@components/core/Loader.vue"
+import BillsValidation from "@components/admin/BillsValidation.vue"
 import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from "@helpers/supabase"
 import { BILL_STATUS } from "@helpers/constants";
