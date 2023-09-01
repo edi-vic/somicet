@@ -87,10 +87,15 @@
         target="_blank" 
         rel="noopener noreferrer"
       >
-        <img
-          :src="registration.receipt_url" 
-          alt="recibo"
-        >
+        <template v-if="isPdf(registration.receipt_url)">
+          Abrir archivo
+        </template>
+        <template v-else>
+          <img
+            :src="registration.receipt_url" 
+            alt="recibo"
+          >
+        </template>
       </a>
 
       <div
@@ -267,6 +272,10 @@ const status = reactive({
 })
 
 /*  vue  methods  */
+const isPdf = (url) => {
+  return url.endsWith('.pdf');
+}
+
 const handleFlow = (value) => {
   confirmation.value = value
 }
@@ -390,7 +399,14 @@ const handleReject = async () => {
     justify-content: center;
     border-radius: 0 0 4px 4px;
     margin-bottom: 12px;
+    overflow: hidden;
   }
+  &__receipt img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
   &__actions {
     display: flex;
     justify-content: space-between

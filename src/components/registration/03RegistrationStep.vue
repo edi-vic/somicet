@@ -150,7 +150,8 @@ const uploadReceipt = async () => {
   const todayArray = new Date().toISOString().split('T')
   const date = todayArray[0]
   const time = todayArray[1].split('.')[0]
-  const path = `receipts/23SIM1/${userId}-${date}-${time}`
+  const extension = file.value.name.split('.').pop();
+  const path = `receipts/23SIM1/${userId}-${date}-${time}.${extension}`;
 
   status.loading = true
   status.success = false
@@ -164,7 +165,6 @@ const uploadReceipt = async () => {
   console.log(data, error)
 
   if (error) {
-    // TODO: find errors
     console.error("Error in uploadReceipt: ", error.message)
   } else {
     await getPublicUrl(path)
@@ -183,7 +183,6 @@ const getPublicUrl = async (path) => {
   console.log(data, error)
 
   if (error) {
-    // TODO: find errors
     console.error("Error in getPublicUrl: ", error.message)
   } else {
     receiptUrl.value = data.publicUrl
