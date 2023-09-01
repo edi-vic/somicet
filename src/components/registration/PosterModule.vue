@@ -16,6 +16,7 @@
     <PosterStep
       v-if="!status.loading && step === REGISTRATION_STEPS[4]"
       :registration="registration"
+      @success="handleSuccess"
     />
   </div>
 </template>
@@ -54,6 +55,10 @@ const handleNextStep = (val) => {
   } else {
     step.value = val
   }
+}
+const handleSuccess = (data) => {
+  registration.value = data
+  getUserProfile()
 }
 
 const handleRestart = () => {

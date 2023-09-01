@@ -220,6 +220,9 @@ import { supabase } from "@helpers/supabase"
 import { POSTER_THEMES } from "@helpers/constants";
 import { isEmpty } from "@helpers/validators"
 
+/*  vue  emits  */
+const emit = defineEmits(["success"])
+
 /*  vue  props  */
 const { registration } = defineProps({
   registration: {
@@ -319,6 +322,7 @@ const savePoster = async () => {
   } else {
     console.log("savePoster: ", data)
     status.success = true
+    emit("success", data)
   }
 
   status.loading = false
