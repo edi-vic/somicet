@@ -1,10 +1,8 @@
 ---
-import logo from "@assets/logo.png"
-
-
 const { active } = Astro.props
-console.log(active)
-let home, register, program, contact, aboutUs;
+
+let home, register, program, contact
+;
 switch (active){
   case "Inicio" : 
     home = true;
@@ -18,12 +16,9 @@ switch (active){
   case "Contacto":
     contact = true;
     break;
-  case "Sobre Nosotros":
-    aboutUs = true;
-    break;
 };
-
 ---
+
 <nav class="navbar">
   <ul class="navbar__items">
     <li 

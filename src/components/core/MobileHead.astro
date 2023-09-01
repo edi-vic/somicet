@@ -1,5 +1,24 @@
 ---
 import logo from "@assets/logo.png"
+
+const { active } = Astro.props
+
+let home, register, program, contact
+;
+switch (active){
+  case "Inicio" : 
+    home = true;
+    break;
+  case "Registro": 
+    register = true;
+    break;
+  case "Programa" :
+    program = true;
+    break;
+  case "Contacto":
+    contact = true;
+    break;
+};
 ---
 
 <header class="mobile-head">
@@ -17,7 +36,36 @@ import logo from "@assets/logo.png"
       <span class="mobile-head__line mobile-head__line-three"/>
     </label>
     <nav class="mobile-nav">
-    
+      <ul class="mobile-nav__items">
+        <li 
+          class:list={["mobile-nav__item", { active: home }]}
+        >
+          <a href="/">
+              Inicio
+          </a>
+        </li>
+        <li 
+          class:list={["mobile-nav__item", { active: program}]}
+        >
+          <a href="/programa/horario">
+            Programa
+          </a>
+        </li>
+        <li 
+          class:list={["mobile-nav__item", { active: register}]}
+        >
+          <a href="/registro">
+            Registro
+          </a>
+        </li>
+        <li 
+          class:list={["mobile-nav__item", { active: contact}]}
+        >
+          <a href="/registro">
+            Contacto
+          </a>
+        </li>
+      </ul>
     </nav>
   </div>
 </header>
@@ -85,6 +133,39 @@ import logo from "@assets/logo.png"
   transform: translateX(0);
   transition: all 0.3s ease;
   z-index: 100;
+  &__items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    height: 100%;
+    list-style: none;
+  }
+  &__item {
+    font-size: 24px;
+    font-weight: 600;
+    color: $black;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid $gray;
+    a {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: $black;
+    }
+  }
+
 }
 
 .toggle-nav {
