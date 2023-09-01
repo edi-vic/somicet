@@ -7,7 +7,7 @@
     v-if="step === REGISTRATION_STEPS[1]"
     @success="handleNextStep"
   />
-  <ProjectStep
+  <PosterStep
     v-if="step === REGISTRATION_STEPS[4]"
     :registration="registration"
   />
@@ -17,7 +17,7 @@
 import { ref, reactive, onMounted } from "vue"
 import EmailStep from "@components/registration/00EmailStep.vue"
 import OtpStep from "@components/registration/01OtpStep.vue"
-import ProjectStep from "@components/registration/06ProjectStep.vue"
+import PosterStep from "@components/registration/06PosterStep.vue"
 import { REGISTRATION_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 import { session, getUserId } from "@stores/session"

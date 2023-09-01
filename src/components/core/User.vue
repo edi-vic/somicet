@@ -52,6 +52,7 @@ const logout = async (e) => {
     user_id: "",
     user_email: "",
   })
+  document.cookie = "sbat=;"
   window.location.href = '/registro';
 }
 

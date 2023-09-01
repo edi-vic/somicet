@@ -1,61 +1,42 @@
 ---
 import logo from "@assets/logo.png"
 ---
-<section class="header">
-  <img src={logo} alt="">
-  <div class="header__name">
-    <p>
+<header class="header">
+  <div class="header__logo">
+    <img class="header__img" src={logo} alt="logo">
+    <span class="header__name">
       Sociedad Mexicana para la Investigación en Células Troncales
-    </p>
+    </span>
   </div>
-  
-</section>
+</header>
 
 <style lang="scss">
   @import "@assets/library";
-  .header{
-    width: 100%;
-    height: 180px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
- 
-    position: fixed;
-    background-color: $background-color;
-    z-index: 10;
-    @media (max-width: 768px){
-      flex-direction: column;
-    }
-    & img{
-      height: 180px;
-      width: 180px;
-      @media (max-width: 480px){
-        width: 90px;
-        height: 90px;
+  .header {
+    display: none;
+    @media (min-width: 768px) {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $background-color;
+      padding-bottom: 40px;
+      &__logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
-      @media screen and (min-width: 480px) and (max-width: 768px){
-        width: 120px;
-        height: 120px;
+      &__img {
+        height: 180px;
+        width: 180px;
       }
-    }
-    &__name{
-      max-width: 650px;
-      @media (max-width: 480px){
-        max-width: 350px;
-      }
-      & p{
+      &__name {
+        max-width: 650px;
         font-size: 36px;
-        font-family:'Besley', serif;
+        font-family: "Besley", serif;
         line-height: 46px;
         text-align: center;
-        @media (max-width: 480px){
-          font-size: 20px;
-          line-height: 26px;
-        }
-        @media screen and (min-width: 480px) and (max-width: 768px){
-          font-size: 24px;
-          line-height: 28px;
-        }
       }
     }
   }

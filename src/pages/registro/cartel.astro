@@ -1,23 +1,24 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import RegistrationModule from "@components/registration/RegistrationModule.vue";
+import PosterModule from "@components/registration/PosterModule.vue";
 ---
 
 <Layout title="Registro">
-  <main class="registration">
-    <h1 class="registration__title">Registro</h1>
-    <RegistrationModule client:only="vue" />
+  <main class="poster">
+    <h1 class="poster__title">Registra tu cartel</h1>
+    <PosterModule client:only="vue"/>
   </main>
 </Layout>
 
 <style lang="scss">
 @import "@assets/library";
-.registration {
+.poster {
   margin: 0 auto;
   padding: 90px 16px 30px;
   &__title {
     color: $black;
     margin-bottom: 12px;
+    font-size: 24px;
   }
   @media (min-width: 768px) {
     max-width: 880px;
