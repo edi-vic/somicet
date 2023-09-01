@@ -53,7 +53,7 @@ const TEMPLATES = {
                   <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                     <tr>
                       <td style="padding:0 0 36px 0;color:#153643;">
-                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimado [[user_name]]:</p>
+                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimad@ [[user_name]]:</p>
                         <p style="font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Su pago para el Simposio "Células Troncales, Medicina Regenerativa y Envejecimiento" ha sido confirmado con éxito.</p>
                         <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Si desea registrar un cartel, por favor haga clic en el botón a continuación.
                           
@@ -63,7 +63,7 @@ const TEMPLATES = {
                     <tr>
                       <td align="center" style="padding:0 9% 3%;">
                         <button style="width: 200px; height: 50px; border: none; border-radius:8px; background:#BF2604;box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);">
-                          <a href="https://somicet.org/proyecto" style="text-decoration:none; color:#fff; font-size: 14px;"> Registrar cartel</a>
+                          <a href="https://somicet.org/registro/cartel" style="text-decoration:none; color:#fff; font-size: 14px;"> Registrar cartel</a>
                         </button>
                       </td>
                     </tr>
@@ -179,7 +179,7 @@ const TEMPLATES = {
                   <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                     <tr>
                       <td style="padding:0 0 36px 0;color:#153643;">
-                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimado [[user_name]]:</p>
+                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimad@ [[user_name]]:</p>
                         <p style="font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Lamentamos informarle que su pago para el Simposio "Células Troncales, Medicina Regenerativa y Envejecimiento" ha sido rechazado debido a la detección de una irregularidad en su proceso.</p>
                         <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
                         No se preocupe, puede resolverlo accediendo nuevamente a la plataforma y corrigiendo el paso mencionado.
@@ -294,7 +294,7 @@ const TEMPLATES = {
                   <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                     <tr>
                       <td style="padding:0 0 36px 0;color:#153643;">
-                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimado [[user_name]]:</p>
+                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimad@ [[user_name]]:</p>
                                         <p style="font-size:16px;line-height:20px;font-family:Arial,sans-serif;">
                                             Le informamos que posterior al proceso de evaluación su trabajo fue seleccionado para participar en el Simposio "Células Troncales, Medicina Regenerativa y Envejecimiento" en la modalidad de cartel.
                                         </p>
@@ -447,7 +447,7 @@ const TEMPLATES = {
                   <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                     <tr>
                       <td style="padding:0 0 36px 0;color:#153643;">
-                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimado [[user_name]]</p>
+                        <p style="font-size:16px;margin:0 0 20px 0;font-family:Arial,sans-serif;font-weight:medium; ">Estimad@ [[user_name]]:</p>
                                         <p style="font-size:16px;line-height:20px;font-family:Arial,sans-serif;">
                                             Le informamos que posterior al proceso de evaluación su trabajo no fue seleccionado para participar
                                             en el Simposio “Células Troncales, Medicina Regenerativa y Envejecimiento” en la modalidad de cartel.
