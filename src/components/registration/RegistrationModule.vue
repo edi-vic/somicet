@@ -30,6 +30,7 @@
       v-if="!status.loading && step === REGISTRATION_STEPS[4]"
       :profile="profile"
       :registration="registration"
+      @reset="handleReset"
     />
     <BillStep
       v-if="!status.loading && step === REGISTRATION_STEPS[4] && registration.status === 'approved'"
@@ -131,6 +132,11 @@ const handleRestart = () => {
     user_email: "",
   })
   step.value = REGISTRATION_STEPS[0]
+}
+
+const handleReset = () => {
+  getUserProfile()
+  step.value = REGISTRATION_STEPS[3]
 }
 
 const getRegistration = async () => {

@@ -39,8 +39,11 @@
 
 <script setup>
 import User from '@components/core/User.vue';
+import { reactive } from 'vue'
 import { REGISTRATION_STATUS } from '@helpers/constants';
 import { supabase } from '@helpers/supabase';
+
+const emit = defineEmits(["reset"])
 
 /*  vue  props  */
 const { registration } = defineProps({
@@ -54,12 +57,31 @@ const { registration } = defineProps({
   },
 })
 
+/*  vue  state  */
+const status = reactive({
+  loading: false,
+  success: false,
+  error: null,
+})
+
 /*  vue  methods  */
 const resetRegistration = async () => {
+  status.loading = true
+  status.success = false
+  status.error = null
+
   const { data, error } = await supabase
     .rpc('reset_registration_fields', { r_id: registration.id })
 
-  console.log(data, error)
+  if (error) {
+    console.error('Error in resetRegistration: ', error)
+    status.error = error.message
+  } else {
+    console.log(data)
+    status.success = true
+    emit("reset")
+  }
+  status.loading = false
 }
 </script>
 
