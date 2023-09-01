@@ -71,6 +71,7 @@ create table
 ```
 
 ### Policies
+
 ```sql
 CREATE POLICY "allow users select own registration" ON "public"."registrations"
 AS PERMISSIVE FOR SELECT
@@ -83,6 +84,13 @@ CREATE POLICY "allow admins select all registrations" ON "public"."registrations
 AS PERMISSIVE FOR SELECT
 TO authenticated
 USING (exists (select 1 from public.admins where admins.id = auth.uid()))
+```
+
+```sql
+CREATE POLICY "allow users insert own registration" ON "public"."registrations"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (auth.uid() = user_id)
 ```
 
 ```sql
