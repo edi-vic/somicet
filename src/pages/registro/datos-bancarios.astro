@@ -2,7 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 ---
 
-<Layout title="Datos Bancarios">
+<Layout title="Registro">
   <main class="bank-data">
     <h1 class="bank-data__title">Datos Bancarios</h1>
     <ul class="bank-data__card">
@@ -60,7 +60,7 @@ import Layout from "@layouts/Layout.astro";
 @import "@assets/library";
 .bank-data {
   margin: 0 auto;
-  padding: 30px 16px;
+  padding: 90px 16px 30px;
   &__title {
     color: $black;
     margin-bottom: 12px;
@@ -97,6 +97,13 @@ import Layout from "@layouts/Layout.astro";
     color: $black;
     font-size: 16px;
     font-weight: 400;
+  }
+  @media (min-width: 768px) {
+    max-width: 880px;
+    padding: 28px 32px;
+    &__title {
+      font-size: 32px;
+    }
   }
 }
 </style>
