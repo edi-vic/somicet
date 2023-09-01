@@ -1,9 +1,20 @@
 <template>
-  <details class="bill-step">
+  <section
+    class="bill-step bill-step--loading"
+    v-if="status.loading"
+  >
+    <Loader />
+  </section>
+
+  <details
+    v-if="!status.loading && !bill.id"
+    class="bill-step"
+  >
     <summary class="bill-step__summary">
-        Datos de facturación
+        ¿Deseas facturar?
     </summary>
-    <div class="bill-step__form">
+    <form class="bill-step__form">
+      <p>Ingresa tuas datos a continuación:</p>
       <label 
         class="bill-step__label"
         for="name"
@@ -59,16 +70,20 @@
       <button 
         class="bill-step__button"
         @click="saveBill"
+        :disabled="status.loading || !isFormComplete"
+        type="submit"
       >
         Enviar
-    </button>
-    </div>
+      </button>
+    </form>
   </details>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue"
+import Loader from "@components/core/Loader.vue"
+import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from '@helpers/supabase'
+import { isEmpty } from "@helpers/validators"
 
 /*  vue  props  */
 const { registration } = defineProps({
@@ -89,6 +104,14 @@ const status = reactive({
   loading: false,
   success: false,
   error: null,
+})
+
+/*  vue  computed  */
+const isFormComplete = computed(() => {
+  return !isEmpty(bill.value.name) && 
+    !isEmpty(bill.value.denomination) && 
+    !isEmpty(bill.value.rfc) && 
+    !isEmpty(bill.value.address)
 })
 
 /*  vue  lifecycle  */
@@ -119,7 +142,8 @@ const getBill = async () => {
   status.loading = false
 }
 
-const saveBill = async () => {
+const saveBill = async (e) => {
+  e.preventDefault()
   status.loading = true
   status.success = false
   status.error = null
@@ -138,11 +162,14 @@ const saveBill = async () => {
   const { data, error } = await supabase
     .from("bills")
     .insert(record)
+    .select()
+    .single()
 
   if (error) {
     console.error("Error in saveBill: ", error.message)
   } else {
     console.log(data)
+    bill.value = data
     status.success = true
   }
 
@@ -153,15 +180,25 @@ const saveBill = async () => {
 <style lang="scss" scoped>
 @import "@assets/library";
 .bill-step {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &--loading {
+    align-items: center;
+    height: 300px;
+  }
   &__summary {
     cursor: pointer;
   }
   &__title {
     margin-bottom: 16px;
   }
+  p {
+    margin-bottom: 12px;
+  }
   &__form {
-    padding: 20px 0;
-    width: 440px; // temporal
+    padding: 12px 0;
     display: flex;
     flex-direction: column;
   }
@@ -186,6 +223,10 @@ const saveBill = async () => {
     color: $white;
     font-size: 16px;
     cursor: pointer;
+    &:disabled {
+      background-color: $primary-color-600;
+      cursor: not-allowed;
+    }
   }
 }
 </style>
