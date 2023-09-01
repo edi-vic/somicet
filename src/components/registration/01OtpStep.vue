@@ -205,7 +205,7 @@ const handleLogin = async ({ session }) => {
     font-size: 12px;
     margin-bottom: 20px;
   }
-  @media (min-width: 992px) {
+  @media (min-width: 768px) {
     max-width: 440px;
     &__label {
       font-size: 20px;

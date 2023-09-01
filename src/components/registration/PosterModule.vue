@@ -1,21 +1,28 @@
 <template>
-  <EmailStep
-    v-if="step === REGISTRATION_STEPS[0]"
-    @success="handleNextStep"
-  />
-  <OtpStep
-    v-if="step === REGISTRATION_STEPS[1]"
-    @restart="handleRestart"
-    @success="handleNextStep"
-  />
-  <PosterStep
-    v-if="step === REGISTRATION_STEPS[4]"
-    :registration="registration"
-  />
+  <div
+    class="poster-container"
+    :class="{ 'poster-container--loading': status.loading }"
+  >
+    <Loader v-if="status.loading" />
+    <EmailStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[0]"
+      @success="handleNextStep"
+    />
+    <OtpStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[1]"
+      @restart="handleRestart"
+      @success="handleNextStep"
+    />
+    <PosterStep
+      v-if="!status.loading && step === REGISTRATION_STEPS[4]"
+      :registration="registration"
+    />
+  </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from "vue"
+import Loader from '@components/core/Loader.vue'
 import EmailStep from "@components/registration/00EmailStep.vue"
 import OtpStep from "@components/registration/01OtpStep.vue"
 import PosterStep from "@components/registration/06PosterStep.vue"
@@ -67,7 +74,8 @@ const getUserProfile = async () => {
     .single()
 
   if (error) {
-    console.error("Error in getUserProfile: ", error)
+    step.value = REGISTRATION_STEPS[0]
+    console.error("Error in getUserProfile: ", error.message)
   } else {
     const { id, email, first_name, last_name } = data
     session.set({ 
@@ -115,4 +123,15 @@ const getRegistration = async () => {
 </script>
 
 <style scoped lang="scss">
+.poster-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  &--loading {
+    justify-content: center;
+    align-items: center;
+  }
+}
 </style>

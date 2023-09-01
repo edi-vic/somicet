@@ -181,7 +181,7 @@ const saveName = async () => {
       cursor: not-allowed;
     }
   }
-  @media (min-width: 992px) {
+  @media (min-width: 768px) {
     max-width: 440px;
     &__label {
       font-size: 20px;
