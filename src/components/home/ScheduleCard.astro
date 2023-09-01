@@ -8,13 +8,23 @@
       img,
       moderator, 
       conferences,
-      } = item;
-
-    console.log(conferences)
+      op_color,
+      color,
+      border,
+      bg
+    } = item;
+    const borderColor = `1px solid ${color}`;
+    const bgImg = bg;
+    const bgColor = color;
 ---
 
-<section class="schedule-card">
-  <div class="schedule-card__title">
+<section 
+  class="schedule-card"
+  style={{border: border,}}
+>
+  <div 
+    style={{background: op_color}}
+    class="schedule-card__title">
     <p>
       {topic_name}
     </p>
@@ -24,16 +34,25 @@
   </div>
   <div class="schedule-card__cards">
     <div class="schedule-card__img">
-      <img src={img} alt="">
-      <p>
-        {moderator}
-      </p><br>
-      <span>
-        Moderador
-      </span>
+      <img 
+        style={{border: border}}
+        src={img} 
+        alt=""
+      >
+      <div class="schedule-card__name">
+        <p>
+          {moderator}
+        </p>
+        <span>
+          Moderador
+        </span>
+
+      </div>
     </div>
     <div class="schedule-card__topics-section">
-      <div class="schedule-card__bg"/>
+      <div 
+        class="schedule-card__bg"
+      />
     {conferences.map((item)=>
       <div class="schedule-card__content">
         <div class="schedule-card__speaker">
@@ -62,7 +81,7 @@
 
 </section>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ borderColor, bgImg, bgColor }}>
    @import "@assets/library";
   .schedule-card{
     width: 100%;
@@ -75,6 +94,12 @@
     flex-direction: column;
     border-radius: 8px;
     margin-bottom:40px;
+    @media (max-width: 768px){
+      max-width: 90%;
+      align-items: center;
+      height: auto;
+      
+    }
     &__title{
       width: 100%;
       height: 85px;
@@ -82,18 +107,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background:rgba(12, 161, 174, 0.40);
-      &:nth-child(2){
-        background-color: rgba(39, 170, 42, 0.40);
-      }
-      &:nth-child(3){
-        background: rgba(197, 60, 29, 0.50);
-      }
-      &:nth-child(4){
-        background: rgba(195, 19, 205, 0.40);
-      }
-      &:nth-child(5){
-        background: rgba(200, 210, 79, 0.40);
+      @media (max-width: 768px){
+        
       }
       & p{
         font-size: 24px;
@@ -102,7 +117,7 @@
         @media (max-width: 768px){
           font-size: 16px;
           line-height: 20px;
-          height: 50px;
+          
         }
       }
     }
@@ -112,20 +127,40 @@
       justify-content: center;
       height: 100%;
       padding: 20px;
+      @media (max-width: 768px){
+        flex-direction: column;
+      }
     }
     &__img{
       width: 30%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       height: 100%;
+      @media (max-width: 768px){
+        
+        width: 100%;
+      }
       & img{
         width: 200px;
         height: auto;
-        border: 4px solid #0CA1AE;
         margin-bottom: 20px;
         border-radius: 8px;
+        @media (max-width: 768px){
+          width: 120px
+        }
+      }
+      
+    }
+    &__name{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      @media (max-width: 768px){
+        height: 60px;
+        justify-content: center;
       }
       & p{
         text-align: center;
@@ -133,14 +168,23 @@
         line-height: 24px;
         color: $white;
         font-weight: 600;
+        @media (max-width: 768px){
+          font-size: 16px;
+          line-height: 20px;
+        }
       }
       & span{
         text-align: center;
         font-size: 16px;
         line-height: 20px;
-        font-weight: 600  ;
+        font-weight: 600;
+        @media (max-width: 768px){
+          font-size: 12px;
+          line-height: 16px;
+
+
+        }
       }
-  
     }
     &__topics-section{
       width: 70%;
@@ -151,7 +195,10 @@
       height: 100%;
       padding-left: 3%;
       justify-content: space-around;
-      
+      @media (max-width: 768px){
+        width: 100%;
+        padding: 0;
+      }
     }
     &__bg{
       width: 100%;
@@ -164,21 +211,30 @@
       background-size:70% auto;
     }
     &__content{
-      width: 250px;
-      
+      width: 45%;
+      margin-left: 20px;
       border-radius: 4px;
-      border: 1px solid #0CA1AE;
+      border: var(--borderColor);
       z-index: 1;
+      @media (max-width: 768px){
+        width: 90%;
+        margin-left: 0;
+        margin-bottom: 15px;
+      }
     }
     &__speaker{
       width: 100%;
       height: 100px;
       text-align: center;
-      background-color: #0CA1AE;
+      background-color: var(--bgColor);
       color: $white;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding: 0 5px;
+      @media (max-width: 768px){
+        height: 70px;
+      }
       & p{
         font-size: 16px;
         line-height: 20px;
@@ -201,11 +257,20 @@
       font-size: 14px;
       line-height: 18px;
       color: $white;
+      @media (max-width: 768px){
+        font-size: 12px;
+        line-height: 16px;
+        height: 100px;
+        
+      }
     }
     &__time-lapse{
       display: flex;
       max-width: 120px;
       justify-content:space-between;
+      @media (max-width: 768px){
+        max-width: 110px;
+      }
     }
   }
 

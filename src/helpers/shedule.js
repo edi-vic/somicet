@@ -5,6 +5,10 @@ export const SCHEDULE = {
       "moderator": "Dr. Alejandro Cabrera",
       "time_lapse": "8:15-10:15 hrs",
       "img": "/src/assets/moderators/alejandro.png",
+      "op_color": "rgba(12, 161, 174, 0.40)",
+      "border": "4px solid #0CA1AE",
+      "color": "#0CA1AE",
+      "bg": "/src/assets/cells/stemCells1.png",
       "conferences": [
         {
           "speaker_name":"Dra. Daniela Ávila González",
@@ -41,6 +45,10 @@ export const SCHEDULE = {
       "moderator": "Dra. Anayansi Molina Hernández",
       "time_lapse": "10:30-12:30 hrs",
       "img": "/src/assets/moderators/anayansi.png",
+      "op_color": "rgba(39, 170, 42, 0.40)",
+      "color": "#27AA2A",
+      "border": "4px solid #27AA2A",
+      "bg": "/src/assets/cells/stemCells2.png",
       "conferences": [
         {
           "speaker_name":"Dra. Rosana Pelayo",
@@ -69,16 +77,18 @@ export const SCHEDULE = {
       ]
     },
     {
-      "break_time":{
-        "break":"Póster con lunch",
-        "time":"12:30-14:00 hrs"
-      }
+      "break":"Póster con lunch",
+      "time":"12:30-14:00 hrs"
     },
     {
       "topic_name": "Células Estromales Mesenquimales",
       "moderator": "Dr. Juan José Montesinos Montesinos",
       "img": "/src/assets/moderators/juan.png",
       "time_lapse": "14:00-16:00 hrs",
+      "color": "#BF2604",
+      "op_color": "rgba(197, 60, 29, 0.50)",
+      "border": "4px solid #BF2604",
+      "bg": "/src/assets/cells/stemCells3.png",
       "conferences": [
         {
           "speaker_name":"Dra. Martha Castro Manrreza",
@@ -107,16 +117,18 @@ export const SCHEDULE = {
       ]
     },
     {
-      "break_time":{
-        "break":"Receso",
-        "time":"16:00-16:15 hrs"
-      }
+      "break":"Receso",
+      "time":"16:00-16:15 hrs"
     },
     {
       "topic_name": "Células Troncales y Regeneración",
       "moderator": "Dr. Mónica Lamas Gregori",
       "img": "/src/assets/moderators/monica.png",
       "time_lapse": "16:15-18:15 hrs",
+      "op_color": "rgba(195, 19, 205, 0.40)",
+      "color": "#C313CD",
+      "border": "4px solid #C313CD",
+      "bg": "/src/assets/cells/stemCells4.png",
       "conferences": [
         {
           "speaker_name":"Dr. René Fernando Abarca Buis",
@@ -151,6 +163,10 @@ export const SCHEDULE = {
       "moderator": "Dra. Elizabeth Ortiz Sánchez",
       "img": "/src/assets/moderators/elizabeth.png",
       "time_lapse": "9:00-11:00 hrs",
+      "op_color": "rgba(200, 210, 79, 0.40)",
+      "color": "#C8D24F",
+      "border": "4px solid #C8D24F",
+      "bg": "/src/assets/cells/stemCells5.png",
       "conferences": [
         {
           "speaker-name":"Dra. Karla Itzel Vázquez Santillán",
@@ -179,16 +195,20 @@ export const SCHEDULE = {
       ]
     },
     {
-      "break_time":{
-        "break":"Receso",
-        "time":"11:00-11:15 hrs"
-      }
+      
+      "break":"Receso",
+      "time":"11:00-11:15 hrs"
+      
     },
     {
       "topic_name": "Envejecimiento",
       "moderator": "Dra. Susana Castro Obregón",
       "time_lapse": "11:15-13:15 hrs",
       "img": "/src/assets/moderators/susana.png",
+      "op_color": "rgba(12, 161, 174, 0.40)",
+      "color": "#0CA1AE",
+      "border": "4px solid #0CA1AE",
+      "bg": "/src/assets/cells/stemCells1.png",
       "conferences": [
         {
           "speaker-name":"Dra. Mina Konigsberg",
@@ -217,16 +237,12 @@ export const SCHEDULE = {
       ]
     },
     {
-      "break_time":{
-        "break":"Póster con lunch",
-        "time":"13:15-14:45 hrs"
-      }
+      "break":"Póster con lunch",
+      "time":"13:15-14:45 hrs"
     },
     {
-      "break_time":{
-        "break":"Clausura",
-        "time":"14:45-15:00 hrs"
-      }
+      "break":"Clausura",
+      "time":"14:45-15:00 hrs"
     }
   ]
 }
