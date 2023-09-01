@@ -46,7 +46,15 @@ onMounted(async () => {
 })
 
 /*  vue  methods  */
-const handleNextStep = (val) => step.value = val
+const handleNextStep = (val) => {
+  if (
+    val === REGISTRATION_STEPS[2]
+  ) {
+    getUserProfile()
+  } else {
+    step.value = val
+  }
+}
 
 const handleRestart = () => {
   session.set({ 

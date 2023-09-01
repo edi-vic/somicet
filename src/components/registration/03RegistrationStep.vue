@@ -71,13 +71,13 @@
       class="registration-step__input"
       id="receipt"
       type="file"
-      accept="image/*"
+      accept="image/*,.pdf"
       @change="handleFile"
     >
     <img
       v-if="receiptUrl"
       :src="receiptUrl"
-      alt=""
+      alt="recibo"
     >
     <div class="registration-step__input-error">
       <span v-if="status.error">
@@ -98,7 +98,7 @@
 <script setup>
 import Loader from "@components/core/Loader.vue"
 import User from '@components/core/User.vue';
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { REGISTRATION_STEPS, REGISTRATION_GROUPS } from '@helpers/constants'
 import { supabase } from '@helpers/supabase'
 import { isEmpty } from "@helpers/validators"
