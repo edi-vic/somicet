@@ -1,12 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import PosterStep from "@components/registration/PosterStep.vue";
+import PosterModule from "@components/registration/PosterModule.vue";
 ---
 
 <Layout title="Registro">
   <main class="poster">
     <h1 class="poster__title">Registra tu cartel</h1>
-    <PosterStep client:only="vue"/>
+    <PosterModule client:only="vue"/>
   </main>
 </Layout>
 
@@ -18,7 +18,7 @@ import PosterStep from "@components/registration/PosterStep.vue";
   padding: 30px 16px;
   &__title {
     color: $black;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     font-size: 24px;
   }
   @media (min-width: 992px) {

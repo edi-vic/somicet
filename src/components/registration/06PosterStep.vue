@@ -47,7 +47,7 @@
       </label>
       <textarea
         id="summary"
-        class="project-step__textarea"
+        class="project-step__textarea project-step__textarea--summary"
         placeholder="Resumen"
         v-model="project.summary"
       />
@@ -163,7 +163,7 @@ const saveProject = async () => {
   justify-content: center;
   &__label {
     font-size: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   &__input, &__textarea {
     height: 50px;
@@ -171,7 +171,12 @@ const saveProject = async () => {
     border-radius: 8px;
     padding: 0 12px;
     font-size: 16px;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
+  }
+  &__textarea {
+    padding: 12px;
+    &--summary {
+      height: 300px;}
   }
   &__input-error {
     height: 16px;
