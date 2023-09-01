@@ -237,7 +237,7 @@ export const SCHEDULE = {
       ]
     },
     {
-      "break":"Póster con lunch",
+      "break":"Palabras finales",
       "time":"13:15-14:45 hrs"
     },
     {
