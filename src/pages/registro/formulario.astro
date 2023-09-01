@@ -6,7 +6,9 @@ import RegistrationModule from "@components/registration/RegistrationModule.vue"
 <Layout title="Registro">
   <main class="registration">
     <h1 class="registration__title">Registro</h1>
-    <RegistrationModule client:only="vue" />
+    <div class="registration__wrapper">
+      <RegistrationModule client:only="vue" />
+    </div>
   </main>
 </Layout>
 
@@ -15,17 +17,27 @@ import RegistrationModule from "@components/registration/RegistrationModule.vue"
 .registration {
   margin: 0 auto;
   padding: 90px 16px 30px;
+  min-height: calc(100vh - 200px);
   &__title {
     color: $black;
     font-size: 24px;
     margin-bottom: 20px;
   }
+  &__wrapper {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
   @media (min-width: 768px) {
     max-width: 880px;
     padding: 40px 32px;
+    min-height: calc(100vh - 600px);
     &__title {
       font-size: 36px;
       margin-bottom: 28px;
+    }
+    &__wrapper {
+      margin: 0;
     }
   }
 }

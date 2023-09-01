@@ -173,10 +173,12 @@ const getRegistration = async () => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   &--loading {
     height: 300px;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
