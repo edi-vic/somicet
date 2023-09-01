@@ -5,6 +5,9 @@ import Layout from "@layouts/Layout.astro";
 <Layout title="Registro">
   <main class="reg-procs">
     <h1 class="reg-procs__title">Proceso de registro</h1>
+    <p class="reg-procs__p">
+      Período de inscripción al Simposio: <span class="important">Del 1 al 22 de septiembre de 2023</span>.
+    </p>
     <ul class="reg-procs__list">
       <li class="reg-procs__element">
         <div class="reg-procs__instruction">
@@ -57,7 +60,7 @@ import Layout from "@layouts/Layout.astro";
           <li class="reg-procs__sub-element">
             <p>
               Posteriormente recibirás un correo confirmando
-              tu lugar en el evento.
+              tu lugar al evento.
             </p>
           </li>
         </ol>
@@ -66,15 +69,15 @@ import Layout from "@layouts/Layout.astro";
         <div class="reg-procs__instruction">
           <span class="reg-procs__bullet">c</span>
           <p>
-            ¿Tienes un poster para presentar?
+            ¿Tienes un cartel para presentar?
             Inscríbelo aquí.
           </p>
         </div>
         <a 
           class="reg-procs__button"
-          href="/registro/proyecto"
+          href="/registro/cartel"
         >
-          Inscribir proyecto
+          Inscribir cartel
         </a>
       </li>
     </ul>
@@ -89,8 +92,13 @@ import Layout from "@layouts/Layout.astro";
   padding: 30px 16px;
   &__title {
     color: $black;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     font-size: 24px;
+  }
+  &__p {
+    color: $black;
+    margin-bottom: 12px;
+    font-size: 16px;
   }
   &__list {
     font-size: 16px;
@@ -171,5 +179,9 @@ import Layout from "@layouts/Layout.astro";
       font-size: 20px;
     }
   }
+}
+.important {
+  color: $primary-color;
+  font-weight: 700;
 }
 </style>
