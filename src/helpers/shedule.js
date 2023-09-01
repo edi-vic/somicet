@@ -1,4 +1,4 @@
-{
+export const SCHEDULE = {
   "thursday":[
     {
       "topic_name": "Células Troncales Pluripotenciales",
@@ -229,5 +229,4 @@
       }
     }
   ]
-
 }

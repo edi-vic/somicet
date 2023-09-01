@@ -1,12 +1,16 @@
 ---
   import clock from "@assets/icons/clock.svg"
-  const { 
-    topicName,
-    timeLapse, 
-    img,
-    moderatorName, 
-    conferences,
-    } = Astro.props;
+  const { item } = Astro.props;
+
+    const { 
+      topicName,
+      timeLapse, 
+      img,
+      moderatorName, 
+      conferences,
+      } = item;
+
+    console.log(conferences)
 ---
 
 <section class="schedule-card">

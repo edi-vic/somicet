@@ -4,13 +4,11 @@ import Layout from "@layouts/Layout.astro";
 import modImg from "@assets/moderators/monica.jpeg";
 import redClock from "@assets/icons/red-clock.svg";
 import calendar from "@assets/icons/calendar.svg";
-import data from "@helpers/scheduleData.json"
+import { SCHEDULE } from "@helpers/shedule"
 
-const thursday = data.thursday
-console.log(thursday, "break");
-
-
+const thursday = SCHEDULE.thursday
 ---
+
 <Layout>
   <section class="schedule">
     <div class="schedule__welcome">
@@ -37,18 +35,15 @@ console.log(thursday, "break");
         </div>
       </div>
     </div>
-    {thursday.map((item) => 
-      
-      <ScheduleCard 
-        topicName={item.topic_name}
-        timeLapse={item.time_lapse}
-        img={item.img}
-        moderatorName={item.moderator}
-        conferences={item.conferences}
-      />
-    )}
+
+    
+    <ScheduleCard 
+      item={thursday[0]}
+    />
+
   </section>
 </Layout>
+
 <style lang="scss">
   @import "@assets/library";
   .schedule{
