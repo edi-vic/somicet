@@ -5,6 +5,7 @@ import modImg from "@assets/moderators/monica.png";
 import redClock from "@assets/icons/red.svg";
 import calendar from "@assets/icons/calendar.svg";
 import { SCHEDULE } from "@helpers/shedule"
+import logo from "@assets/logo.png"
 
 const thursday = SCHEDULE.thursday;
 const friday = SCHEDULE.friday;
@@ -98,6 +99,35 @@ const friday = SCHEDULE.friday;
         item={thursday[6]}
       />
     </div>
+    <div class="schedule__welcome">
+      <img 
+        style="width:auto;"
+        src={logo}>
+      <div class="schedule__info">
+        <h3>
+          Segundo día de actividades
+        </h3>
+        
+        <div class="schedule__time">
+          <img 
+            class="schedule__icon"
+            src={redClock} alt=""
+          >
+          <p>
+            9:00-15:00 hrs
+          </p>
+        </div>
+        <div class="schedule__time">
+          <img 
+            class="schedule__icon"
+            src={calendar} alt=""
+          >
+          <p>
+            Viernes 20 de Octubre
+          </p>
+        </div>
+      </div>
+    </div> 
     <div class="schedule__friday">
       <ScheduleCard 
         item={friday[0]}
