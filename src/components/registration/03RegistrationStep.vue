@@ -86,7 +86,7 @@
     </div>
     <button
       class="registration-step__button"
-      @click="saveRegistration"
+      @click="handleFlow"
       :disabled="status.loading || !isFormComplete"
       type="submit"
     >
@@ -98,7 +98,7 @@
 <script setup>
 import Loader from "@components/core/Loader.vue"
 import User from '@components/core/User.vue';
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { REGISTRATION_STEPS, REGISTRATION_GROUPS } from '@helpers/constants'
 import { supabase } from '@helpers/supabase'
 import { isEmpty } from "@helpers/validators"
@@ -107,8 +107,12 @@ import { isEmpty } from "@helpers/validators"
 const emit = defineEmits(["success"])
 
 /*  vue  props  */
-const { profile, getUserId } = defineProps({
+const { profile, registration, getUserId } = defineProps({
   profile: {
+    type: Object,
+    required: true,
+  },
+  registration: {
     type: Object,
     required: true,
   },
@@ -186,6 +190,15 @@ const getPublicUrl = async (path) => {
   }
 }
 
+const handleFlow = (e) => {
+  e.preventDefault()
+  if (registration) {
+    updateRegistration()
+  } else {
+    saveRegistration()
+  }
+}
+
 const saveRegistration = async () => {
   const record = { 
     name: `${profile.firstName} ${profile.lastName}`,
@@ -194,8 +207,6 @@ const saveRegistration = async () => {
     group: group.value,
     receipt_url: receiptUrl.value,
   }
-
-  console.log(record)
 
   status.loading = true
   status.success = false
@@ -215,6 +226,34 @@ const saveRegistration = async () => {
     emit("success", REGISTRATION_STEPS[4])
   }
 
+  status.loading = false
+}
+
+const updateRegistration = async () => {
+  const userId = getUserId()
+  const record = { 
+    secondment: secondment.value,
+    group: group.value,
+    receipt_url: receiptUrl.value,
+  }
+
+  console.log(record)
+
+  status.loading = true
+  status.success = false
+  status.error = null
+
+  const { data, error } = await supabase
+    .from('registrations')
+    .update(record)
+    .eq('user_id', userId)
+
+  if (error) {
+    console.error("Error in updateRegistration: ", error.message)
+  } else {
+    status.success = true
+    emit("success", REGISTRATION_STEPS[4])
+  }
   status.loading = false
 }
 

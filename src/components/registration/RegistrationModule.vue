@@ -22,6 +22,7 @@
     <RegistrationStep
       v-if="!status.loading && step === REGISTRATION_STEPS[3]"
       :profile="profile"
+      :registration="registration"
       :getUserId="getUserId"
       @success="handleNextStep"
     />
@@ -29,6 +30,7 @@
       v-if="!status.loading && step === REGISTRATION_STEPS[4]"
       :profile="profile"
       :registration="registration"
+      @reset="handleReset"
     />
     <BillStep
       v-if="!status.loading && step === REGISTRATION_STEPS[4] && registration.status === 'approved'"
@@ -132,6 +134,11 @@ const handleRestart = () => {
   step.value = REGISTRATION_STEPS[0]
 }
 
+const handleReset = () => {
+  getUserProfile()
+  step.value = REGISTRATION_STEPS[3]
+}
+
 const getRegistration = async () => {
   const userId = getUserId()
 
@@ -151,7 +158,11 @@ const getRegistration = async () => {
   } else {
     console.log('there', data)
     registration.value = data
-    step.value = REGISTRATION_STEPS[4]
+    if (data.receipt_url === null) {
+      step.value = REGISTRATION_STEPS[3]
+    } else {
+      step.value = REGISTRATION_STEPS[4]
+    }
   }
   status.loading = false
 }
