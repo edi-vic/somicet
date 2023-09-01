@@ -219,7 +219,7 @@ export const SCHEDULE = {
         },
         {
           "speaker_name":"Dr. Juan de Dios Rodríguez Callejas ",
-          "institution": "Postdoctoral. Instituto de Fisiología Celular. UNAM",
+          "institution": "Centro de Investigación sobre el envejecimiento del CINVESTAV",
           "topic": "Relación entre la autofagia y la senescencia con la distrofia microglial durante el envejecimiento de un primate no humano",
           "schedule": "11:45 - 12:15 hrs"
         },
