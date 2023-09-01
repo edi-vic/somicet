@@ -1,18 +1,18 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import ProyectModule from "@components/registration/ProyectModule.vue";
+import PosterStep from "@components/registration/PosterStep.vue";
 ---
 
-<Layout title="Registra tu Proyecto">
-  <main class="proyect">
-    <h1 class="proyect__title">Registra tu proyecto</h1>
-    <ProyectModule client:only="vue"/>
+<Layout title="Registro">
+  <main class="poster">
+    <h1 class="poster__title">Registra tu cartel</h1>
+    <PosterStep client:only="vue"/>
   </main>
 </Layout>
 
 <style lang="scss">
 @import "@assets/library";
-.proyect {
+.poster {
   margin: 0 auto;
   max-width: 880px;
   padding: 30px 16px;

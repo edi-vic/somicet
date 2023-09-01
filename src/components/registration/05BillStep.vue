@@ -77,6 +77,41 @@
       </button>
     </form>
   </details>
+
+  <details
+    v-if="!status.loading && bill.id"
+    class="bill-step"
+  >
+    <summary class="bill-step__summary">
+        Datos de tu factura
+    </summary>
+    <div class="bill-step__form">
+      <h5>
+        Nombre
+      </h5>
+      <p>
+        {{ bill.name }}
+      </p>
+      <h5>
+        Razón social
+      </h5>
+      <p>
+        {{ bill.denomination }}
+      </p>
+      <h5>
+        RFC
+      </h5>
+      <p>
+        {{ bill.rfc }}
+      </p>
+      <h5>
+        Domicilio fiscal
+      </h5>
+      <p>
+        {{ bill.address }}
+      </p>
+    </div>
+  </details>
 </template>
 
 <script setup>
