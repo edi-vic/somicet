@@ -25,251 +25,89 @@ switch (active){
 
 ---
 <nav class="navbar">
-  <input type="checkbox" name="toggle-nav" id="">
-  <div class="navbar__hamburger-lines">
-    <span class="navbar__line navbar__line-one"/>
-    <span class="navbar__line navbar__line-two"/>
-    <span class="navbar__line navbar__line-three"/>
-  </div>
-  <div class="navbar__div"/>
   <ul class="navbar__items">
     <li 
       class:list={[{ active: home }]}
     >
-      <div>
-        <a href="/">
-            Inicio
-        </a>
-      </div>
+      <a href="/">
+          Inicio
+      </a>
     </li>
     <li 
       class:list={[{ active: program}]}
     >
-      <div>
-        <a href="/programa/horario">
-          Programa
-        </a>
-      </div>
+      <a href="/programa/horario">
+        Programa
+      </a>
     </li>
     <li 
       class:list={[{ active: register}]}
     >
-      <div>
-        <a href="/registro">
-          Registro
-        </a>
-      </div>
+      <a href="/registro">
+        Registro
+      </a>
     </li>
     <li 
       class:list={[{ active: contact}]}
     >
-      <div>
-        <a href="/registro">
-          Contacto
-        </a>
-      </div>
+      <a href="/registro">
+        Contacto
+      </a>
     </li>
     <li 
       class:list={[{ active: aboutUs}]}
     >
-      <div>
-        <a href="/registro">
-          Sobre Nosotros
-        </a>
-      </div>
+      <a href="/registro">
+        Sobre Nosotros
+      </a>
     </li>
   </ul>
 </nav>
 
 <style lang="scss" >
 @import "@assets/library";
-  .navbar{
+.navbar {
+  display: none;
+  @media (min-width: 768px) {
+    background: $white;
     width: 100%;
     height: auto;
     display: flex;
-    position: fixed;
-    background: $background-color;
-    z-index: 1;
+    justify-content: center;
+    position: sticky;
+    z-index: 100;
+    top: 0;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);
-    margin-top:180px;
-    & input[name="toggle-nav"]{
-      display: none;
-      @media (max-width: 768px){
-        display: block;
-        position: absolute;
-        height: 35px;
-        width: 30px;
-        top: 50px;
-        left: 30px;
-        z-index: 5;
-        opacity: 0;
-        cursor: pointer;
-        
-      }
-    }
-    &__hamburger-lines{
-      display: none;
-      @media (max-width: 768px){
-        display: block;
-        height: 28px;
-        width: 35px;
-        position: absolute;
-        top: 50px;
-        left: 30px;
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        
-      }
-    }
-    &__line{
-      display: none;
-      @media (max-width: 768px){
-        display: block;
-        height: 3px;
-        width: 100%;
-        border-radius: 10px;
-        background: #333;
-      }
-    }
-    &__line-one{
-      @media (max-width: 768px){
-        transform-origin: 0% 0%;
-        transition: transform 0.3s ease-in-out;
-      }
-    }
-    
-    &__line-two{
-      @media (max-width: 768px){
-        transition: transform 0.2s ease-in-out;
-        
-      }
-    }
-    &__line-three{
-      @media (max-width: 768px){
-        transform-origin: 0% 100%;
-        transition: transform 0.3s ease-in-out;
-        
-      }
-    }
-    &__div{
-      display: none;
-      @media (max-width: 768px){
-        display: block;
-        border:1px solid #959595;
-        width: 100%;
-        position: absolute;
-        top: 100px;
-        z-index: 100;
-        transform: translate(-150%);
-        transition: transform 0.5s ease-in-out;
-      }
-    }
-    &__items{
+    ul {
+      display: flex;
+      list-style: none;
+      width: 100%;
+      max-width: 880px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 20px;
-      width: 100%;
-      max-width: 880px;
+    }
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 60px;
-      @media (max-width: 768px){
-        position: absolute;
-        top: 0;
-        padding-top: 100px;
-        background: $background-color;
-        height: 100vh;
-        width: 100%;
-        transform: translate(-150%);
-        transition: transform 0.5s ease-in-out;
-        display: flex;
-        flex-direction: column;
-        box-shadow:  5px 0px 10px 0px #aaa;
-        overflow: scroll;
-      }
-      & li{
-        list-style: none;
-        color: #000000;
-        font-size: 20px;
-        line-height: 28px;
-        width: 150px;
-        text-align: center;
-        @media (max-width: 768px){
-          font-size: 24px;
-          line-height: 32px;
-          display: flex;
-          align-items: center;
-          width: 100%;
-          height: 105px;
-          border-bottom: 1px solid $accent-color;
-        }
-        &:last-child{
-          border: none;
-        }
-        &:hover{
-          font-weight: 600;
-          @media (max-width: 768px){
-            background-color: $primary-color;
-            color: $background-color;
-            font-weight: 500;
-          }
-        }
-        & div{
-          height: 60px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover{
-            border-bottom: solid 2px $primary-color;
-          }
-          @media (max-width: 768px){
-          }
-          & a{
-            text-decoration: none;
-            @media (max-width: 768px){
-              padding-left: 40px;
-              
-            }
-            &:hover{
-              @media (max-width: 768px){
-                color: $background-color;
-                font-weight: 500;
-              }
-
-            }
-          }
-        }
-
+      width: 150px;
+    }
+    a {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: $black;
+      font-size: 20px;
+      &:hover {
+        font-weight: 600;
       }
     }
-  }
-  input[name="toggle-nav"]:checked{
-    & ~ .navbar__items{
-      transform: translateX(0);
-    }
-    & ~ .navbar__div{
-      
-      transform: translateX(0);
-      
-      
-
-    }
-    & ~ .navbar__hamburger-lines .navbar__line-one{
-      transform: rotate(45deg);
-    }
-    & ~ .navbar__hamburger-lines .navbar__line-two{
-      transform: scaleY(0);
-    }
-    & ~ .navbar__hamburger-lines .navbar__line-three{
-      transform: rotate(-45deg);
-    }
-  }
-
-.active {
-  font-weight: 600;
-  & div {
-    border-bottom: solid 2px $primary-color;
   }
 }
+
 </style>

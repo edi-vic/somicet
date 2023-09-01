@@ -1,0 +1,119 @@
+---
+import logo from "@assets/logo.png"
+---
+
+<header class="mobile-head">
+  <div class="mobile-head__logo">
+    <img class="mobile-head__img" src={logo} alt="logo">
+    <span class="mobile-head__text">
+      SOMICET
+    </span>
+  </div>
+  <div class="mobile-head__hamburguer">
+    <input type="checkbox" id="toggle-nav" class="toggle-nav" />
+    <label class="mobile-head__hamburguer" for="toggle-nav">
+      <span class="mobile-head__line mobile-head__line-one"/>
+      <span class="mobile-head__line mobile-head__line-two"/>
+      <span class="mobile-head__line mobile-head__line-three"/>
+    </label>
+    <nav class="mobile-nav">
+    
+    </nav>
+  </div>
+</header>
+
+
+
+<style lang="scss">
+@import "@assets/library";
+
+.mobile-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 60px;
+  background-color: $white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  &__img {
+    width: 48px;
+    height: 48px;
+  }
+  &__text {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  &__hamburguer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 35px;
+    height: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  &__line {
+    display: block;
+    height: 3px;
+    width: 100%;
+    border-radius: 10px;
+    background: #333;
+  }
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  transform: translateX(0);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.toggle-nav {
+  display: none;
+}
+
+.mobile-head__hamburguer input:not(:checked) ~ nav {
+  transform: translateX(-100%);
+  transition: all 0.3s ease;
+}
+
+.mobile-head__hamburguer input:checked ~ nav {
+  transform: translateX(0);
+  transition: all 0.3s ease;
+}
+
+.mobile-head__hamburguer input:checked ~ label .mobile-head__line-one {
+  transform: rotate(-45deg) translate(-8px, 6px);
+  transition: all 0.3s ease;
+}
+
+.mobile-head__hamburguer input:checked ~ label .mobile-head__line-two {
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.mobile-head__hamburguer input:checked ~ label .mobile-head__line-three {
+  transform: rotate(45deg) translate(-8px, -6px);
+  transition: all 0.3s ease;
+}
+
+</style>
