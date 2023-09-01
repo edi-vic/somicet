@@ -9,6 +9,31 @@ BEGIN
 END;
 ```
 
+## reset_registration_fields
+```sql
+create
+or replace function public.reset_registration_fields (r_id uuid) returns text language plpgsql as $$
+DECLARE
+    v_error text;
+BEGIN
+    BEGIN
+        UPDATE public.registrations
+        SET 
+            secondment = NULL,
+            "group" = NULL,
+            receipt_url = NULL,
+            note = NULL,
+            status = 'pending'
+        WHERE id = r_id;
+    EXCEPTION WHEN others THEN
+        GET STACKED DIAGNOSTICS v_error = MESSAGE_TEXT;
+        RETURN v_error;
+    END;
+    RETURN 'Success';
+END;
+$$;
+```
+
 ## total_profiles_and_admins
 ```sql
 BEGIN

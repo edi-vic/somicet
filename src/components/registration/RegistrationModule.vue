@@ -22,6 +22,7 @@
     <RegistrationStep
       v-if="!status.loading && step === REGISTRATION_STEPS[3]"
       :profile="profile"
+      :registration="registration"
       :getUserId="getUserId"
       @success="handleNextStep"
     />
@@ -151,7 +152,11 @@ const getRegistration = async () => {
   } else {
     console.log('there', data)
     registration.value = data
-    step.value = REGISTRATION_STEPS[4]
+    if (data.receipt_url === null) {
+      step.value = REGISTRATION_STEPS[3]
+    } else {
+      step.value = REGISTRATION_STEPS[4]
+    }
   }
   status.loading = false
 }
