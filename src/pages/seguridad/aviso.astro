@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 ---
 <Layout>
   <section class="privacy">
-    <div>
+    <div class="privacy__title">
       <h3>
         Aviso de privacidad
       </h3>
@@ -20,7 +20,14 @@ import Layout from "@layouts/Layout.astro";
     padding-top: 100px;
     max-width: 880px;
 
-    &__title
+    &__title{
+      display: flex;
+      width: 100%;
+      & h3{
+        font-size: 32px;
+        line-height: 36px;
+      }
+    }
   }
 
 </style>
