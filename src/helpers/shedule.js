@@ -169,25 +169,25 @@ export const SCHEDULE = {
       "bg": "/src/assets/cells/stemCells5.png",
       "conferences": [
         {
-          "speaker-name":"Dra. Karla Itzel Vázquez Santillán",
+          "speaker_name":"Dra. Karla Itzel Vázquez Santillán",
           "institution": "Instituto Nacional de Medicina Genómica ",
           "topic": "Implicaciones funcionales de la señalización de RANKL a través de LGR4 o RANK en células troncales de cáncer de mama.",
           "schedule": "9:00-9:30 hrs"
         },
         {
-          "speaker-name":"Dr. Alejandro García Carrancá",
+          "speaker_name":"Dr. Alejandro García Carrancá",
           "institution": "Unidad de Investigación Biomédica en Cáncer. Intituto de Investigaciones Biomédicas. UNAM",
           "topic": "Contribución del VPH en las células troncales durante en el desarrollo de cáncer cervicouterino. ",
           "schedule": "9:30-10:00 hrs"
         },
         {
-          "speaker-name":"Dra. Claudia Bello",
+          "speaker_name":"Dra. Claudia Bello",
           "institution": "Posgrado en Ciencias Biológicas. Facultad de Medicina. UNAM",
           "topic": "El ácido lisofosfatídico promueve el crecimiento de esferoides derivados de células de glioma a través de la expresión de SOX2 y OCT4.",
           "schedule": "10:00-10:30 hrs"
         },
         {
-          "speaker-name":"M. en C. José Manuel Tinajero Rodríguez",
+          "speaker_name":"M. en C. José Manuel Tinajero Rodríguez",
           "institution": "Doctorado en Ciencias Biomédicas. Universidad Autónoma de Guerrero. Instituto Nacional de Cancerología",
           "topic": "Explorando la Contribución de CD54 en la Capacidad Metastásica de Células Troncales de Cáncer Gástrico.",
           "schedule": "10:30-11:00 hrs"
@@ -211,25 +211,25 @@ export const SCHEDULE = {
       "bg": "/src/assets/cells/stemCells1.png",
       "conferences": [
         {
-          "speaker-name":"Dra. Mina Konigsberg",
+          "speaker_name":"Dra. Mina Konigsberg",
           "institution": "Departamento de Ciencias de la Salud. Universidad Autónoma Metopolitana-Iztapalapa.",
           "topic": "Bioenergética y Envejecimiento Celular",
           "schedule": "11:15-11:45 hrs"
         },
         {
-          "speaker-name":"Dr. Juan de Dios Rodríguez Callejas ",
+          "speaker_name":"Dr. Juan de Dios Rodríguez Callejas ",
           "institution": "Postdoctoral. Instituto de Fisiología Celular. UNAM",
           "topic": "Relación entre la autofagia y la senescencia con la distrofia microglial durante el envejecimiento de un primate no humano",
           "schedule": "11:45-12:15 hrs"
         },
         {
-          "speaker-name":"Dra. Ingrid Fetter Pruneda",
+          "speaker_name":"Dra. Ingrid Fetter Pruneda",
           "institution": "Instituto de Investigaciones Biomedicas. UNAM",
           "topic": "Envejecimiento y longevidad en insectos",
           "schedule": "12:15-12:45 hrs"
         },
         {
-          "speaker-name":"Dra. Claudia González Espinosa",
+          "speaker_name":"Dra. Claudia González Espinosa",
           "institution": "Profesora Investigadora. Departamento de Farmacología. CINVESTAV. IPN",
           "topic": "",
           "schedule": "12:45-13:15 hrs"
