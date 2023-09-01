@@ -46,7 +46,7 @@ switch (active){
       class:list={[{ active: program}]}
     >
       <div>
-        <a href="/registro">
+        <a href="/programa/horario">
           Programa
         </a>
       </div>
@@ -85,9 +85,13 @@ switch (active){
 @import "@assets/library";
   .navbar{
     width: 100%;
-    height: 50px;
+    height: auto;
     display: flex;
-    justify-content: center;
+    position: fixed;
+    background: $background-color;
+    z-index: 1;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);
+    margin-top:180px;
     & input[name="toggle-nav"]{
       display: none;
       @media (max-width: 768px){

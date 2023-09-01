@@ -1,0 +1,212 @@
+---
+  import clock from "@assets/icons/clock.svg"
+  const { item } = Astro.props;
+
+    const { 
+      topic_name,
+      time_lapse, 
+      img,
+      moderator, 
+      conferences,
+      } = item;
+
+    console.log(conferences)
+---
+
+<section class="schedule-card">
+  <div class="schedule-card__title">
+    <p>
+      {topic_name}
+    </p>
+    <span>
+      {time_lapse}
+    </span>
+  </div>
+  <div class="schedule-card__cards">
+    <div class="schedule-card__img">
+      <img src={img} alt="">
+      <p>
+        {moderator}
+      </p><br>
+      <span>
+        Moderador
+      </span>
+    </div>
+    <div class="schedule-card__topics-section">
+      <div class="schedule-card__bg"/>
+    {conferences.map((item)=>
+      <div class="schedule-card__content">
+        <div class="schedule-card__speaker">
+          <p>
+            {item.speaker_name}
+          </p>
+          <span>
+            {item.institution}
+          </span>
+        </div>
+        <div class="schedule-card__topic">
+          <p>
+            {item.topic}
+          </p>
+          <div class="schedule-card__time-lapse">
+            <img src={clock} alt="">
+            <p>
+              {item.schedule}
+            </p>
+          </div>
+        </div>
+      </div>
+      )}
+    </div>
+  </div>
+
+</section>
+
+<style lang="scss">
+   @import "@assets/library";
+  .schedule-card{
+    width: 100%;
+    max-width: 880px;
+    height: 670px;
+    color:$white;
+    border: 4px solid #0CA1AE;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    margin-bottom:40px;
+    &__title{
+      width: 100%;
+      height: 85px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background:rgba(12, 161, 174, 0.40);
+      &:nth-child(2){
+        background-color: rgba(39, 170, 42, 0.40);
+      }
+      &:nth-child(3){
+        background: rgba(197, 60, 29, 0.50);
+      }
+      &:nth-child(4){
+        background: rgba(195, 19, 205, 0.40);
+      }
+      &:nth-child(5){
+        background: rgba(200, 210, 79, 0.40);
+      }
+      & p{
+        font-size: 24px;
+        line-height: 28px;
+        font-weight: 600;
+        @media (max-width: 768px){
+          font-size: 16px;
+          line-height: 20px;
+          height: 50px;
+        }
+      }
+    }
+    &__cards{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      padding: 20px;
+    }
+    &__img{
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100%;
+      & img{
+        width: 200px;
+        height: auto;
+        border: 4px solid #0CA1AE;
+        margin-bottom: 20px;
+        border-radius: 8px;
+      }
+      & p{
+        text-align: center;
+        font-size: 20px;
+        line-height: 24px;
+        color: $white;
+        font-weight: 600;
+      }
+      & span{
+        text-align: center;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 600  ;
+      }
+  
+    }
+    &__topics-section{
+      width: 70%;
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      height: 100%;
+      padding-left: 3%;
+      justify-content: space-around;
+      
+    }
+    &__bg{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-image: url('../../assets/cells/stemCells2.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.4;
+      background-size:70% auto;
+    }
+    &__content{
+      width: 250px;
+      
+      border-radius: 4px;
+      border: 1px solid #0CA1AE;
+      z-index: 1;
+    }
+    &__speaker{
+      width: 100%;
+      height: 100px;
+      text-align: center;
+      background-color: #0CA1AE;
+      color: $white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      & p{
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 600;
+      }
+      & span{
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 400;
+      }
+  
+    }
+    &__topic{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      text-align: center;
+      padding: 0 10px;
+      height: 130px;
+      font-size: 14px;
+      line-height: 18px;
+      color: $white;
+    }
+    &__time-lapse{
+      display: flex;
+      max-width: 120px;
+      justify-content:space-between;
+    }
+  }
+
+</style>

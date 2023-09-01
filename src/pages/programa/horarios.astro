@@ -1,0 +1,152 @@
+---
+import ScheduleCard from "@components/home/ScheduleCard.astro";
+import Layout from "@layouts/Layout.astro";
+import modImg from "@assets/moderators/monica.png";
+import redClock from "@assets/icons/red-clock.svg";
+import calendar from "@assets/icons/calendar.svg";
+import { SCHEDULE } from "@helpers/shedule"
+
+const thursday = SCHEDULE.thursday
+---
+
+<Layout>
+  <section class="schedule">
+    <div class="schedule__btns">
+      <a 
+        class="schedule__btn-day"
+        href=""
+      >
+        Jueves
+      </a>
+      <a 
+        class="schedule__btn-day"
+        href=""
+      >
+        Viernes
+      </a>
+  
+    </div>
+    <div class="schedule__thursday">
+      <div class="schedule__welcome">
+        <img 
+        
+          src={modImg}>
+        <div class="schedule__info">
+          <h3>
+            Bienvenida
+          </h3>
+          <p>
+            Dra. Mónica Lamas Gregori
+          </p>
+          <div class="schedule__time">
+            <img 
+              class="schedule__icon"
+              src={calendar} alt=""
+            >
+            <p>
+
+            </p>
+          </div>
+          <div class="schedule__time">
+            <img 
+              class="schedule__icon"
+              src={redClock} alt=""
+            >
+            <p>
+
+            </p>
+          </div>
+        </div>
+      </div>  
+      <ScheduleCard 
+        item={thursday[0]}
+      />
+      <div class="schedule__break">
+        
+
+      </div>
+      <ScheduleCard 
+        item={thursday[2]}
+      />
+      <ScheduleCard 
+        item={thursday[4]}
+      />
+      <ScheduleCard 
+        item={thursday[6]}
+      />
+    </div>
+    <div class="schedule__friday">
+
+    </div>
+
+  </section>
+</Layout>
+<script>
+  function activeBtn(){
+    const buttons = document.querySelectorAll("schedule__btns a")
+
+  }
+</script>
+
+<style lang="scss">
+  @import "@assets/library";
+  .schedule{
+    padding-top: 280px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__btns{
+      display: flex;
+
+    }
+    &__welcome{
+      width: 100%;
+      max-width: 880px;
+      padding: 20px;
+      height: 220px;
+      border-radius: 8px;
+      border: 4px solid $primary-color;
+      display: flex;
+      margin-bottom: 40px;
+      align-items: center;
+      & img{
+        width: 130px;
+        height: 180px;
+        border-radius: 4px;
+      }
+      
+    }
+    &__info{
+      margin-left: 3%;
+      & h3{
+        font-size: 24px;
+        line-height: 28px;
+        font-weight: 600;
+      }
+      & p{
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 500;
+      }
+      & img{
+        width: 20px;
+        height: 20px;
+      }
+    }
+    &__time{
+      display: flex;
+    }
+    &__icon{
+      width: 20px;
+      height: 20px;
+    }
+    &__info{
+      display: flex;
+      flex-direction: column;
+
+    }
+  }
+  
+</style>

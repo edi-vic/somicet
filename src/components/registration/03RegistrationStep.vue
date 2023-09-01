@@ -192,7 +192,8 @@ const getPublicUrl = async (path) => {
 
 const handleFlow = (e) => {
   e.preventDefault()
-  if (registration) {
+  console.log("handleFlow: ", registration)
+  if (registration?.id) {
     updateRegistration()
   } else {
     saveRegistration()

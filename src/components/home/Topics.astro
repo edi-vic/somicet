@@ -11,30 +11,33 @@ const arrInfoCells = [
     title: "Células Estromales Mesenquimales",
     info: "Las Células Troncales/Estromales Mesenquimales (MSCs) son células multipotenciales con la capacidad de generar diversos tipos celulares como adipocitos, osteoblastos y condroblastos. Estudios han demostrado que también desempeñan un papel importante en la formación de células hematopoyéticas y en la regulación de la respuesta inmunológica antitumoral."
   },
-  // {
-  //   img: stemCells2,
-  //   title: "Células Troncales Neurales y Hematopoyéticas.",
-  //   info: "Las células troncales neurales desempeñan un papel clave en la investigación al generar varios tipos de neuronas y células gliales en el sistema nervioso. Su capacidad para reparar tejido neural dañado es prometedora para trastornos neurológicos y lesiones cerebrales. Las células troncales hematopoyéticas son esenciales para producir células sanguíneas e inmunitarias, abriendo posibilidades en el estudio de trastornos sanguíneos y el desarrollo de tratamientos innovadores. Ambos tipos de células troncales avanzan en la medicina regenerativa y mejoran la comprensión de sus respectivas áreas"
-  // },
-  // {
-  //   img: stemCells3,
-  //   title: "Células Troncales y Regeneración",
-  //   info: "'Célula Troncal' y 'Regeneración' son conceptos interrelacionados. Las células troncales, con su capacidad de transformación, fundamentan las estrategias de regeneración en Medicina Regenerativa. Los investigadores, ampliando el conocimiento, están superando límites y haciendo posible lo que parecía imposible."
-  // },
-  // {
-  //   img: stemCells4,
-  //   title: "Células Troncales Pluripotenciales.",
-  //   info: "Las células embrionarias humanas y las células inducidas son tipos de células troncales pluripotentes. Su capacidad de reprogramación y diferenciación en tres linajes germinales ha mejorado la comprensión de enfermedades genéticas, desarrollo y creación de fármacos. Las células iPSC también han posibilitado la terapia personalizada y podrían ser utilizadas en tratamientos futuros."
-  // },
+  {
+    img: stemCells2,
+    title: "Células Troncales Neurales y Hematopoyéticas.",
+    info: "Las células troncales neurales desempeñan un papel clave en la investigación al generar varios tipos de neuronas y células gliales en el sistema nervioso. Su capacidad para reparar tejido neural dañado es prometedora para trastornos neurológicos y lesiones cerebrales. Las células troncales hematopoyéticas son esenciales para producir células sanguíneas e inmunitarias, abriendo posibilidades en el estudio de trastornos sanguíneos y el desarrollo de tratamientos innovadores. Ambos tipos de células troncales avanzan en la medicina regenerativa y mejoran la comprensión de sus respectivas áreas"
+  },
+  {
+    img: stemCells3,
+    title: "Células Troncales y Regeneración",
+    info: "'Célula Troncal' y 'Regeneración' son conceptos interrelacionados. Las células troncales, con su capacidad de transformación, fundamentan las estrategias de regeneración en Medicina Regenerativa. Los investigadores, ampliando el conocimiento, están superando límites y haciendo posible lo que parecía imposible."
+  },
+  {
+    img: stemCells4,
+    title: "Células Troncales Pluripotenciales.",
+    info: "Las células embrionarias humanas y las células inducidas son tipos de células troncales pluripotentes. Su capacidad de reprogramación y diferenciación en tres linajes germinales ha mejorado la comprensión de enfermedades genéticas, desarrollo y creación de fármacos. Las células iPSC también han posibilitado la terapia personalizada y podrían ser utilizadas en tratamientos futuros."
+  },
 ];
 
 ---
 <section 
   class="topics"
+  id="topics"
 >
+  
   <div 
     class="topics__photo-section"
   >
+
     {arrInfoCells.map((data) =>
     <img 
       src={data.img} 
@@ -54,30 +57,44 @@ const arrInfoCells = [
   </div>
   <div 
     class="topics__dot-imgs"
+    id="dots-img"
   >
-  {arrInfoCells.map((data) =>
-    <img src={data.img} alt="">
-  )}
+    {arrInfoCells.map((item) =>
+      <img
+        src={item.img} 
+        class="topics__dots"
+        id="dots"
+      >
+      
+    )}
+    
+  
   </div>
 </section>
 <script>
   {
-    const sliders = document.querySelectorAll('.topics');
+    const slider = document.getElementById('topics');
+   
+    
     const interval = 2800;
     const animDuration = 600;
-    for (let i = 0; i < sliders.length; ++i){
-      const slider = sliders[i];
-      const dots = document.querySelector('.topics__dot-imgs');
-      const sliderImgs = document.querySelectorAll('.topics__photo-section');
+    const sliderImgs = document.querySelectorAll('.topics__photo-section');
+    const dotImage =  document.getElementById("dots-img")
+    console.log(dotImage, "ite")
     
-      let currImg = 0;
-      let prevImg = sliders.length - 1;
-      let intrvl;
-      let timeout;
-      for(let i = 0; i < sliderImgs.length; ++ i){
-        
-      }
-    }
+    // for(let i = 0; i < dotImage.length; i ++){
+    //   //i.addEventListener("click", dotClick.bind(null, i), false)
+    // }
+    
+    
+
+
+    let currImg = 0;
+    let prevImg = sliderImgs.length - 1;
+    let intrvl;
+    let timeout;
+    
+    
   }
 </script>
 <style lang="scss">
