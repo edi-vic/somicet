@@ -1,5 +1,41 @@
 # Tables
 
+<details>
+<summary>Índice</summary>
+
+- [Profiles](#profiles)
+  - [Schema](#schema)
+  - [Policies](#policies)
+    - [allow users select own profile](#allow-users-select-own-profile)
+    - [allow admins select all profiles](#allow-admins-select-all-profiles)
+    - [allow users update own profile](#allow-users-update-own-profile)
+- [Registrations](#registrations)
+  - [Schema](#schema-1)
+  - [Policies](#policies-1)
+    - [allow users select own registration](#allow-users-select-own-registration)
+    - [allow admins select all registrations](#allow-admins-select-all-registrations)
+    - [allow users insert own registration](#allow-users-insert-own-registration)
+    - [allow users update own registration](#allow-users-update-own-registration)
+    - [allow admins update all registrations](#allow-admins-update-all-registrations)
+- [Posters](#posters)
+  - [Schema](#schema-2)
+  - [Policies](#policies-2)
+    - [allow users select own poster](#allow-users-select-own-poster)
+    - [allow admins select all posters](#allow-admins-select-all-posters)
+    - [allow users insert own poster](#allow-users-insert-own-poster)
+    - [allow admins update all posters](#allow-admins-update-all-posters)
+- [Bills](#bills)
+  - [Schema](#schema-3)
+  - [Policies](#policies-3)
+    - [allow users select own bill](#allow-users-select-own-bill)
+    - [allow admins select all bills](#allow-admins-select-all-bills)
+    - [allow users insert own bill](#allow-users-insert-own-bill)
+    - [allow admins update all bills](#allow-admins-update-all-bills)
+- [Admins](#admins)
+  - [Schema](#schema-4)
+
+</details>
+
 ## Profiles
 
 ### Schema
@@ -188,6 +224,9 @@ create table
     constraint posters_user_id_fkey foreign key (user_id) references auth.users (id)
   ) tablespace pg_default;
 ```
+
+### Policies
+
 #### allow users select own poster
 ```sql
 CREATE POLICY "allow users select own poster" ON "public"."posters"
@@ -257,6 +296,41 @@ create table
     constraint bills_registration_id_fkey foreign key (registration_id) references registrations (id),
     constraint bills_user_id_fkey foreign key (user_id) references auth.users (id)
   ) tablespace pg_default;
+```
+
+### Policies
+
+#### allow users select own bill
+```sql
+CREATE POLICY "allow users select own bill" ON "public"."bills"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (auth.uid() = user_id)
+```
+
+#### allow admins select all bills
+```sql
+CREATE POLICY "allow admins select all bills" ON "public"."bills"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (exists (select 1 from public.admins where admins.id = auth.uid()))
+```
+
+#### allow users insert own bill
+```sql
+CREATE POLICY "allow users insert own bill" ON "public"."bills"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (user_id = auth.uid())
+```
+
+#### allow admins update all bills
+```sql
+CREATE POLICY "allow admins update all bills" ON "public"."bills"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (exists (select 1 from public.admins where admins.id = auth.uid()))
+WITH CHECK (exists (select 1 from public.admins where admins.id = auth.uid()))
 ```
 
 ## Admins
