@@ -30,6 +30,33 @@ create table
   ) tablespace pg_default;
 ```
 
+### Policies
+
+#### allow users select own profile
+```sql
+CREATE POLICY "allow users select own profile" ON "public"."profiles"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (auth.uid() = id)
+```
+
+#### allow admins select all profiles
+```sql
+CREATE POLICY "allow admins select all profiles" ON "public"."profiles"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (exists (select 1 from public.admins where admins.id = auth.uid()))
+```
+
+#### allow users update own profile
+```sql
+CREATE POLICY "allow users update own profile" ON "public"."profiles"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (auth.uid() = id)
+WITH CHECK (auth.uid() = id)
+```
+
 ## Registrations
 
 ### Schema
@@ -72,6 +99,7 @@ create table
 
 ### Policies
 
+#### allow users select own registration
 ```sql
 CREATE POLICY "allow users select own registration" ON "public"."registrations"
 AS PERMISSIVE FOR SELECT
@@ -79,6 +107,7 @@ TO authenticated
 USING (auth.uid() = user_id)
 ```
 
+#### allow admins select all registrations
 ```sql
 CREATE POLICY "allow admins select all registrations" ON "public"."registrations"
 AS PERMISSIVE FOR SELECT
@@ -86,6 +115,7 @@ TO authenticated
 USING (exists (select 1 from public.admins where admins.id = auth.uid()))
 ```
 
+#### allow users insert own registration
 ```sql
 CREATE POLICY "allow users insert own registration" ON "public"."registrations"
 AS PERMISSIVE FOR INSERT
@@ -93,6 +123,7 @@ TO authenticated
 WITH CHECK (auth.uid() = user_id)
 ```
 
+#### allow users update own registration
 ```sql
 CREATE POLICY "allow users update own registration" ON "public"."registrations"
 AS PERMISSIVE FOR UPDATE
@@ -101,6 +132,7 @@ USING (auth.uid() = user_id)
 WITH CHECK (auth.uid() = user_id)
 ```
 
+#### allow admins update all registrations
 ```sql
 CREATE POLICY "allow admins update all registrations" ON "public"."registrations"
 AS PERMISSIVE FOR UPDATE
@@ -155,6 +187,38 @@ create table
     constraint posters_registration_id_fkey foreign key (registration_id) references registrations (id),
     constraint posters_user_id_fkey foreign key (user_id) references auth.users (id)
   ) tablespace pg_default;
+```
+#### allow users select own poster
+```sql
+CREATE POLICY "allow users select own poster" ON "public"."posters"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (auth.uid() = user_id)
+```
+
+#### allow admins select all posters
+```sql
+CREATE POLICY "allow admins select all posters" ON "public"."posters"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (exists (select 1 from public.admins where admins.id = auth.uid()))
+```
+
+#### allow users insert own poster
+```sql
+CREATE POLICY "allow users insert own poster" ON "public"."posters"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (auth.uid() = user_id)
+```
+
+#### allow admins update all posters
+```sql
+CREATE POLICY "allow admins update all posters" ON "public"."posters"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (exists (select 1 from public.admins where admins.id = auth.uid()))
+WITH CHECK (exists (select 1 from public.admins where admins.id = auth.uid()))
 ```
 
 ## Bills
