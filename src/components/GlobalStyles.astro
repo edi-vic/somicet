@@ -1,6 +1,7 @@
 ---
 ---
 <style lang="scss"  is:global>
+  @import "@assets/library";
   @import url(https://fonts.bunny.net/css?family=source-serif-pro:300,400,600,700);
   @import url(https://fonts.bunny.net/css?family=besley:400,600,700,800);
 * {
@@ -8,7 +9,33 @@
   padding: 0;
   box-sizing: border-box;
   font-family:'Source Serif Pro', serif ;
+
 }
+.principal-btn{
+  width: 350px;
+  height: 60px;
+  border-radius: 16px;
+  background:$primary-color;
+  border: none;
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px){
+    width: 290px;
+    height: 50px;
+    border-radius: 8px;
+  }
+  & a{
+    text-decoration: none;
+    color: $background-color;
+    font-weight:600;
+    font-size: 20px
+  }
+}
+
+
 
 
 
