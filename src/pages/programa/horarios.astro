@@ -12,21 +12,23 @@ const friday = SCHEDULE.friday;
 
 <Layout title="Programa">
   <section class="schedule">
-    <div class="schedule__btns">
+    <!-- <div class="schedule__btns">
       <a 
-        class="schedule__btn-day"
+        class="schedule__btn-day active"
+        id="thursday"
         href=""
       >
         Jueves
       </a>
       <a 
-        class="schedule__btn-day active"
+        id="friday"
+        class="schedule__btn-day "
         href=""
       >
         Viernes
       </a>
   
-    </div>
+    </div> -->
     <div class="schedule__thursday">
       <div class="schedule__welcome">
         <img 
@@ -124,13 +126,17 @@ const friday = SCHEDULE.friday;
   </section>
 </Layout>
 <script>
-  const btnContainer = document.querySelectorAll(".schedule__btns a");
+  const thursday = document.getElementById("thursday");
+  const friday = document.getElementById("friday");
+
+  const thursdaySection = document.getElementsByClassName("")
+  thursday.addEventListener("click",() => {
+
+
+  })
   
-  for(let i = 0; i < btnContainer.length; i ++){
-    btnContainer[i].addEventListener("click", (e) => {
-      
-    })
-  }
+  
+
 
   
 

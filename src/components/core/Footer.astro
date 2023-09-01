@@ -1,19 +1,31 @@
 ---
-import conacytLogo from "@assets/cells/conacyt.png"
-import cinvestavLogo from "@assets/cells/cinvestav.png"
-import facmedLogo from "@assets/cells/facmed.png"
-import imssLogo from "@assets/cells/imss.png"
-import unamLogo from "@assets/cells/unam.png"
-
-const logosArr =[conacytLogo, cinvestavLogo, facmedLogo, imssLogo, unamLogo]
+import somicet from "@assets/logos/white-logo.svg"
+import facebook from "@assets/icons/facebook.svg"
+import twitter from "@assets/icons/twitter.svg"
 ---
 <section class="footer">
-  <div class="footer__logos">
-    {logosArr.map((item) => 
-      <img src={item} alt="">
-    )}
-  </div>
+  <div class="footer__container">
+    <div class="footer__somicet">
+      <img src={somicet} alt="somicet">
+      <p>
+        SOMICET 2023
+      </p>
+    </div>
+    <div class="footer__privacy">
+      <a href="/seguridad/aviso">
+        Aviso de privacidad
+      </a>
+    </div>
+    <div class="footer__social-media">
+      <a href="https://www.facebook.com/SOMICET">
+        <img src={facebook} alt="facebook">
+      </a>
+      <a href="https://twitter.com/celulastroncal?s=11">
+        <img src={twitter} alt="twitter">
+      </a>
+    </div>
 
+  </div>
 </section>
 
 <style lang="scss">
@@ -23,11 +35,85 @@ const logosArr =[conacytLogo, cinvestavLogo, facmedLogo, imssLogo, unamLogo]
     height: 230px;
     background: $primary-color;
     display: flex;
-    &__logos{
+    justify-content:center;
+    @media (max-width: 768px){
+      flex-direction: column;
+      height: auto;
+    }
+    &__container{
       width: 100%;
-      max-width: 768px;
+      max-width: 880px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @media (max-width: 768px){
+        flex-direction: column;
+        min-height: 200px;
+        justify-content: center;
+
+      }
+    }
+    &__somicet{
+      width: 33%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & img{
+        width: 90px;
+        height: 90px;
+        margin-bottom: 5px;
+        @media (max-width: 768px){
+          width: 50px;
+          height: 50px;
+          margin: 2px;
+        }
+      }
+      & p{
+        font-size: 20px;
+        line-height: 24px;
+        color: $white;
+        font-weight: 600;
+        @media (max-width: 768px){
+          font-size: 16px;
+          line-height: 20px;
+        }
+      }
+
       
-      
+    }
+    &__privacy{
+      width: 33%;
+      text-align: center;
+      @media (max-width: 768px){
+        margin: 10px 0;
+      }
+      & a{
+        color: $white;
+        font-size: 16px;
+        line-height: 20px;
+        text-decoration: none;
+      }
+    }
+    &__social-media{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 33%;
+      & a{
+        text-decoration: none;
+      }
+      & img{
+        margin-left: 10px;
+        @media (max-width: 768px){
+          margin: 0;
+          width: 30px;
+          height: 30px;
+          &:nth-child(1){
+            margin-right: 7px;
+          }
+        }
+      }
+     
     }
 
   }
