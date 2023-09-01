@@ -5,9 +5,6 @@ import Layout from "@layouts/Layout.astro";
 <Layout title="Registro">
   <main class="reg-procs">
     <h1 class="reg-procs__title">Proceso de registro</h1>
-    <p class="reg-procs__p">
-      Período de inscripción al Simposio: <span class="important">Del 1 al 22 de septiembre de 2023</span>.
-    </p>
     <ul class="reg-procs__list">
       <li class="reg-procs__element">
         <div class="reg-procs__instruction">
@@ -79,6 +76,20 @@ import Layout from "@layouts/Layout.astro";
         >
           Inscribir cartel
         </a>
+        <ul class="reg-procs__sub-list">
+          <li class="reg-procs__sub-element">
+            <p>
+              Período de inscripción: <span class="important">Del 
+              1 al 22 de septiembre de 2023</span>.
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Carteles seleccionados a más tardar el <span class="important">
+              29 de septiembre de 2023</span>.
+            </p>
+          </li>
+        </ul>
       </li>
     </ul>
     <!-- <RegisterModule client:only='vue' /> -->
@@ -92,8 +103,8 @@ import Layout from "@layouts/Layout.astro";
   padding: 90px 16px 30px;
   &__title {
     color: $black;
-    margin-bottom: 12px;
     font-size: 24px;
+    margin-bottom: 20px;
   }
   &__p {
     color: $black;
@@ -137,7 +148,7 @@ import Layout from "@layouts/Layout.astro";
     justify-content: center;
     border-radius: 8px;
     font-size: 16px;
-    margin: 12px auto;
+    margin: 20px auto;
     cursor: pointer;
     &:visited {
       color: $black;
@@ -152,16 +163,17 @@ import Layout from "@layouts/Layout.astro";
     margin-left: 10%;
   }
   &__sub-element {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     &::marker {
       color: $primary-color;
     }
   }
   @media (min-width: 768px) {
     max-width: 880px;
-    padding: 28px 32px;
+    padding: 40px 32px;
     &__title {
-      font-size: 32px;
+      font-size: 36px;
+      margin-bottom: 28px;
     }
     &__list {
       font-size: 20px;
@@ -177,11 +189,12 @@ import Layout from "@layouts/Layout.astro";
       width: 300px;
       height: 60px;
       font-size: 20px;
+      margin: 28px auto;
     }
   }
 }
 .important {
-  color: $primary-color;
-  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: $primary-color;
 }
 </style>
