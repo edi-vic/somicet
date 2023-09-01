@@ -10,6 +10,11 @@
     <div class="program__topics">
       <div class="program__card">
         <p>
+          Células troncales pluripotenciales
+        </p>
+      </div>
+      <div class="program__card">
+        <p>
           Células troncales neurales y hematopoyéticas
         </p>
       </div>
@@ -33,11 +38,6 @@
           Envejecimiento 
         </p>
       </div>
-      <div class="program__card">
-        <p>
-          Células troncales pluripotenciales
-        </p>
-      </div>
     </div>
     <butto class="principal-btn">
       <a href="/programa/horarios">
@@ -57,6 +57,7 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    justify-content: center;
     @media (max-width: 768px){
       padding: 0 40px;
     }
@@ -77,6 +78,9 @@
       justify-content: center;
       align-items: center;
       z-index: 1;
+      @media (max-width: 768px){
+        justify-content: space-between;
+      }
     }
     &__title{
       font-size: 32px;
@@ -111,6 +115,7 @@
       @media (max-width: 768px){
         width: 220px;
         height: 100px;
+        margin-bottom: 10px;
       }
       p{
         color: $white;
@@ -127,17 +132,21 @@
         background-color: rgba(39, 170, 42, 0.40);
       }
       &:nth-child(3){
+        border: 3px solid #D62380;
+        background: rgba(214, 35, 128, 0.40)
+      }
+      &:nth-child(4){
         border-color: $primary-color;
         background: rgba(197, 60, 29, 0.50);
 
       }
-      &:nth-child(4){
-        border-color: #C313CD;
-        background: rgba(195, 19, 205, 0.40);
-      }
       &:nth-child(5){
         border-color: #C8D24F;
         background: rgba(200, 210, 79, 0.40);
+      }
+      &:nth-child(6){
+        border-color: #C313CD;
+        background: rgba(195, 19, 205, 0.40);
       }
     }
   }

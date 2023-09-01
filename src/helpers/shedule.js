@@ -6,8 +6,9 @@ export const SCHEDULE = {
       "time_lapse": "8:15-10:15 hrs",
       "img": "/src/assets/moderators/alejandro.png",
       "op_color": "rgba(12, 161, 174, 0.40)",
-      "border": "4px solid #0CA1AE",
       "color": "#0CA1AE",
+      "border": "4px solid #0CA1AE",
+      
       "bg": "/src/assets/cells/stemCells1.png",
       "conferences": [
         {
@@ -46,8 +47,8 @@ export const SCHEDULE = {
       "time_lapse": "10:30-12:30 hrs",
       "img": "/src/assets/moderators/anayansi.png",
       "op_color": "rgba(39, 170, 42, 0.40)",
-      "color": "#27AA2A",
       "border": "4px solid #27AA2A",
+      "color": "#27AA2A",
       "bg": "/src/assets/cells/stemCells2.png",
       "conferences": [
         {
@@ -85,9 +86,9 @@ export const SCHEDULE = {
       "moderator": "Dr. Juan José Montesinos Montesinos",
       "img": "/src/assets/moderators/juan.png",
       "time_lapse": "14:00-16:00 hrs",
-      "color": "#BF2604",
-      "op_color": "rgba(197, 60, 29, 0.50)",
-      "border": "4px solid #BF2604",
+      "op_color": "rgba(195, 19, 205, 0.40)",
+      "border": "4px solid #C313CD",
+      "color": "#C313CD",
       "bg": "/src/assets/cells/stemCells3.png",
       "conferences": [
         {
@@ -125,9 +126,9 @@ export const SCHEDULE = {
       "moderator": "Dr. Mónica Lamas Gregori",
       "img": "/src/assets/moderators/monica.png",
       "time_lapse": "16:15-18:15 hrs",
-      "op_color": "rgba(195, 19, 205, 0.40)",
-      "color": "#C313CD",
-      "border": "4px solid #C313CD",
+      "color": "#BF2604",
+      "op_color": "rgba(197, 60, 29, 0.50)",
+      "border": "4px solid #BF2604",
       "bg": "/src/assets/cells/stemCells4.png",
       "conferences": [
         {
@@ -196,18 +197,18 @@ export const SCHEDULE = {
     },
     {
       
-      "break":"Receso",
-      "time":"11:00-11:15 hrs"
+      "break":"Café y Posters",
+      "time":"11:00-12:00 hrs"
       
     },
     {
       "topic_name": "Envejecimiento",
       "moderator": "Dra. Susana Castro Obregón",
-      "time_lapse": "11:15-13:15 hrs",
+      "time_lapse": "12:00-14:00 hrs",
       "img": "/src/assets/moderators/susana.png",
-      "op_color": "rgba(12, 161, 174, 0.40)",
-      "color": "#0CA1AE",
-      "border": "4px solid #0CA1AE",
+      "op_color": "rgba(195, 19, 205, 0.40)",
+      "color": "#C313CD",
+      "border": "4px solid #C313CD",
       "bg": "/src/assets/cells/stemCells1.png",
       "conferences": [
         {
@@ -231,18 +232,15 @@ export const SCHEDULE = {
         {
           "speaker_name":"Dra. Claudia González Espinosa",
           "institution": "Profesora Investigadora. Departamento de Farmacología. CINVESTAV. IPN",
-          "topic": "",
+          "topic": "Envejecimiento inflamatorio y senescencia de células cebadas",
           "schedule": "12:45-13:15 hrs"
         }
       ]
     },
     {
-      "break":"Palabras finales",
-      "time":"13:15-14:45 hrs"
-    },
-    {
       "break":"Clausura",
-      "time":"14:45-15:00 hrs"
-    }
+      "time":"14:00-14:15 hrs"
+    },
+    
   ]
 }
