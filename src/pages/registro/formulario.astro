@@ -14,14 +14,17 @@ import RegistrationModule from "@components/registration/RegistrationModule.vue"
 @import "@assets/library";
 .registration {
   margin: 0 auto;
-  max-width: 880px;
-  padding: 20px 16px;
+  padding: 90px 16px 30px;
   &__title {
     color: $black;
     margin-bottom: 12px;
   }
-  @media (min-width: 992px) {
-    padding: 60px 0;
+  @media (min-width: 768px) {
+    max-width: 880px;
+    padding: 28px 32px;
+    &__title {
+      font-size: 32px;
+    }
   }
 }
 </style>

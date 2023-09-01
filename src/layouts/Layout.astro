@@ -2,13 +2,14 @@
 import BaseLayout from "@layouts/BaseLayout.astro"
 import Navbar from "@components/core/Navbar.astro";
 import Header from "@components/core/Header.astro";
+import MobileHead from "@components/core/MobileHead.astro";
 
 const { title } = Astro.props
 ---
 
 <BaseLayout title={title}>
+  <MobileHead />
   <Header />
   <Navbar active={title}/>
   <slot />
-  
 </BaseLayout>
