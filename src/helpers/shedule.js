@@ -111,7 +111,7 @@ export const SCHEDULE = {
         {
           "speaker_name":"Dra. Elsa Garza Treviño",
           "institution": "Facultad de Medicina. UANL",
-          "topic": "Células mesenquimales modificadas para expresar TRAIL como tratamiento contra el cánce.",
+          "topic": "Células mesenquimales modificadas para expresar TRAIL como tratamiento contra el cáncer.",
           "schedule": "15:30-16:00 hrs"
         }
       ]
