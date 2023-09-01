@@ -19,13 +19,13 @@
     <div v-else-if="registration.status === REGISTRATION_STATUS[2] ">
       <p>
         Tu registro fue rechazado. Hubo una irregularidad
-        en tus datos:
+        en tus datos.
       </p>
-      <p class="validation__note">
+      <p v-if="registration.note" class="validation__note">
         {{ registration.note }}
       </p>
       <p>
-        Por favor, vuelve a enviar tu información:
+        Por favor, vuelve a enviar tu información.
       </p>
       <button 
         class="validation__button"

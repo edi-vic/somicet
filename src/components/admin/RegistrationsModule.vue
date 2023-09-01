@@ -171,7 +171,7 @@ const filteredRegistrations = computed(() => {
 
     const searchMatch = name.includes(searchValue) || email.includes(searchValue)
     const statusMatch = statusValue === "no_status" || statusValue === status
-    const groupMatch = groupValue === "no_group" || groupValue === group
+    const groupMatch = groupValue === "no_group" || groupValue === group || (groupValue === "no_group" && !group)
 
     return searchMatch && statusMatch && groupMatch
   })
@@ -199,8 +199,14 @@ const getRegistrations = async () => {
   status.loading = false
 }
 
-const handleGroup = (groupCode) => Object.values(REGISTRATION_GROUPS)
-  .find(group => group.code === groupCode)
+const handleGroup = (groupCode) => {
+  if (!groupCode) return '-'
+  
+  const group = Object.values(REGISTRATION_GROUPS)
+    .find(group => group.code === groupCode)
+    
+  return group ? group : '-'
+}
 
 
 const handleRegistration = (element) => {

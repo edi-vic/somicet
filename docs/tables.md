@@ -85,6 +85,22 @@ TO authenticated
 USING (exists (select 1 from public.admins where admins.id = auth.uid()))
 ```
 
+```sql
+CREATE POLICY "allow users update own registration" ON "public"."registrations"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (auth.uid() = user_id)
+WITH CHECK (auth.uid() = user_id)
+```
+
+```sql
+CREATE POLICY "allow admins update all registrations" ON "public"."registrations"
+AS PERMISSIVE FOR UPDATE
+TO authenticated
+USING (exists (select 1 from public.admins where admins.id = auth.uid()))
+WITH CHECK (exists (select 1 from public.admins where admins.id = auth.uid()))
+```
+
 ## Posters
 
 ### Schema
