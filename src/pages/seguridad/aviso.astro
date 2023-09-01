@@ -8,6 +8,34 @@ import Layout from "@layouts/Layout.astro";
         Aviso de privacidad
       </h3>
     </div>
+    <div class="privacy__content">
+      <p>
+        Estimado participante, los miembros de la SOMICET y el comité 
+        organizador informa que sus datos personales serán utilizados 
+        únicamente para las siguientes finalidades: Registrar su correcta 
+        inscripción al Simposio <b>“Células Troncales, Medicina Regenerativa 
+        y Envejecimiento”</b> 2023, generar listas de asistencias y validación 
+        de las mismas en dicho evento, así como mantener informado al 
+        asistente sobre la logística y actividades del simposio y la emisión 
+        de la constancia de participación o asistencia de acuerdo a la modalidad 
+        de que se trate. Por ninguna razón sus datos serán empleados con 
+        objetivos distintos a los anteriores.
+      </p>
+      <p>
+        Para más información acerca del aviso de privacidad o protección 
+        de sus datos personales puede solicitar informes al correo de la sociedad:
+        <a href="mailto:somicet@gmail.com">
+          somicet@gmail.com</a>. 
+      </p>
+      <p>
+        Agradecemos su participación y colaboración.
+      </p>
+      <p>
+        <b>
+          SOMICET
+        </b> <br>y comité organizador.
+      </p>
+    </div>
   
   </section>
 
@@ -17,15 +45,64 @@ import Layout from "@layouts/Layout.astro";
   @import "@assets/library";
   .privacy{
     width: 100%;
-    padding-top: 100px;
-    max-width: 880px;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    height: auto;
+    min-height: 780px;
+    padding: 0 40px;
+    @media (max-width: 768px){
+      padding: 0;
+    }
     &__title{
       display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
       width: 100%;
+      max-width: 880px;
+      @media (max-width: 768px){
+        max-width: 660px;
+        width: 90%;
+        margin-bottom: 10px;
+      }
       & h3{
         font-size: 32px;
         line-height: 36px;
+        @media (max-width: 768px){
+          font-size: 20px;
+          line-height: 24px;
+        }
+      }
+    }
+    &__content{
+      width: 100%;
+      max-width: 880px;
+      display: flex;
+      flex-direction: column;
+      text-align: justify;
+      @media (max-width: 768px){
+        max-width: 660px;
+        width: 90%;
+      }
+      & p{
+        font-size: 16px;
+        line-height: 20px;
+        margin: 20px 0;
+        &:nth-child(4){
+          text-align: center;
+          margin: 10px 0;
+        }
+        @media (max-width: 768px){
+          font-size: 12px;
+          line-height: 16px;
+        }
+        & a{
+          text-decoration: none;
+          color:$primary-color;
+          font-weight: 600;
+          cursor: pointer;
+        }
       }
     }
   }
