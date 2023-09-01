@@ -121,8 +121,6 @@ const validateAuthCode = async () => {
       token: code.value,
       type: "email"
     })
-  
-  console.log(data, error)
 
   if (error) {
     // TODO: find errors ej. wrong code
@@ -152,7 +150,6 @@ const handleLogin = async ({ session }) => {
       body: JSON.stringify(session),
     })
 
-    console.log(response)
   } catch (error) {
     console.error("Error in handleLogin: ", error)
   }

@@ -5,6 +5,7 @@
   />
   <OtpStep
     v-if="step === REGISTRATION_STEPS[1]"
+    @restart="handleRestart"
     @success="handleNextStep"
   />
   <PosterStep
@@ -40,6 +41,14 @@ onMounted(async () => {
 /*  vue  methods  */
 const handleNextStep = (val) => step.value = val
 
+const handleRestart = () => {
+  session.set({ 
+    user_id: "",
+    user_email: "",
+  })
+  step.value = REGISTRATION_STEPS[0]
+}
+
 const getUserProfile = async () => {
   const userId = getUserId()
   if (!userId) {
@@ -66,8 +75,7 @@ const getUserProfile = async () => {
       user_email: email,
     })
     if (!first_name || !last_name) {
-      // todo: send to registration step
-      step.value = REGISTRATION_STEPS[2]
+      window.location.href = '/registro/formulario';
     } else {
       profile.value = {
         firstName: first_name,
@@ -85,6 +93,10 @@ const getUserProfile = async () => {
 const getRegistration = async () => {
   const userId = getUserId()
 
+  status.loading = true
+  status.success = false
+  status.error = null
+
   const { data, error } = await supabase
     .from("registrations")
     .select()
@@ -92,10 +104,9 @@ const getRegistration = async () => {
     .single()
   
   if (error) {
-    console.log("here", error, error.message)
-    step.value = REGISTRATION_STEPS[3]
+    console.error("Error in getRegistration: ", error, error.message)
+    window.location.href = '/registro/formulario';
   } else {
-    console.log("there", data)
     registration.value = data
     step.value = REGISTRATION_STEPS[4]
   }
