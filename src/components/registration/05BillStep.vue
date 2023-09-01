@@ -169,7 +169,6 @@ const getBill = async () => {
   if (error) {
     console.error("Error in getBill: ", error.message)
   } else {
-    console.log(data)
     bill.value = data
     status.success = true
   }
@@ -192,8 +191,6 @@ const saveBill = async (e) => {
     "user_id": registration.user_id,
   }
 
-  console.log(record)
-
   const { data, error } = await supabase
     .from("bills")
     .insert(record)
@@ -203,7 +200,6 @@ const saveBill = async (e) => {
   if (error) {
     console.error("Error in saveBill: ", error.message)
   } else {
-    console.log(data)
     bill.value = data
     status.success = true
   }

@@ -153,10 +153,9 @@ const getRegistration = async () => {
     .single()
   
   if (error) {
-    console.log('here', error, error.message)
+    console.error('Error in getRegistration: ', error.message)
     step.value = REGISTRATION_STEPS[3]
   } else {
-    console.log('there', data)
     registration.value = data
     if (data.receipt_url === null) {
       step.value = REGISTRATION_STEPS[3]
