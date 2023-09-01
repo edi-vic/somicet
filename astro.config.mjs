@@ -6,13 +6,13 @@ export default defineConfig({
   output: 'server',
   integrations: [vue()],
   adapter: netlify(),
-  redirects: {
-    "/": "/mantenimiento",
-    "/admin": "/mantenimiento",
-    "/admin/carteles": "/mantenimiento",
-    "/admin/facturas": "/mantenimiento",
-    "/admin/inicio": "/mantenimiento",
-    "/admin/registros": "/mantenimiento",
-    "/registro": "/mantenimiento",
-  }
+  // redirects: {
+  //   "/": "/mantenimiento",
+  //   "/admin": "/mantenimiento",
+  //   "/admin/carteles": "/mantenimiento",
+  //   "/admin/facturas": "/mantenimiento",
+  //   "/admin/inicio": "/mantenimiento",
+  //   "/admin/registros": "/mantenimiento",
+  //   "/registro": "/mantenimiento",
+  // }
 });
