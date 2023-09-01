@@ -40,7 +40,8 @@ const { profile } = defineProps({
 })
 
 /*  vue  methods  */
-const logout = async () => {
+const logout = async (e) => {
+  e.preventDefault()
   
   const { error } = await supabase.auth.signOut()
   if (error) {
@@ -59,15 +60,17 @@ const logout = async () => {
 <style scoped lang="scss">
 @import "@assets/library";
 .user {
-  background-color: $white;
-  border-radius: 10px;
-  border: 3px solid lightgray;
+  width: 100%;
+  background-color: $lightgray;
+  border: 1px solid $gray;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  align-items: flex-start;
+  padding: 8px;
   margin-bottom: 20px;
   h5 {
-    color: $primary-color;
+    color: $black;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 4px;
@@ -76,6 +79,16 @@ const logout = async () => {
     color: $black;
     font-size: 16px;
     font-weight: 400;
+  }
+  button {
+    height: 30px;
+    width: 200%;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 8px;
+    color: $white;
+    font-size: 16px;
+    cursor: pointer;
   }
   &__element {
     margin-bottom: 12px;

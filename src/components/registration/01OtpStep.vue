@@ -1,10 +1,37 @@
 <template>
-  <section class="otp-step">
+  <section
+    class="otp-step otp-step--loading"
+    v-if="status.loading"
+  >
+    <Loader />
+  </section>
+
+  <section
+    class="otp-step"
+    v-if="!status.loading"
+  >
+    <article class="email">
+      <h5>
+        Correo electrónico
+      </h5>
+      <p>
+        {{ session.get()?.user_email }}
+      </p>
+      <button @click="handleRestart">
+        Cambiar de correo
+      </button>
+    </article>
+  </section>
+
+  <form 
+    class="otp-step"
+    v-if="!status.loading"
+  >
     <label
       class="otp-step__label"
       for="code"
     >
-      Código
+      Ingresa el código que recibiste en tu correo:
     </label>
     <input
       class="otp-step__input" 
@@ -24,21 +51,28 @@
       class="otp-step__button"
       @click="validateAuthCode"
       :disabled="status.loading || !isCodeValid"
+      type="submit"
     >
       Validar código
     </button>
-  </section>
+
+    <p class="otp-step__copy">
+      Si no has recibido el código, te sugerimos 
+      revisar la carpeta de correo no deseado.
+    </p>
+  </form>
 </template>
 
 <script setup>
 import { ref, reactive, computed } from "vue"
+import Loader from "@components/core/Loader.vue"
 import { session } from "@stores/session"
 import { REGISTRATION_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
 import { isEmpty, isLength } from "@helpers/validators"
 
 /*  vue  emits  */
-const emit = defineEmits(["success"])
+const emit = defineEmits(["restart", "success"])
 
 /*  vue  state  */
 const code = ref("")
@@ -66,6 +100,11 @@ const validateCode = () => {
     status.error = "El código debe tener 6 dígitos"
   else
     status.error = null
+}
+
+const handleRestart = (e) => {
+  e.preventDefault()
+  emit('restart')
 }
 
 const validateAuthCode = async () => {
@@ -120,7 +159,7 @@ const handleLogin = async ({ session }) => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "@assets/library";
 
 .otp-step {
@@ -128,6 +167,10 @@ const handleLogin = async ({ session }) => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  &--loading {
+    align-items: center;
+    height: 300px;
+  }
   &__label {
     font-size: 16px;
     margin-bottom: 12px;
@@ -155,6 +198,15 @@ const handleLogin = async ({ session }) => {
     color: $white;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 20px;
+    &:disabled {
+      background-color: $primary-color-600;
+      cursor: not-allowed;
+    }
+  }
+  &__copy {
+    font-size: 12px;
+    margin-bottom: 20px;
   }
   @media (min-width: 992px) {
     max-width: 440px;
@@ -172,6 +224,38 @@ const handleLogin = async ({ session }) => {
       width: 440px;
       font-size: 20px;
     }
+  }
+}
+
+.email {
+  background-color: $lightgray;
+  border: 1px solid $gray;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px;
+  margin-bottom: 20px;
+  h5 {
+    color: $black;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  p {
+    color: $black;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  button {
+    background: transparent;
+    border: none;
+    color: $primary-color;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 600;
   }
 }
 </style>

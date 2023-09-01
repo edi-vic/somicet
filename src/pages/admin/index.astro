@@ -1,5 +1,6 @@
 ---
 import { getUser, getAdmin } from "@helpers/supabase";
+import PanelModule from "@components/admin/PanelModule.vue";
 import AdminLayout from "@layouts/AdminLayout.astro"
 
 const user = await getUser(Astro.request);
@@ -20,4 +21,11 @@ if (!isAdmin) {
 
 <AdminLayout title="Panel">
   <h1>Panel</h1>
+  <PanelModule client:only="vue"/>
 </AdminLayout>
+
+<style lang="scss">
+  h1 {
+    margin-bottom: 8px;
+  }
+</style>

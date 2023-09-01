@@ -1,10 +1,20 @@
 <template>
-  <section class="email-step">
+  <section
+    class="email-step email-step--loading"
+    v-if="status.loading"
+  >
+    <Loader />
+  </section>
+
+  <form
+    class="email-step"
+    v-else
+  >
     <label
       class="email-step__label"
       for="email"
     >
-      Ingresa tu correo electrónico
+      Ingresa tu correo electrónico:
     </label>
     <input
       class="email-step__input"
@@ -24,14 +34,16 @@
       class="email-step__button"
       @click="sendAuthCode"
       :disabled="status.loading || !isEmailValid"
+      type="submit"
     >
       Enviar
     </button>
-  </section>
+  </form>
 </template>
 
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue"
+import Loader from "@components/core/Loader.vue"
 import { session } from "@stores/session"
 import { REGISTRATION_STEPS } from "@helpers/constants"
 import { supabase } from "@helpers/supabase"
@@ -74,7 +86,8 @@ const validateEmail = () => {
     inputErrors.email = null
 }
 
-const sendAuthCode = async () => {
+const sendAuthCode = async (e) => {
+  e.preventDefault()
   const _email = email.value.trim()
 
   status.loading = true
@@ -99,13 +112,17 @@ const sendAuthCode = async () => {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "@assets/library";
 .email-step {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  &--loading {
+    align-items: center;
+    height: 300px;
+  }
   &__label {
     font-size: 16px;
     margin-bottom: 12px;
@@ -133,6 +150,10 @@ const sendAuthCode = async () => {
     color: $white;
     font-size: 16px;
     cursor: pointer;
+    &:disabled {
+      background-color: $primary-color-600;
+      cursor: not-allowed;
+    }
   }
   @media (min-width: 992px) {
     max-width: 440px;

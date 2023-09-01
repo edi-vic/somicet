@@ -3,6 +3,7 @@ import logo from "@assets/logo.png"
 
 
 const { active } = Astro.props
+console.log(active)
 let home, register, program, contact, aboutUs;
 switch (active){
   case "Inicio" : 
@@ -167,10 +168,11 @@ switch (active){
     }
     &__items{
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: center;
       margin-top: 20px;
       width: 100%;
+      max-width: 880px;
       height: 60px;
       @media (max-width: 768px){
         position: absolute;
@@ -191,6 +193,8 @@ switch (active){
         color: #000000;
         font-size: 20px;
         line-height: 28px;
+        width: 150px;
+        text-align: center;
         @media (max-width: 768px){
           font-size: 24px;
           line-height: 32px;
@@ -212,6 +216,10 @@ switch (active){
           }
         }
         & div{
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           &:hover{
             border-bottom: solid 2px $primary-color;
           }
@@ -257,4 +265,11 @@ switch (active){
       transform: rotate(-45deg);
     }
   }
+
+.active {
+  font-weight: 600;
+  & div {
+    border-bottom: solid 2px $primary-color;
+  }
+}
 </style>
