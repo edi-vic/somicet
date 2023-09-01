@@ -130,6 +130,7 @@ const getRegistration = async () => {
   justify-content: flex-start;
   align-items: flex-start;
   &--loading {
+    height: 300px;
     justify-content: center;
     align-items: center;
   }

@@ -17,6 +17,7 @@ import PosterModule from "@components/registration/PosterModule.vue";
 .poster {
   margin: 0 auto;
   padding: 90px 16px 30px;
+  min-height: calc(100vh - 200px);
   &__title {
     color: $black;
     font-size: 24px;
@@ -24,13 +25,13 @@ import PosterModule from "@components/registration/PosterModule.vue";
   }
   &__wrapper {
     margin: 0 auto;
-    min-height: 45vh;
     display: flex;
     flex-direction: column;
   }
   @media (min-width: 768px) {
     max-width: 880px;
     padding: 40px 32px;
+    min-height: calc(100vh - 600px);
     &__title {
       font-size: 36px;
       margin-bottom: 28px;
