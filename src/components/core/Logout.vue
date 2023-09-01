@@ -18,7 +18,7 @@ const logout = async () => {
     user_id: "",
     user_email: "",
   })
-  document.cookie = "sbat=;"
+  document.cookie = "sbat=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   window.location.href = '/admin/inicio';
 }
 </script>
