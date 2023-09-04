@@ -45,12 +45,12 @@ export const REGISTRATION_GROUPS = {
   2: {
     code: "student_member",
     copy: "Estudiantes miembros (al año 2019)",
-    price: "$200",
+    price: "$300",
   },
   3: {
     code: "student",
     copy: "Estudiantes no miembros",
-    price: "$300",
+    price: "$400",
   },
   4: {
     code: "public",
@@ -104,26 +104,31 @@ export const POSTER_THEMES = {
     short_copy: "Tema",
   },
   1: {
+    code: "pluripotent",
+    copy: "Células Troncales Pluripotenciales",
+    short_copy: "Pluripotenciales",
+  },
+  2: {
     code: "neural_hematopoietic",
     copy: "Células Troncales Neurales y Hematopoyéticas",
     short_copy: "Neurales y Hematopoyéticas",
   },
-  2: {
+  3: {
     code: "mesenchymal",
     copy: "Células Estromales Mesenquimales",
     short_copy: "Estromales Mesenquimales",
   },
-  3: {
+  4: {
     code: "regeneration",
     copy: "Células Troncales y de Regeneración",
     short_copy: "Regeneración",
   },
-  4: {
+  5: {
     code: "cancer",
     copy: "Células Troncales y Cáncer",
     short_copy: "Cáncer",
   },
-  5: {
+  6: {
     code: "aging",
     copy: "Envejecimiento",
     short_copy: "Envejecimiento",
