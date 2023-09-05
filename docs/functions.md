@@ -36,6 +36,8 @@ $$;
 
 ## total_profiles_and_admins
 ```sql
+CREATE FUNCTION total_profiles_and_admins()
+RETURNS TABLE(total_profiles INTEGER, total_admins INTEGER) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -43,4 +45,26 @@ BEGIN
     CAST(COUNT(CASE WHEN is_admin THEN 1 END) as INTEGER) as total_admins
   FROM profiles;
 END;
+$$ LANGUAGE plpgsql;
+```
+
+## total_registrations_and_status
+```sql
+CREATE OR REPLACE FUNCTION public.total_registrations_and_status()
+RETURNS TABLE(
+    total_registrations INTEGER,
+    pending_registrations INTEGER,
+    approved_registrations INTEGER,
+    rejected_registrations INTEGER
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        COUNT(*) AS total_registrations,
+        COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending_registrations,
+        COUNT(CASE WHEN status = 'approved' THEN 1 END) AS approved_registrations,
+        COUNT(CASE WHEN status = 'rejected' THEN 1 END) AS rejected_registrations
+    FROM registrations;
+END;
+$$ LANGUAGE plpgsql;
 ```
