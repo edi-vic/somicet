@@ -82,17 +82,20 @@
           </div>
         </div>
       </div>
-      <a 
-        class="validation__receipt"
-        :href="registration.receipt_url" 
-        target="_blank" 
-        rel="noopener noreferrer"
+      <div 
         v-if="isPdf(registration.receipt_url)"
-      >
-        <template >
-          Abrir archivo
-        </template>
-      </a>
+        class="validation__receipt">
+        <a 
+          class="validation__btn"
+          :href="registration.receipt_url" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          
+        >
+          Abrir archivo PDF
+        </a>
+
+      </div>
       <div 
         class="validation__payment"
         v-else
@@ -361,7 +364,7 @@ const handleReject = async () => {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 50%;
-    height: 75vh;
+    height: 60vh;
     background-color: $white;
     justify-content: space-around;
     padding: 20px;
@@ -413,11 +416,12 @@ const handleReject = async () => {
   }
 
   &__receipt{
-    height: 400px;
+    height: 20%;
     border: 1px solid $gray;
     border-top: none;
     background: $lightgray;
     display: flex;
+    align-items: center;
     justify-content: center;
     border-radius: 0 0 4px 4px;
     margin-bottom: 12px;
@@ -430,21 +434,21 @@ const handleReject = async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    & a {
-      width: 180px;
-      height: 40px;
-      border-radius: 4px;
-      text-decoration:none;
-      padding: 8px 0;
-      border: none;
-      background: $primary-color;
-      text-align: center;
-      color: $white;
-      font-size: 16px;
-      line-height: 20px;
-      font-weight: 500;
-    }
     
+  }
+  &__btn{
+    width: 180px;
+    height: 40px;
+    border-radius: 4px;
+    text-decoration:none;
+    padding: 8px 0;
+    border: none;
+    background: $primary-color;
+    text-align: center;
+    color: $white;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
   }
   &__payment img {
     width: 50%;
