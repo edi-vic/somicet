@@ -5,23 +5,24 @@
       class="validation__dialog"
       v-if="!status.loading && confirmation === ''"
     >
-      <div class="validation__close">
-        <button
-          class="action"
-          @click="$emit('close')"
-        >
-          <img
-            class="action__image"
-            src="@assets/icons/close.svg"
-            alt="Cerrar"
-          />
-          <span>Cerrar</span>
-        </button>
+      <div class="validation__header">
+        <h2 class="validation__title">
+          Validación de registro
+        </h2>
+        <div class="validation__close">
+          <button
+            class="action"
+            @click="$emit('close')"
+          >
+            <img
+              class="action__image"
+              src="@assets/icons/close.svg"
+              alt="Cerrar"
+            />
+            <span>Cerrar</span>
+          </button>
+        </div>
       </div>
-
-      <h2 class="validation__title">
-        Validación de registro
-      </h2>
 
       <div class="validation__data">
         <div class="validation__row">
@@ -86,17 +87,28 @@
         :href="registration.receipt_url" 
         target="_blank" 
         rel="noopener noreferrer"
+        v-if="isPdf(registration.receipt_url)"
       >
-        <template v-if="isPdf(registration.receipt_url)">
+        <template >
           Abrir archivo
         </template>
-        <template v-else>
-          <img
-            :src="registration.receipt_url" 
-            alt="recibo"
-          >
-        </template>
       </a>
+      <div 
+        class="validation__payment"
+        v-else
+      >
+        <a 
+          class="validation__btn"
+          :href="registration.receipt_url"
+          target="_blank"
+        >
+          Visualizar pago
+        </a>
+        <img
+          :src="registration.receipt_url" 
+          alt="recibo"
+        >
+      </div>
 
       <div
         v-if="registration.status === 'pending'"
@@ -343,11 +355,15 @@ const handleReject = async () => {
   background-color: rgba(0, 0, 0, 0.5);
   &__dialog {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
+    width: 50%;
+    height: 75vh;
     background-color: $white;
+    justify-content: space-around;
     padding: 20px;
     border-radius: 4px;
     &--loading {
@@ -355,6 +371,11 @@ const handleReject = async () => {
       justify-content: center;
       align-items: center;
     }
+  }
+  &__header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
   &__close {
     display: flex;
@@ -390,7 +411,8 @@ const handleReject = async () => {
   &__cell {
     width: 50%;
   }
-  &__receipt {
+
+  &__receipt{
     height: 400px;
     border: 1px solid $gray;
     border-top: none;
@@ -401,12 +423,35 @@ const handleReject = async () => {
     margin-bottom: 12px;
     overflow: hidden;
   }
-  &__receipt img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  &__payment{
+    height: 30%;
+    border: 1px solid $gray;
+    background: $lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & a {
+      width: 180px;
+      height: 40px;
+      border-radius: 4px;
+      text-decoration:none;
+      padding: 8px 0;
+      border: none;
+      background: $primary-color;
+      text-align: center;
+      color: $white;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+    
+  }
+  &__payment img {
+    width: 50%;
+    height: 85%;
+    object-fit: contain;
     object-position: center;
-}
+  }
   &__actions {
     display: flex;
     justify-content: space-between

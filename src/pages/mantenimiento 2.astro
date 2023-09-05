@@ -1,0 +1,229 @@
+---
+import Header from "@components/core/Header.astro";
+
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <section 
+    title="mantenimiento"
+    class="home"
+    >
+      <Header />
+      <div class="home__content">
+        <div class="home__circles">
+          <div class="home__circle"/>
+          <div class="home__circle"/>
+          <div class="home__circle"/>
+          <div class="home__circle"/>
+          <div class="home__circle"/>
+          <div class="home__circle"/>
+          <div class="home__circle"/>
+          <div class="home__circle"/>
+        </div>
+        <div class="home__center-section">
+          <div class="home__text">
+            <h2>
+              ¡Nos encontramos en <br> mantenimiento!
+            </h2>
+            <br>
+            <p>
+              Estamos trabajando en el sitio web <br>
+              <span>
+                Pronto estaremos de vuelta
+              </span>
+            </p>
+  
+          </div>
+  
+        </div>
+        <div class="home__circles-right">
+        
+        </div>
+      </div>
+    </section>
+  </head>
+</html>
+
+
+<style lang="scss">
+  @import "@assets/library";
+  .header-wip{
+    margin-top: 20px;
+  }
+  .home{
+    width: 100%;
+    height: 100vh;
+    
+    background-color: $bg-hero;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction:column;
+    @media (max-width: 768px){
+      height: 100vh;
+      margin: 0;
+    }
+    &__content{
+      width: 100%;
+      height: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__circles{
+      position: relative;
+      height: 100%;
+    }
+    &__circle{
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      top: 22vh;
+      left: 6vw;
+      background: linear-gradient(to right, #F15, #F15A2A);
+      transform-origin: top left;
+      border-radius: 50%;
+      transform: scale(0) rotate(0deg) translate(-50%, -50%);
+      animation: cube 20s ease-in forwards infinite;
+      @media (max-width: 768px){
+        width: 10px;
+        height: 10px; 
+        top: 5vh;
+        left: 2vw;
+      }
+      &:nth-child(2) {
+        background: radial-gradient(circle, rgba(251,72,63,1) 0%, rgba(64,12,12,1) 94%);
+        top: 39vh;
+        left: 23vw;
+        animation-delay: 3s;
+        width: 10px;
+        height: 10px;
+        z-index: 1;
+        @media (max-width: 768px){
+          top: 47vh;
+          left: 60vw;
+        }
+      }
+      &:nth-child(3){
+        width: 15px;
+        height: 15px;
+        top: 55vh;
+        left: 30vw;
+        animation-delay: 6s;
+        display: block;
+        background: radial-gradient(circle, rgba(191,38,4,1) 0%, rgba(217,125,104,1) 94%);
+        @media (max-width: 768px){
+          display: none;
+        }
+      }
+      &:nth-child(4){
+        width: 15px;
+        height: 15px;
+        top: 25vh;
+        left: 45vw;
+        animation-delay: 10s;
+        display: block;
+        background: radial-gradient(circle, rgba(64,12,12,1) 0%, rgba(191,38,4,1) 94%);
+        @media (max-width: 768px){
+          display: none;
+        }
+      }
+      &:nth-child(5){
+        width: 15px;
+        height: 15px;
+        top: 57vh;
+        left: 4vw;
+        display: block;
+        animation-delay: 30s;
+        @media (max-width: 768px){
+          display: none;
+        }
+      }
+      &:nth-child(6){
+        width: 20px;
+        height: 20px;
+        top: 43vh;
+        left: 44vw;
+        background: linear-gradient(to right, #F15, #F15A2A);
+        animation-delay: 3s;
+        display: block;
+        @media (max-width: 768px){
+          display: none;
+        }
+      }
+    }
+    &__center-section{
+      width: 65%;
+      max-width: 680px;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(5px);
+      border: 4px solid $background-color;
+      border-radius: 40px;
+      z-index: 1;
+      @media (max-width: 768px){
+        width: 80%;
+        height: 200px;
+      }
+    }
+    &__text{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      & h2{
+        font-size: 40px;
+        line-height: 42px;
+        font-weight: 600;
+        margin: 0;
+        @media (max-width: 768px){
+          font-size: 24px;
+          line-height: 28px;
+        }
+        & span{
+          font-weight: 400;
+          font-size: 32px;
+          line-height: 40px;
+          @media (max-width: 768px){
+            font-size: 18px;
+            line-height: 22px;
+          }
+        }
+      }
+      & p{
+        font-size: 30px;
+        line-height: 36px;
+        font-weight: 500;
+        margin-top: 20px;
+        @media (max-width: 768px){
+          font-size: 14px;
+          line-height: 18px;
+        }
+        & span{
+          font-size: 20px;
+          line-height: 24px;
+          font-weight: 400;
+          @media (max-width: 768px){
+          font-size: 12px;
+          line-height: 16px;
+        }
+        }
+      }
+    }
+  }
+  @keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);   
+    opacity: 1;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%); 
+    opacity: 0;
+  }
+}
+</style>
