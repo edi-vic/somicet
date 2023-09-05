@@ -1,6 +1,6 @@
 <template>
   <section class="panel">
-    <h2>Usuarios</h2>
+    <h2 class="panel__subtitle">Usuarios</h2>
     <div class="panel__section">
       <div class="panel__module">
         <p class="panel__big-no">{{ profiles.users }}</p>
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <h2>Registros</h2>
+    <h2 class="panel__subtitle">Registros</h2>
     <div class="panel__section">
       <div class="panel__module">
         <p class="panel__big-no">{{ registrations.total }}</p>
@@ -102,6 +102,9 @@ const getRegistrations = async () => {
 <style scoped lang="scss">
 @import "@assets/library";
 .panel {
+  &__title {
+    margin-bottom: 8px;
+  }
   &__section {
     width: 100%;
     display: flex;
