@@ -100,8 +100,14 @@ import cover from "@assets/logos/cover-book.jpeg"
           max-width: 350px;
         }
         & span{
-          color: $primary-color;
+          color: $primary-color-800;
           font-weight: 600;
+          font-size: 28px;
+          line-height: 32px;
+          @media (max-width: 768px){
+            font-size: 20px;
+            line-height: 28px;
+          }
         }
       }
     }
