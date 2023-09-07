@@ -68,3 +68,24 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 ```
+
+### total_posters_and_status
+```sql
+CREATE OR REPLACE FUNCTION public.total_posters_and_status()
+RETURNS TABLE(
+    total_posters BIGINT,
+    pending_posters BIGINT,
+    approved_posters BIGINT,
+    rejected_posters BIGINT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        COUNT(*) AS total_posters,
+        COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending_posters,
+        COUNT(CASE WHEN status = 'approved' THEN 1 END) AS approved_posters,
+        COUNT(CASE WHEN status = 'rejected' THEN 1 END) AS rejected_posters
+    FROM posters;
+END;
+$$ LANGUAGE plpgsql;
+```

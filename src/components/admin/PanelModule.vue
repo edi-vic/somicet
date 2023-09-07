@@ -40,6 +40,36 @@
         </p>
       </div>
     </div>
+
+    <h2 class="panel__subtitle">Carteles</h2>
+    <div class="panel__section">
+      <div class="panel__module">
+        <p class="panel__big-no">{{ posters.total }}</p>
+        <p class="panel__title">Registros</p>
+      </div>
+      <div class="panel__module panel__module--wide">
+        <p class="panel__big-no">{{ posters.pending }}</p>
+        <p class="panel__title">
+          <span class="status-tag status-tag--pending" />
+          Pendientes
+        </p>
+      </div>
+      <div class="panel__module panel__module--wide">
+        <p class="panel__big-no">{{ posters.approved }}</p>
+        <p class="panel__title">
+            <span class="status-tag status-tag--approved" />
+            Aprobados
+        </p>
+      </div>
+      <div class="panel__module panel__module--wide">
+        <p class="panel__big-no">{{ posters.rejected }}</p>
+        <p class="panel__title">
+          <span class="status-tag status-tag--rejected" />
+          Rechazados
+        </p>
+      </div>
+    </div>
+
   </section>
 </template>
 
@@ -60,10 +90,18 @@ const registrations = ref({
   rejected: 0,
 })
 
+const posters = ref({
+  total: 0,
+  pending: 0,
+  approved: 0,
+  rejected: 0,
+})
+
 /*  vue  lifecycle  */
 onMounted(() => {
   getProfiles()
   getRegistrations()
+  getPosters()
 })
 
 const getProfiles = async () => {
@@ -97,12 +135,30 @@ const getRegistrations = async () => {
   }
 }
 
+const getPosters = async () => {
+  const { data, error } = await supabase
+    .rpc('total_posters_and_status')
+    .single()
+
+  if (error) {
+    console.error("Error in getPosters: ", error)
+  } else {
+    const { 
+      total_posters: total,
+      pending_posters: pending,
+      approved_posters: approved,
+      rejected_posters: rejected
+    } = data
+    posters.value = { total, pending, approved, rejected }
+  }
+}
+
 </script>
 
 <style scoped lang="scss">
 @import "@assets/library";
 .panel {
-  &__title {
+  &__subtitle {
     margin-bottom: 8px;
   }
   &__section {
