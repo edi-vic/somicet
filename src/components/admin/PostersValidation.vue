@@ -128,13 +128,6 @@
         <p class="validation__copy">
           {{ poster.approval_number }}
         </p>
-
-        <h6>
-          Fecha y hora de presentación
-        </h6>
-        <p>
-          {{ poster.presentation_date }}, {{ poster.presentation_time }}
-        </p>
       </div>
     </div>
 
@@ -175,34 +168,6 @@
           id="poster-number" 
           type="text"
           v-model="posterNumber"
-        >
-      </div>
-      <div class="validation__cell validation__cell--full">
-        <label 
-          class="validation__label" 
-          for="poster-number"
-        >
-          Fecha de presentación
-        </label>
-        <input 
-          class="validation__input"
-          id="poster-number" 
-          type="date"
-          v-model="posterDate"
-        >
-      </div>
-      <div class="validation__cell validation__cell--full">
-        <label 
-          class="validation__label" 
-          for="poster-number"
-        >
-          Hora de presentación
-        </label>
-        <input 
-          class="validation__input"
-          id="poster-number" 
-          type="time"
-          v-model="posterTime"
         >
       </div>
       <div
@@ -304,8 +269,6 @@ const { poster, handleTheme } = defineProps({
 /*  vue  data  */
 const confirmation = ref("")
 const posterNumber = ref("")
-const posterDate = ref("")
-const posterTime = ref("")
 const status = reactive({
   loading: false,
   success: false,
@@ -315,7 +278,7 @@ const status = reactive({
 /*  vue  computed  */
 const validConfirmation = computed(() => {
   if (confirmation.value === "approve") {
-    return posterNumber.value !== "" && posterDate.value !== "" && posterTime.value !== ""
+    return posterNumber.value !== ""
   } else {
     return true
   }
@@ -328,9 +291,7 @@ const handleFlow = (value) => {
 
 const handleApprove = async () => {
   const posterData = {
-    "number": posterNumber.value,
-    "date": posterDate.value,
-    "time": posterTime.value,
+    "number": posterNumber.value
   }
 
   status.loading = true
@@ -342,8 +303,6 @@ const handleApprove = async () => {
     .update({ 
       "status": REGISTRATION_STATUS[1],
       "approval_number": posterData.number,
-      "presentation_date": posterData.date,
-      "presentation_time": posterData.time,
     })
     .eq("id", poster.id)
     .select(`*,
