@@ -303,15 +303,16 @@ const TEMPLATES = {
                                             <span style="font-weight: bold;">
                                                 [[poster_number]]
                                             </span>
-                                            y deberá presentarse el día 
-                                            <span style="font-weight: bold;">
-                                                [[poster_date]]
-                                            </span>
-                                              a partir de las
-                                            <span style="font-weight: bold;">
-                                                [[poster_time]].
-                                            </span> 
+                                            y deberá presentar los días:
                                         </p>
+                                        <ul>
+                                          <li style="margin: 0 0 10px;">
+                                            Jueves, 19 de octubre de 2023 de 12:30 a 14:00 hrs.
+                                          </li>
+                                          <li style="margin: 0 0 10px;">
+                                            Viernes, 20 de octubre de 2023 de 11:00 a 12:00 hrs.
+                                          </li>
+                                        </ul>
                                         <p style="margin:0;font-size:16px;line-height:20px;font-family:Arial,sans-serif;">
                                             Enseguida le enlistamos los requerimientos para la presentación de su proyecto:
                                         </p>
@@ -542,11 +543,8 @@ const handler = async (_request: Request): Promise<Response> => {
   const { template, name, email, poster } = req
   let templateHTML = TEMPLATES[template]
   if (name) templateHTML = templateHTML.replace("[[user_name]]", name)
-  console.log(poster)
   if (poster) {
     templateHTML = templateHTML.replace("[[poster_number]]", poster.number)
-    templateHTML = templateHTML.replace("[[poster_date]]", poster.date)
-    templateHTML = templateHTML.replace("[[poster_time]]", poster.time)
   }
   const subject = SUBJECTS[template]
   
