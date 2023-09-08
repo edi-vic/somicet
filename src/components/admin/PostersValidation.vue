@@ -24,61 +24,63 @@
       </h2>
   
       <div class="validation__data" id="validation-data">
-        <div class="validation__row">
-          <div class="validation__cell">
-            <h6>
-                Tema
-              </h6>
-              <p>
-                {{ handleTheme(poster.theme, 'copy') }}
-              </p>
-          </div>
-          <div class="validation__cell">
-            <h6>
-              Fecha
-            </h6>
-            <p>
-              {{ parseDate(poster.created_at) }}
-            </p>
-          </div>
-        </div>
 
-        <div class="validation__row">
-          <div class="validation__cell">
-            <h6>
-                Título
+        <div class="validation__first-content">
+          <div class="validation__row">
+            <div class="validation__cell">
+              <h6>
+                  Tema
+                </h6>
+                <p>
+                  {{ handleTheme(poster.theme, 'copy') }}
+                </p>
+            </div>
+            <div class="validation__cell">
+              <h6>
+                Fecha
               </h6>
               <p>
-                {{ poster.title }}
+                {{ parseDate(poster.created_at) }}
               </p>
+            </div>
           </div>
-          <div class="validation__cell">
-            <h6>
-                Autores
+          <div class="validation__row">
+            <div class="validation__cell">
+              <h6>
+                  Título
+                </h6>
+                <p>
+                  {{ poster.title }}
+                </p>
+            </div>
+            <div class="validation__cell">
+              <h6>
+                  Autores
+                </h6>
+                <p>
+                  {{ poster.authors }}
+                </p>
+            </div>
+          </div>
+          <div class="validation__row">
+            <div class="validation__cell">
+              <h6>
+                  Adscripción
+                </h6>
+                <p>
+                  {{ poster.secondment }}
+                </p>
+            </div>
+            <div class="validation__cell">
+              <h6>
+                Agradecimientos
               </h6>
               <p>
-                {{ poster.authors }}
+                {{ poster.acknowledgements }}
               </p>
+            </div>
           </div>
-        </div>
 
-        <div class="validation__row">
-          <div class="validation__cell">
-            <h6>
-                Adscripción
-              </h6>
-              <p>
-                {{ poster.secondment }}
-              </p>
-          </div>
-          <div class="validation__cell">
-            <h6>
-              Agradecimientos
-            </h6>
-            <p>
-              {{ poster.acknowledgements }}
-            </p>
-          </div>
         </div>
         <div 
           class="validation__resume"
@@ -91,8 +93,9 @@
             {{ poster.summary }}
           </p>
         </div>
-      </div>
 
+      </div>
+      
       <div class="validation__pdf">
         <button @click="exportToPDF()">
           Descargar PDF
@@ -417,18 +420,15 @@ const exportToPDF = async () =>{
     if(POSTER_THEMES[key].code === poster.theme){
       theme = POSTER_THEMES[key].copy
     }
-  }
+  };
   html2canvas(document.getElementById("validation-data")).then((canvas) => {
-    var imgdata = canvas.toDataURL("image/jpg");
-    var doc = new jsPDF();
-    doc.addImage(imgdata, "JPG", 10, 10);
+    var imgdata = canvas.toDataURL("image/png");
+    var doc = new jsPDF('l', 'mm', [200, 120]);
+    doc.addImage(imgdata, "PNG", 7, 13, 180, 100);
     doc.save(theme);
   })
   status.loading = false;
-  status.isDownload = false
-  
-  
-  
+  status.isDownload = false; 
 }
 
 
@@ -450,10 +450,11 @@ const exportToPDF = async () =>{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
+    width: 80%;
     background-color: $white;
     padding: 20px;
     border-radius: 4px;
+    height: 80vh;
     &--loading {
       display: flex;
       justify-content: center;
@@ -471,6 +472,11 @@ const exportToPDF = async () =>{
   &__data {
     border: 1px solid $gray;
     border-radius: 4px 4px 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+  &__first-content{
+
   }
   &__row {
     width: 100%;
@@ -485,7 +491,7 @@ const exportToPDF = async () =>{
     }
   }
   &__resume {
-    height: 400px;
+    height: auto;
     border: 1px solid $gray;
     border-top: none;
     background: $lightgray;
@@ -493,8 +499,8 @@ const exportToPDF = async () =>{
     flex-direction: column;
     border-radius: 0 0 4px 4px;
     padding: 12px;
-    margin-bottom: 12px;
     overflow-y: scroll;
+   
     &--download{
       height: auto;
       overflow-y: initial;
