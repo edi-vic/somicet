@@ -18,10 +18,15 @@
           <span>Cerrar</span>
         </button>
       </div>
+      <div class="validation__pdf">
+        <h2 class="validation__title">
+          Validación de cartel
+        </h2>
+        <button @click="exportToPDF()">
+          Descargar PDF
+        </button>
 
-      <h2 class="validation__title">
-        Validación de cartel
-      </h2>
+      </div>
   
       <div class="validation__data" id="validation-data">
 
@@ -80,7 +85,6 @@
               </p>
             </div>
           </div>
-
         </div>
         <div 
           class="validation__resume"
@@ -96,12 +100,7 @@
 
       </div>
       
-      <div class="validation__pdf">
-        <button @click="exportToPDF()">
-          Descargar PDF
-        </button>
-
-      </div>
+      
       <div
         v-if="poster.status === 'pending'"
         class="validation__actions"
@@ -450,11 +449,11 @@ const exportToPDF = async () =>{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 85%;
     background-color: $white;
     padding: 20px;
     border-radius: 4px;
-    height: 80vh;
+    height: 85vh;
     &--loading {
       display: flex;
       justify-content: center;
@@ -473,10 +472,9 @@ const exportToPDF = async () =>{
     border: 1px solid $gray;
     border-radius: 4px 4px 0 0;
     display: flex;
-    flex-direction: column;
   }
   &__first-content{
-
+    width: 60%;
   }
   &__row {
     width: 100%;
@@ -491,6 +489,7 @@ const exportToPDF = async () =>{
     }
   }
   &__resume {
+    width: 40%;
     height: auto;
     border: 1px solid $gray;
     border-top: none;
@@ -507,8 +506,9 @@ const exportToPDF = async () =>{
     }
   }
   &__pdf{
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-bottom: 10px;
     & button{
       width: 180px;
@@ -529,7 +529,8 @@ const exportToPDF = async () =>{
   }
   &__actions {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    margin-top: 20px;
   }
   &__action {
     width: 48%;
