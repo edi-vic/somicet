@@ -131,11 +131,9 @@ import PostersValidation from "./PostersValidation.vue";
 import { ref, reactive, computed, onMounted } from "vue"
 import { supabase } from "@helpers/supabase"
 import { POSTER_STATUS, POSTER_THEMES } from "@helpers/constants";
-
 /*  vue  state  */
 const posters = ref([])
 const poster = ref(null)
-
 const search = ref("")
 const postersStatusSelect = ref("no_status")
 const postersThemeSelect = ref("no_theme")
@@ -165,6 +163,7 @@ const filteredPosters = computed(() => {
     const authors = poster.authors.toLowerCase()
     const status = poster.status
     const theme = poster.theme
+
 
     const searchMatch = title.includes(searchValue) || authors.includes(searchValue)
     const statusMatch = statusValue === "no_status" || status === statusValue
@@ -211,6 +210,7 @@ const handleTheme = (code, type) => {
 
 const handlePoster = (element) => {
   poster.value = element
+  
 }
 
 const handleUpdate = (element) => {
@@ -218,6 +218,9 @@ const handleUpdate = (element) => {
   posters.value[index] = element
   poster.value = null
 }
+
+
+
 </script>
 
 <style scoped lang="scss">

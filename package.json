@@ -16,6 +16,8 @@
     "@nanostores/vue": "^0.10.0",
     "@supabase/supabase-js": "^2.32.0",
     "astro": "^2.10.3",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "nanostores": "^0.9.3",
     "sass": "^1.65.1",
     "vue": "^3.3.4"

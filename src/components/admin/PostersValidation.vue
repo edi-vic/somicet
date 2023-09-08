@@ -18,79 +18,89 @@
           <span>Cerrar</span>
         </button>
       </div>
+      <div class="validation__pdf">
+        <h2 class="validation__title">
+          Validación de cartel
+        </h2>
+        <button @click="exportToPDF()">
+          Descargar PDF
+        </button>
 
-      <h2 class="validation__title">
-        Validación de cartel
-      </h2>
+      </div>
   
-      <div class="validation__data">
-        <div class="validation__row">
-          <div class="validation__cell">
-            <h6>
-                Tema
+      <div class="validation__data" id="validation-data">
+
+        <div class="validation__first-content">
+          <div class="validation__row">
+            <div class="validation__cell">
+              <h6>
+                  Tema
+                </h6>
+                <p>
+                  {{ handleTheme(poster.theme, 'copy') }}
+                </p>
+            </div>
+            <div class="validation__cell">
+              <h6>
+                Fecha
               </h6>
               <p>
-                {{ handleTheme(poster.theme, 'copy') }}
+                {{ parseDate(poster.created_at) }}
               </p>
+            </div>
           </div>
-          <div class="validation__cell">
-            <h6>
-              Fecha
-            </h6>
-            <p>
-              {{ parseDate(poster.created_at) }}
-            </p>
+          <div class="validation__row">
+            <div class="validation__cell">
+              <h6>
+                  Título
+                </h6>
+                <p>
+                  {{ poster.title }}
+                </p>
+            </div>
+            <div class="validation__cell">
+              <h6>
+                  Autores
+                </h6>
+                <p>
+                  {{ poster.authors }}
+                </p>
+            </div>
           </div>
+          <div class="validation__row">
+            <div class="validation__cell">
+              <h6>
+                  Adscripción
+                </h6>
+                <p>
+                  {{ poster.secondment }}
+                </p>
+            </div>
+            <div class="validation__cell">
+              <h6>
+                Agradecimientos
+              </h6>
+              <p>
+                {{ poster.acknowledgements }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div 
+          class="validation__resume"
+          :class="{'validation__resume--download': status.isDownload}"
+        >
+          <h6>
+            Resumen
+          </h6>
+          <p>
+            {{ poster.summary }}
+          </p>
         </div>
 
-        <div class="validation__row">
-          <div class="validation__cell">
-            <h6>
-                Título
-              </h6>
-              <p>
-                {{ poster.title }}
-              </p>
-          </div>
-          <div class="validation__cell">
-            <h6>
-                Autores
-              </h6>
-              <p>
-                {{ poster.authors }}
-              </p>
-          </div>
-        </div>
-
-        <div class="validation__row">
-          <div class="validation__cell">
-            <h6>
-                Adscripción
-              </h6>
-              <p>
-                {{ poster.secondment }}
-              </p>
-          </div>
-          <div class="validation__cell">
-            <h6>
-              Agradecimientos
-            </h6>
-            <p>
-              {{ poster.acknowledgements }}
-            </p>
-          </div>
-        </div>
       </div>
-
-      <div class="validation__resume">
-        <h6>
-          Resumen
-        </h6>
-        <p>
-          {{ poster.summary }}
-        </p>
-      </div>
-
+      
+      
       <div
         v-if="poster.status === 'pending'"
         class="validation__actions"
@@ -153,7 +163,7 @@
         Validación de cartel
       </h2>
       <p class="validation__copy">
-        ¿Estás segura de aprobar el cartel? Ingresa el número de cartel y
+        ¿Está seguro que desea aprobar el cartel? Ingresa el número de cartel y
         la fecha de presentación.
       </p>
       <div class="validation__cell validation__cell--full">
@@ -248,9 +258,10 @@
 import Loader from '@components/core/Loader.vue'
 import { ref, reactive, computed } from 'vue'
 import { parseDate } from "@helpers/dates"
-import { REGISTRATION_STATUS } from "@helpers/constants"
+import { REGISTRATION_STATUS, POSTER_THEMES } from "@helpers/constants"
 import { supabase, sendEmail } from "@helpers/supabase"
-
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
 
@@ -273,6 +284,7 @@ const status = reactive({
   loading: false,
   success: false,
   error: null,
+  isDownload: false
 })
 
 /*  vue  computed  */
@@ -357,6 +369,26 @@ const handleReject = async () => {
     status.loading = false
   }
 }
+const exportToPDF = async () =>{
+  status.isDownload = true;
+  status.loading = true;
+
+  let theme;
+  for(const key in POSTER_THEMES){
+    if(POSTER_THEMES[key].code === poster.theme){
+      theme = POSTER_THEMES[key].copy
+    }
+  };
+  html2canvas(document.getElementById("validation-data")).then((canvas) => {
+    var imgdata = canvas.toDataURL("image/png");
+    var doc = new jsPDF('l', 'mm', [200, 120]);
+    doc.addImage(imgdata, "PNG", 7, 13, 180, 100);
+    doc.save(theme);
+  })
+  status.loading = false;
+  status.isDownload = false; 
+}
+
 
 </script>
 
@@ -376,10 +408,11 @@ const handleReject = async () => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
+    width: 85%;
     background-color: $white;
     padding: 20px;
     border-radius: 4px;
+    height: 85vh;
     &--loading {
       display: flex;
       justify-content: center;
@@ -397,6 +430,10 @@ const handleReject = async () => {
   &__data {
     border: 1px solid $gray;
     border-radius: 4px 4px 0 0;
+    display: flex;
+  }
+  &__first-content{
+    width: 60%;
   }
   &__row {
     width: 100%;
@@ -411,7 +448,8 @@ const handleReject = async () => {
     }
   }
   &__resume {
-    height: 400px;
+    width: 40%;
+    height: auto;
     border: 1px solid $gray;
     border-top: none;
     background: $lightgray;
@@ -419,11 +457,39 @@ const handleReject = async () => {
     flex-direction: column;
     border-radius: 0 0 4px 4px;
     padding: 12px;
-    margin-bottom: 12px;
+    overflow-y: scroll;
+   
+    &--download{
+      height: auto;
+      overflow-y: initial;
+    }
+  }
+  &__pdf{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    & button{
+      width: 180px;
+      height: 40px;
+      border-radius: 4px;
+      text-decoration:none;
+      padding: 8px 0;
+      border: none;
+      cursor: pointer;
+      background: $primary-color;
+      text-align: center;
+      color: $white;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+
+    }
   }
   &__actions {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    margin-top: 20px;
   }
   &__action {
     width: 48%;
