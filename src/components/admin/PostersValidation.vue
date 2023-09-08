@@ -23,7 +23,7 @@
         Validación de cartel
       </h2>
   
-      <div class="validation__data">
+      <div class="validation__data" id="validation-data">
         <div class="validation__row">
           <div class="validation__cell">
             <h6>
@@ -80,17 +80,25 @@
             </p>
           </div>
         </div>
+        <div 
+          class="validation__resume"
+          :class="{'validation__resume--download': status.isDownload}"
+        >
+          <h6>
+            Resumen
+          </h6>
+          <p>
+            {{ poster.summary }}
+          </p>
+        </div>
       </div>
 
-      <div class="validation__resume">
-        <h6>
-          Resumen
-        </h6>
-        <p>
-          {{ poster.summary }}
-        </p>
-      </div>
+      <div class="validation__pdf">
+        <button @click="exportToPDF()">
+          Descargar PDF
+        </button>
 
+      </div>
       <div
         v-if="poster.status === 'pending'"
         class="validation__actions"
@@ -160,7 +168,7 @@
         Validación de cartel
       </h2>
       <p class="validation__copy">
-        ¿Estás segura de aprobar el cartel? Ingresa el número de cartel y
+        ¿Está seguro que desea aprobar el cartel? Ingresa el número de cartel y
         la fecha de presentación.
       </p>
       <div class="validation__cell validation__cell--full">
@@ -283,9 +291,10 @@
 import Loader from '@components/core/Loader.vue'
 import { ref, reactive, computed } from 'vue'
 import { parseDate } from "@helpers/dates"
-import { REGISTRATION_STATUS } from "@helpers/constants"
+import { REGISTRATION_STATUS, POSTER_THEMES } from "@helpers/constants"
 import { supabase, sendEmail } from "@helpers/supabase"
-
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 /*  vue  emits  */
 const emit = defineEmits(["close", "update"])
 
@@ -310,6 +319,7 @@ const status = reactive({
   loading: false,
   success: false,
   error: null,
+  isDownload: false
 })
 
 /*  vue  computed  */
@@ -398,6 +408,29 @@ const handleReject = async () => {
     status.loading = false
   }
 }
+const exportToPDF = async () =>{
+  status.isDownload = true;
+  status.loading = true;
+
+  let theme;
+  for(const key in POSTER_THEMES){
+    if(POSTER_THEMES[key].code === poster.theme){
+      theme = POSTER_THEMES[key].copy
+    }
+  }
+  html2canvas(document.getElementById("validation-data")).then((canvas) => {
+    var imgdata = canvas.toDataURL("image/jpg");
+    var doc = new jsPDF();
+    doc.addImage(imgdata, "JPG", 10, 10);
+    doc.save(theme);
+  })
+  status.loading = false;
+  status.isDownload = false
+  
+  
+  
+}
+
 
 </script>
 
@@ -461,6 +494,32 @@ const handleReject = async () => {
     border-radius: 0 0 4px 4px;
     padding: 12px;
     margin-bottom: 12px;
+    overflow-y: scroll;
+    &--download{
+      height: auto;
+      overflow-y: initial;
+    }
+  }
+  &__pdf{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    & button{
+      width: 180px;
+      height: 40px;
+      border-radius: 4px;
+      text-decoration:none;
+      padding: 8px 0;
+      border: none;
+      cursor: pointer;
+      background: $primary-color;
+      text-align: center;
+      color: $white;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+
+    }
   }
   &__actions {
     display: flex;
