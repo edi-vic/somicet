@@ -108,11 +108,12 @@
           {{ handleTheme(poster.theme, 'short_copy') }}
         </div>
         <div class="posters__cell posters__cell--title">
-          {{ poster.title }}
+          {{ truncateText(poster.title, "title") }}
         </div>
-        <div class="posters__cell posters__cell--authors">
-          {{ poster.authors }}
-        </div>
+        <div 
+          class="posters__cell posters__cell--authors"
+          :innerHTML="truncateText(poster.authors , 'authors')"
+        />
       </li>
     </ul>
   </section>
@@ -147,6 +148,7 @@ const status = reactive({
 /*  vue  lifecycle  */
 onMounted(() => {
   getPosters()
+  
 })
 
 /*  vue  computed  */
@@ -198,6 +200,15 @@ const getPosters = async () => {
   }
 
   status.loading = false
+}
+
+const truncateText = (str, type) => {
+  const maxLength = 50;
+  return str.length > maxLength && type === "title" ?
+  str.slice(0, maxLength - 1) + "…" :
+  str.length > maxLength && type === "authors" ? 
+  `<p>${str.slice(0, maxLength - 1)}...<i>et al</i></p>` 
+  : str;
 }
 
 const handleTheme = (code, type) => {
@@ -281,7 +292,7 @@ const handleUpdate = (element) => {
     }
   }
   &__title, &__cell {
-    height: 48px;
+    height: 58px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -297,6 +308,7 @@ const handleUpdate = (element) => {
     }
     &--theme, &--title, &--authors {
       width: 20%;
+      padding: 0 8px;
     }
   }
 }
