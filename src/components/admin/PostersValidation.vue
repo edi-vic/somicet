@@ -163,8 +163,7 @@
         Validación de cartel
       </h2>
       <p class="validation__copy">
-        ¿Está seguro que desea aprobar el cartel? Ingresa el número de cartel y
-        la fecha de presentación.
+        ¿Está seguro que desea aprobar el cartel? Ingresa el número de cartel.
       </p>
       <div class="validation__cell validation__cell--full">
         <label 

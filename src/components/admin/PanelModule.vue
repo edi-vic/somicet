@@ -158,6 +158,11 @@ const getPosters = async () => {
 <style scoped lang="scss">
 @import "@assets/library";
 .panel {
+  max-height: calc(90vh - 135px);
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid $gray;
+  border-radius: 8px;
   &__subtitle {
     margin-bottom: 8px;
   }
@@ -166,6 +171,7 @@ const getPosters = async () => {
     display: flex;
     gap: 16px;
     margin-bottom: 20px;
+    padding-left: 20px;
   }
   &__module{
     width: 120px;
