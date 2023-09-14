@@ -57,3 +57,7 @@ supabase functions deploy mails --project-ref dvehcomkytvfptmklezb
 
 - [Ver Tablas](docs/tables.md)
 - [Ver Funciones](docs/functions.md)
+
+
+---
+© 2023 Sociedad Mexicana para la Investigación de Células Troncales (SOMICET). Todos los derechos reservados.
