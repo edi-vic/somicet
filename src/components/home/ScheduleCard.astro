@@ -1,11 +1,11 @@
 ---
 import clock from "@assets/icons/clock.svg"
-// import alejandro from "@assets/moderators/alejandro.png"
-// import anayansi from "@assets/moderators/anayansi.png"
-// import elizabeth from "@assets/moderators/elizabeth.png"
-// import juan from "@assets/moderators/juan.png"
-// import monica from "@assets/moderators/monica.png"
-// import susana from "@assets/moderators/susana.png"
+import alejandro from "@assets/moderators/alejandro.png"
+import anayansi from "@assets/moderators/anayansi.png"
+import elizabeth from "@assets/moderators/elizabeth.png"
+import juan from "@assets/moderators/juan.png"
+import monica from "@assets/moderators/monica.png"
+import susana from "@assets/moderators/susana.png"
 
 const { item } = Astro.props;
 
@@ -24,7 +24,12 @@ const {
 const borderColor = `1px solid ${color}`;
 const bgImg = bg;
 const bgColor = color;
-const moderatorImg = img;
+const moderatorImg = img.includes("alejandro") ? alejandro 
+  : img.includes("anayansi") ? anayansi 
+  : img.includes("elizabeth") ? elizabeth 
+  : img.includes("juan") ? juan 
+  : img.includes("monica") ? monica 
+  : susana;
 ---
 
 <section 
