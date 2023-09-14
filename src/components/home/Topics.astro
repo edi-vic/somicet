@@ -119,11 +119,12 @@ const arrInfoCells = [
 
       prevImg = currImg;
       currImg = nextImg;
-
-      // currDot = dotImage[currImg];
-      // currDot.classList.add("topics__dots--active");
-      // prevDot = dotImage[prevImg];
-      // prevDot.classList.remove("topics__dots--active");
+      let currDot;
+      let prevDot;
+      currDot = dotImage[currImg];
+      currDot.classList.add("topics__dots--active");
+      prevDot = dotImage[prevImg];
+      prevDot.classList.remove("topics__dots--active");
 
     }
 
@@ -155,15 +156,17 @@ const arrInfoCells = [
     width: 100%;
     height: 820px;
     background: $background-color;
+    overflow: hidden;
     position: relative;
     
     @media (max-width: 768px){
-      height: auto;
+      height: 750px;
       background: $primary-color-600;
     }
     &__container{
-      overflow: hidden;
+      
       display: flex;
+      width: 100%;
      
     }
     &__photo-section{
@@ -240,15 +243,19 @@ const arrInfoCells = [
       width: 210px;
       height: 150px;
       margin-right: 25px;
-      &--active{
-        width: 230px;
-        height: 170px;
-        box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.35);
-      }
       @media (max-width: 768px){
         width: 70px;
         height: 50px;
         margin-right: 13px;
+      }
+      &--active{
+        width: 230px;
+        height: 170px;
+        box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.35);
+        @media (max-width: 768px){
+          width: 90px;
+          height: 70px;
+        }
       }
     }
   }
