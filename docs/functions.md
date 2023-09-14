@@ -89,3 +89,22 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 ```
+
+### total_bills_and_status
+```sql
+CREATE OR REPLACE FUNCTION public.total_bills_and_status()
+RETURNS TABLE(
+    total_bills BIGINT,
+    pending_bills BIGINT,
+    approved_bills BIGINT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        COUNT(*) AS total_bills,
+        COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending_bills,
+        COUNT(CASE WHEN status = 'approved' THEN 1 END) AS approved_bills
+    FROM bills;
+END;
+$$ LANGUAGE plpgsql;
+```

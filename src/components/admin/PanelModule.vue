@@ -16,7 +16,7 @@
     <div class="panel__section">
       <div class="panel__module">
         <p class="panel__big-no">{{ registrations.total }}</p>
-        <p class="panel__title">Registros</p>
+        <p class="panel__title">Total</p>
       </div>
       <div class="panel__module panel__module--wide">
         <p class="panel__big-no">{{ registrations.pending }}</p>
@@ -45,7 +45,7 @@
     <div class="panel__section">
       <div class="panel__module">
         <p class="panel__big-no">{{ posters.total }}</p>
-        <p class="panel__title">Registros</p>
+        <p class="panel__title">Total</p>
       </div>
       <div class="panel__module panel__module--wide">
         <p class="panel__big-no">{{ posters.pending }}</p>
@@ -66,6 +66,28 @@
         <p class="panel__title">
           <span class="status-tag status-tag--rejected" />
           Rechazados
+        </p>
+      </div>
+    </div>
+
+    <h2 class="panel__subtitle">Facturas</h2>
+    <div class="panel__section">
+      <div class="panel__module">
+        <p class="panel__big-no">{{ bills.total }}</p>
+        <p class="panel__title">Total</p>
+      </div>
+      <div class="panel__module panel__module--wide">
+        <p class="panel__big-no">{{ bills.pending }}</p>
+        <p class="panel__title">
+          <span class="status-tag status-tag--pending" />
+          Pendientes
+        </p>
+      </div>
+      <div class="panel__module panel__module--wide">
+        <p class="panel__big-no">{{ bills.approved }}</p>
+        <p class="panel__title">
+            <span class="status-tag status-tag--approved" />
+            Aprobados
         </p>
       </div>
     </div>
@@ -97,11 +119,18 @@ const posters = ref({
   rejected: 0,
 })
 
+const bills = ref({
+  total: 0,
+  pending: 0,
+  approved: 0,
+})
+
 /*  vue  lifecycle  */
 onMounted(() => {
   getProfiles()
   getRegistrations()
   getPosters()
+  getBills()
 })
 
 const getProfiles = async () => {
@@ -153,11 +182,34 @@ const getPosters = async () => {
   }
 }
 
+const getBills = async () => {
+  const { data, error } = await supabase
+    .rpc('total_bills_and_status')
+    .single()
+
+  if (error) {
+    console.error("Error in getBills: ", error)
+  } else {
+    const { 
+      total_bills: total,
+      pending_bills: pending,
+      approved_bills: approved
+    } = data
+    bills.value = { total, pending, approved }
+  }
+}
+
+
 </script>
 
 <style scoped lang="scss">
 @import "@assets/library";
 .panel {
+  max-height: calc(90vh - 135px);
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid $gray;
+  border-radius: 8px;
   &__subtitle {
     margin-bottom: 8px;
   }
@@ -166,6 +218,7 @@ const getPosters = async () => {
     display: flex;
     gap: 16px;
     margin-bottom: 20px;
+    padding-left: 20px;
   }
   &__module{
     width: 120px;

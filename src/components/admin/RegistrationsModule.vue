@@ -224,8 +224,12 @@ const handleUpdate = (element) => {
 @import "@assets/library";
 .registrations {
   &__table {
+    max-height: calc(90vh - 135px);
     border: 1px solid $gray;
     border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
   &__control {
     padding: 16px;
@@ -261,7 +265,6 @@ const handleUpdate = (element) => {
     font-weight: bold;
   }
   &__rows {
-    max-height: 70vh;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
