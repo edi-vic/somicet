@@ -1,21 +1,30 @@
 ---
-  import clock from "@assets/icons/clock.svg"
-  const { item } = Astro.props;
+import clock from "@assets/icons/clock.svg"
+// import alejandro from "@assets/moderators/alejandro.png"
+// import anayansi from "@assets/moderators/anayansi.png"
+// import elizabeth from "@assets/moderators/elizabeth.png"
+// import juan from "@assets/moderators/juan.png"
+// import monica from "@assets/moderators/monica.png"
+// import susana from "@assets/moderators/susana.png"
 
-    const { 
-      topic_name,
-      time_lapse, 
-      img,
-      moderator, 
-      conferences,
-      op_color,
-      color,
-      border,
-      bg
-    } = item;
-    const borderColor = `1px solid ${color}`;
-    const bgImg = bg;
-    const bgColor = color;
+const { item } = Astro.props;
+
+const { 
+  topic_name,
+  time_lapse, 
+  img,
+  moderator, 
+  conferences,
+  op_color,
+  color,
+  border,
+  bg
+} = item;
+
+const borderColor = `1px solid ${color}`;
+const bgImg = bg;
+const bgColor = color;
+const moderatorImg = img;
 ---
 
 <section 
@@ -36,7 +45,7 @@
     <div class="schedule-card__img">
       <img 
         style={{border: border}}
-        src={img} 
+        src={moderatorImg} 
         alt=""
       >
       <div class="schedule-card__name">
