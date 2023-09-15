@@ -237,13 +237,13 @@ const getBills = async () => {
   }
   &__big-no {
     font-size: 48px;
-    font-weight: 700;
+    font-weight: 600;
     color: $primary-color;
     text-align: center;
   }
   &__title {
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     color: $black;
     text-align: center;
     display: flex;
