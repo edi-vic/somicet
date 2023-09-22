@@ -1,5 +1,6 @@
 ---
 import cipquim from "@assets/logos/CIPQUIM.png"
+import accesoLab from "@assets/logos/logo-accesolab.png"
 ---
 <section class="sponsors">
   <div class="sponsors__title">
@@ -9,11 +10,20 @@ import cipquim from "@assets/logos/CIPQUIM.png"
   </div>
   <div class="sponsors__content">
     <div class="sponsors__line"/>
-      <div class="sponsors__logo">
-        <img src={cipquim} alt="cipquim-logo">
-        <p>
-          CIPQUIM
-        </p>
+      <div class="sponsors__brands">
+        <div class="sponsors__logo">
+          <img src={cipquim} alt="cipquim-logo">
+          <p>
+            CIPQUIM
+          </p>
+        </div>
+        <div class="sponsors__logo">
+          <img src={accesoLab} alt="">
+          <p>
+            AccesoLab
+          </p>
+        </div>
+
       </div>
     <div class="sponsors__line" />
 
@@ -24,13 +34,13 @@ import cipquim from "@assets/logos/CIPQUIM.png"
   @import "@assets/library";
   .sponsors{
     width: 100%;
-    height: 300px;
+    height: 450px;
     background:$white;
     display:flex;
     justify-content:space-evenly;;
     flex-direction: column;
     @media (max-width: 768px){
-      height: 200px;
+      height: 400px;
     }
     &__title{
       display: flex;
@@ -52,30 +62,48 @@ import cipquim from "@assets/logos/CIPQUIM.png"
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0 12%;
+      
     }
     &__line{
       width: 40%;
       height: 0;
       border: 1px solid $secondary-color-700;
     }
-    &__logo{
-      width: 20%;
+    &__brands{
+      width: 50%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      height: 180px;
+      justify-content: space-between;
       & img{
-        width: 70px;
         height: 70px;
         @media (max-width: 768px){
           width: 50px;
           height: 50px;
         }
       }
+      
+      &:nth-child(2){
+        & img{
+          @media (max-width: 768px){
+            width: auto;
+            max-width: 120px;
+            height: auto;
+          }
+        }
+      }
+    }
+    &__logo{
+      
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      
       & p{
-        font-size: 24px;
-        line-height: 28px;
+        font-size: 14px;
+        line-height: 18px;
         text-align: center;
         margin-top: 10px;
         @media (max-width: 768px){

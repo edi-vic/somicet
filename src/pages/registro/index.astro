@@ -59,8 +59,16 @@ import Layout from "@layouts/Layout.astro";
               Posteriormente recibirás un correo confirmando
               tu lugar al evento.
             </p>
+
           </li>
+
         </ol>
+        <div class="reg-procs__banner">
+          <p>
+            Periodo de inscripción como asistente abierto hasta el día del evento.
+          </p>
+          
+        </div>
       </li>
       <li class="reg-procs__element">
         <div class="reg-procs__instruction">
@@ -68,35 +76,59 @@ import Layout from "@layouts/Layout.astro";
           <p>
             ¿Tienes un cartel para presentar?
             Inscríbelo aquí.
+            <br> 
+            Estos son los requisitos:
           </p>
+          
         </div>
+        
+        <ul class="reg-procs__sub-list">
+          <li class="reg-procs__sub-element">
+            <p>
+              Título
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Autores
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Adscripción 
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Resumen del trabajo (no mayor a 250 palabras)
+            </p>
+          </li>
+          <li class="reg-procs__sub-element">
+            <p>
+              Agradecimientos
+            </p>
+          </li>
+        </ul>
+
         <a 
           class="reg-procs__button"
           href="/registro/cartel"
         >
           Inscribir cartel
         </a>
-        <ul class="reg-procs__sub-list">
-          <li class="reg-procs__sub-element">
-            <p>
-              Período de inscripción de cartel: <span class="important">Del 
-              1 al 22 de septiembre de 2023</span>.
-            </p>
-          </li>
-          <li class="reg-procs__sub-element">
-            <p>
-              Resultados de carteles seleccionados: <span class="important">
-              29 de septiembre de 2023</span>.
-            </p>
-          </li>
-          <li class="reg-procs__sub-element">
-            <p>
-              Periodo de inscripción como asitente abierto hasta el día del evento.
-            </p>
-          </li>
-        </ul>
       </li>
     </ul>
+    <div class="reg-procs__banner">
+      <p>
+        Período de inscripción de cartel: <br> <span class="important">Del 
+        1 al 29 de septiembre de 2023</span>.
+      </p>
+      <p>
+        Resultados de carteles seleccionados: <br> <span class="important">
+          5 de Octubre de 2023</span>.
+      </p>
+
+    </div>
   </main>
 </Layout>
 
@@ -162,6 +194,37 @@ import Layout from "@layouts/Layout.astro";
       color: $white;
     }
   }
+  &__requirements{
+
+  }
+  &__banner{
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    background-color: $primary-color;
+    color: $white;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    text-align: center;
+    @media (min-width: 768px){
+      padding: 8px 0;
+
+    }
+    & p{
+      font-size: 14px;
+      line-height: 18px;
+      &:nth-child(2){
+        margin: 5px 0;
+      }
+      @media (min-width: 768px){
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+  }
   &__sub-list {
     width: 80%;
     margin-left: 10%;
@@ -198,7 +261,9 @@ import Layout from "@layouts/Layout.astro";
   }
 }
 .important {
-  text-decoration: underline;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 24px;
   text-decoration-color: $primary-color;
 }
 </style>
