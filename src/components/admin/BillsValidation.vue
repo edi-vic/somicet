@@ -60,6 +60,17 @@
         <div class="validation__row">
           <div class="validation__cell">
             <h6>
+              Régimen fiscal
+            </h6>
+            <p>
+              {{ bill.regime || "-" }}
+            </p>
+          </div>
+        </div>
+
+        <div class="validation__row">
+          <div class="validation__cell">
+            <h6>
               Dirección
             </h6>
             <p>
