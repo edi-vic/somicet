@@ -19,7 +19,7 @@ export const SCHEDULE = {
         },
         {
           "speaker_name":"Dr. Mario Bermúdez de León",
-          "institution": "Instituto Mexicano de Seguro Social, Monterrey",
+          "institution": "Departamento de Biología Molecular Centro de Investigación Biomédica del Noreste Instituto Mexicano del Seguro Social",
           "topic": "Uso de fármacos epigenéticos en el proceso de reprogramación a células troncales pluripotentes inducidas.",
           "schedule": "08:45 - 09:15 hrs"
         },
