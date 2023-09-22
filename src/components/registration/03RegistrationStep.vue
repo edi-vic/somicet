@@ -162,8 +162,6 @@ const uploadReceipt = async () => {
     .from('receipts')
     .upload(path, file.value)
 
-  console.log(data, error)
-
   if (error) {
     console.error("Error in uploadReceipt: ", error.message)
   } else {
@@ -179,8 +177,6 @@ const getPublicUrl = async (path) => {
     .storage
     .from('receipts')
     .getPublicUrl(path)
-  
-  console.log(data, error)
 
   if (error) {
     console.error("Error in getPublicUrl: ", error.message)
@@ -191,7 +187,6 @@ const getPublicUrl = async (path) => {
 
 const handleFlow = (e) => {
   e.preventDefault()
-  console.log("handleFlow: ", registration)
   if (registration?.id) {
     updateRegistration()
   } else {
@@ -216,8 +211,6 @@ const saveRegistration = async () => {
     .from('registrations')
     .insert(record)
 
-  console.log(data, error)
-
   if (error) {
     // TODO: find errors
     console.error("Error in saveRegistration: ", error.message)
@@ -236,8 +229,6 @@ const updateRegistration = async () => {
     group: group.value,
     receipt_url: receiptUrl.value,
   }
-
-  console.log(record)
 
   status.loading = true
   status.success = false
