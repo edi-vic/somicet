@@ -149,12 +149,7 @@ export const SCHEDULE = {
           "topic": "El gasterópodo Deroceras laeve, modelo emergente para el estudio de la regeneración en moluscos.",
           "schedule": "17:15 - 17:45 hrs"
         },
-        {
-          "speaker_name":"Por confirmar",
-          "institution": "",
-          "topic": "",
-          "schedule": "17:45 - 18:15 hrs"
-        }
+        
       ]
     }
   ],
@@ -214,25 +209,25 @@ export const SCHEDULE = {
         {
           "speaker_name":"Dra. Mina Konigsberg",
           "institution": "Departamento de Ciencias de la Salud. Universidad Autónoma Metopolitana-Iztapalapa.",
-          "topic": "Bioenergética y Envejecimiento Celular",
+          "topic": "El tratamiento prolongado con sulforafano previene la neuroinflamación y la senescencia en el cerebro de ratas de mediana edad",
           "schedule": "11:15 - 11:45 hrs"
         },
         {
           "speaker_name":"Dr. Juan de Dios Rodríguez Callejas ",
-          "institution": "Centro de Investigación sobre el envejecimiento del CINVESTAV",
-          "topic": "Relación entre la autofagia y la senescencia con la distrofia microglial durante el envejecimiento de un primate no humano",
+          "institution": "Ciencias Médicas del Servicio de Geriatría del Instituto Nacional de Ciencias Médicas y Nutrición Salvador Zubirán.",
+          "topic": "Distrofia microglial en el envejecimiento del primate no humano marmoseta común (Callithrix jacchus).",
           "schedule": "11:45 - 12:15 hrs"
         },
         {
           "speaker_name":"Dra. Ingrid Fetter Pruneda",
           "institution": "Instituto de Investigaciones Biomedicas. UNAM",
-          "topic": "Envejecimiento y longevidad en insectos",
+          "topic": "Las hormigas como un sistema novedoso para estudiar la conducta social, el envejecimiento y la longevidad reproductiva.",
           "schedule": "12:15 - 12:45 hrs"
         },
         {
           "speaker_name":"Dra. Claudia González Espinosa",
           "institution": "Profesora Investigadora. Departamento de Farmacología. CINVESTAV. IPN",
-          "topic": "Envejecimiento inflamatorio y senescencia de células cebadas",
+          "topic": "Envejecimiento inflamatorio y senescencia del sistema inmune innato: el caso de las células cebadas.",
           "schedule": "12:45 - 13:15 hrs"
         }
       ]
