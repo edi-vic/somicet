@@ -156,7 +156,7 @@ export const SCHEDULE = {
   "friday":[
     {
       "topic_name": "Células Troncales y Cáncer",
-      "moderator": "Dra. Elizabeth Ortiz Sánchez",
+      "moderator": "Dra.  Ortiz Sánchez",
       "img": "/src/assets/moderators/elizabeth.png",
       "time_lapse": "9:00 - 11:00 hrs",
       "op_color": "rgba(200, 210, 79, 0.40)",
@@ -178,7 +178,7 @@ export const SCHEDULE = {
         },
         {
           "speaker_name":"Dra. Claudia Bello",
-          "institution": "Posgrado en Ciencias Biológicas. Facultad de Medicina. UNAM",
+          "institution": "Posgrado en Ciencias Bioquímicas. Instituto de Investigaciones Biomédicas. UNAM",
           "topic": "El ácido lisofosfatídico promueve el crecimiento de esferoides derivados de células de glioma a través de la expresión de SOX2 y OCT4.",
           "schedule": "10:00 - 10:30 hrs"
         },

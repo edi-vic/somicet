@@ -56,6 +56,19 @@
       />
       <label 
         class="bill-step__label"
+        for="regime"
+      >
+        Régimen fiscal
+      </label>
+      <input 
+        id="regime" 
+        class="bill-step__input"
+        type="text" 
+        placeholder="Régimen fiscal"
+        v-model="bill.regime"
+      />
+      <label 
+        class="bill-step__label"
         for="address"
       >
         Domicilio fiscal
@@ -133,6 +146,7 @@ const bill = ref({
   name: "",
   denomination: "",
   rfc: "",
+  regime: "",
   address: "",
 })
 const status = reactive({
@@ -146,6 +160,7 @@ const isFormComplete = computed(() => {
   return !isEmpty(bill.value.name) && 
     !isEmpty(bill.value.denomination) && 
     !isEmpty(bill.value.rfc) && 
+    !isEmpty(bill.value.regime) &&
     !isEmpty(bill.value.address)
 })
 
@@ -186,6 +201,7 @@ const saveBill = async (e) => {
     "name": bill.value.name,
     "denomination": bill.value.denomination,
     "rfc": bill.value.rfc,
+    "regime": bill.value.regime,
     "address": bill.value.address,
     "registration_id": registration.id,
     "user_id": registration.user_id,

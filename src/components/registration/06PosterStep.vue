@@ -360,7 +360,7 @@ const savePoster = async () => {
   &__label {
     font-size: 16px;
     margin-bottom: 8px;
-    font-weight: bold;
+    font-weight: 600;
   }
   &__input, &__textarea {
     height: 50px;

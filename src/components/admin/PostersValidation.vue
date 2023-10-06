@@ -481,7 +481,7 @@ const exportToPDF = async () =>{
       color: $white;
       font-size: 16px;
       line-height: 20px;
-      font-weight: 500;
+      font-weight: 400;
 
     }
   }

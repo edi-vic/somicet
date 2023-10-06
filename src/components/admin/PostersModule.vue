@@ -276,7 +276,7 @@ const handleUpdate = (element) => {
     border-bottom: 1px solid $gray;
   }
   &__titles {
-    font-weight: bold;
+    font-weight: 600;
   }
   &__rows {
     overflow-y: scroll;
