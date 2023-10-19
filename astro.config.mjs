@@ -15,4 +15,7 @@ export default defineConfig({
   //   "/admin/registros": "/mantenimiento",
   //   "/registro": "/mantenimiento",
   // }
+  redirects: {
+    "/registro/cartel" : "/"
+  }
 });
