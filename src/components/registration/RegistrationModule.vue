@@ -13,12 +13,16 @@
       @restart="handleRestart"
       @success="handleNextStep"
     />
-    <NameStep 
+    <NoEmailRegister 
+      v-if="!status.loading && step === REGISTRATION_STEPS[2]"
+      @restart="handleRestart"
+    />
+    <!-- <NameStep 
       v-if="!status.loading && step === REGISTRATION_STEPS[2]"
       :profile="profile"
       :getUserId="getUserId"
       @success="handleNextStep"
-    />
+    /> -->
     <RegistrationStep
       v-if="!status.loading && step === REGISTRATION_STEPS[3]"
       :profile="profile"
@@ -48,6 +52,7 @@ import NameStep from '@components/registration/02NameStep.vue'
 import RegistrationStep from '@components/registration/03RegistrationStep.vue'
 import ValidationStep from '@components/registration/04ValidationStep.vue'
 import BillStep from '@components/registration/05BillStep.vue'
+import NoEmailRegister from '@components/registration/NoEmailRegister.vue'
 import { REGISTRATION_STEPS } from '@helpers/constants'
 import { supabase } from '@helpers/supabase'
 import { session, getUserId } from '@stores/session'
@@ -56,6 +61,7 @@ import { session, getUserId } from '@stores/session'
 const step = ref(null)
 const profile = ref({})
 const registration = ref({})
+const assistance = ref(false)
 
 const status = reactive({
   loading: false,
@@ -66,6 +72,7 @@ const status = reactive({
 /*  vue  lifecycle  */
 onMounted(async () => {
   await getUserProfile()
+  
 })
 
 /*  vue  methods  */
@@ -110,7 +117,6 @@ const getUserProfile = async () => {
     }
     status.success = true
   }
-
   status.loading = false
 }
 
@@ -157,6 +163,7 @@ const getRegistration = async () => {
     step.value = REGISTRATION_STEPS[3]
   } else {
     registration.value = data
+    assistance.value = data.assistance
     if (data.receipt_url === null) {
       step.value = REGISTRATION_STEPS[3]
     } else {
