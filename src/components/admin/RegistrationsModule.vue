@@ -87,6 +87,13 @@
         </div>
         <div class="registrations__cell registrations__cell--actions">
           <button
+            class="action action--diploma"
+            v-if="registration.assistance && registration.status !== 'rejected'"
+            @click="downloadDiploma(registration)"
+          >
+            Diploma
+          </button>
+          <button
             class="action"
             v-if="registration.status === 'pending'"
             @click="handleRegistration(registration)"
@@ -221,6 +228,20 @@ const handleUpdate = (element) => {
   const index = registrations.value.findIndex((registration) => registration.id === element.id)
   registrations.value[index] = element
   registration.value = null
+}
+
+const downloadDiploma = async (registration) => {
+
+    const { id } = registration;
+
+    const { data, error } = supabase
+      .storage
+      .from('diplomas')
+      .getPublicUrl(`${id}.pdf`)
+
+    const { publicUrl } = data
+
+  window.open(publicUrl, '_blank');
 }
 
 // LOGIC FOR CSV GENERATION
@@ -380,6 +401,9 @@ function downloadCSV(csvData, filename = 'data.csv') {
   border-radius: 4px;
   background-color: $white;
   cursor: pointer;
+  &--diploma {
+    margin-right: 8px;
+  }
   &__image {
     width: 16px;
     margin-right: 8px;
