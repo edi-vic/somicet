@@ -72,7 +72,7 @@
     >
       <li
         class="registrations__row"
-        :class="`registrations__row--${registration.assistance ? 'assistance' : 'no-assistance'}`"
+        :class="`registrations__row--${!registration.assistance || registration.status === 'rejected' ? 'no-assistance' : 'assistance'}`"
         v-for="registration in filteredRegistrations" 
         :key="registration.id"
       >
