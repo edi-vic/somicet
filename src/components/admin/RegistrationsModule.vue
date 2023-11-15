@@ -72,6 +72,7 @@
     >
       <li
         class="registrations__row"
+        :class="`registrations__row--${registration.assistance ? 'assistance' : 'no-assistance'}`"
         v-for="registration in filteredRegistrations" 
         :key="registration.id"
       >
@@ -273,6 +274,9 @@ const handleUpdate = (element) => {
     }
   }
   &__row {
+    &--no-assistance {
+      background-color: $red;
+    }
     &:last-child {
       border-bottom: none;
     }
