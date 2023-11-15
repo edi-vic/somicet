@@ -1,4 +1,7 @@
 <template>
+  <!-- <button @click="getAssistants">
+    Generate CSV
+  </button> -->
   <section class="registrations__table">
     <div class="registrations__control">
       <input
@@ -72,6 +75,7 @@
     >
       <li
         class="registrations__row"
+        :class="`registrations__row--${!registration.assistance || registration.status === 'rejected' ? 'no-assistance' : 'assistance'}`"
         v-for="registration in filteredRegistrations" 
         :key="registration.id"
       >
@@ -82,6 +86,13 @@
           <div :class="`status-tag status-tag--${registration.status}`" />
         </div>
         <div class="registrations__cell registrations__cell--actions">
+          <button
+            class="action action--diploma"
+            v-if="registration.assistance && registration.status !== 'rejected'"
+            @click="downloadDiploma(registration)"
+          >
+            Diploma
+          </button>
           <button
             class="action"
             v-if="registration.status === 'pending'"
@@ -218,6 +229,73 @@ const handleUpdate = (element) => {
   registrations.value[index] = element
   registration.value = null
 }
+
+const downloadDiploma = async (registration) => {
+
+    const { id } = registration;
+
+    const { data, error } = supabase
+      .storage
+      .from('diplomas')
+      .getPublicUrl(`${id}.pdf`)
+
+    const { publicUrl } = data
+
+  window.open(publicUrl, '_blank');
+}
+
+// LOGIC FOR CSV GENERATION
+
+const getAssistants = async () => {
+  const { data, error } = await supabase
+    .from("registrations")
+    .select()
+    .eq("assistance", true)
+    .not("status", 'eq', "rejected")
+    .order("serial_number", { ascending: false })
+
+  if (error) {
+    console.error("Error in getRegistrations: ", error.message)
+  } else {
+    console.log(data)
+    const csvData = arrayToCSV(data);
+    downloadCSV(csvData, 'diplomas.csv');
+  }
+
+}
+
+function arrayToCSV(data) {
+  // Crear los encabezados del CSV (basados en las claves del primer objeto, si todos tienen la misma estructura)
+  const headers = Object.keys(data[0]).join(',');
+
+  // Crear las filas del CSV
+  const rows = data.map(obj => {
+    return Object.keys(obj).map(key => {
+      let val = obj[key];
+      if (key === 'name') {
+      // Eliminar espacios adicionales y convertir a mayúsculas
+      val = val.replace(/\s+/g, ' ').trim().toUpperCase();
+    }
+      return typeof val === 'string' ? `"${val.replace(/"/g, '""')}"` : val; // Manejar comillas dentro de los valores
+    }).join(',');
+  });
+
+  // Unir encabezados y filas, y agregar un salto de línea al final de cada fila
+  return [headers].concat(rows).join('\r\n');
+}
+
+function downloadCSV(csvData, filename = 'data.csv') {
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.style.visibility = 'hidden';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -273,6 +351,9 @@ const handleUpdate = (element) => {
     }
   }
   &__row {
+    &--no-assistance {
+      background-color: $red;
+    }
     &:last-child {
       border-bottom: none;
     }
@@ -320,6 +401,9 @@ const handleUpdate = (element) => {
   border-radius: 4px;
   background-color: $white;
   cursor: pointer;
+  &--diploma {
+    margin-right: 8px;
+  }
   &__image {
     width: 16px;
     margin-right: 8px;
