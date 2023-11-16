@@ -8,11 +8,12 @@ import Contact from "@components/home/Contact.astro"
 import Program from "@components/home/Program.astro"
 import Sponsors from "@components/home/Sponsors.astro"
 import Banner from "@components/home/PromotionalBanner.astro"
+import Memories from "@components/home/Memories.vue";
 ---
 
 <Layout title='Inicio'>
 	<Hero />
-	<Banner />
+	<Memories client:only="vue" />
 	<!-- <Program />
 	<Register /> 
 	<Location /> -->

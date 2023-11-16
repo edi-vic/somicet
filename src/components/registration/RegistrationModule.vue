@@ -31,15 +31,25 @@
       @success="handleNextStep"
     />
     <ValidationStep
-      v-if="!status.loading && step === REGISTRATION_STEPS[4]"
+      v-if="!status.loading && step === REGISTRATION_STEPS[4] && assistance"
       :profile="profile"
       :registration="registration"
-      @reset="handleReset"
+      @download="downloadDiploma"
     />
-    <BillStep
+    <section 
+      class="registration-container__msg"
+      v-if="!status.loading && step === REGISTRATION_STEPS[4] && !assistance"
+    >
+      <User :profile="profile" />
+      <p>
+        Lamentamos informarte que no cumples con los requisitos necesarios para obtener la constancia. Si tienes alguna pregunta o necesitas aclaraciones, no dudes en ponerte en contacto con nosotros a través de <a href="mailto:somicet@gmail.com">somicet@gmail.com</a>.
+      </p>
+
+    </section>
+    <!-- <BillStep
       v-if="!status.loading && step === REGISTRATION_STEPS[4] && registration.status === 'approved'"
       :registration="registration"
-    />
+    /> -->
   </div>
 </template>
 
@@ -47,6 +57,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import Loader from '@components/core/Loader.vue'
 import EmailStep from '@components/registration/00EmailStep.vue'
+import User from '@components/core/User.vue';
 import OtpStep from '@components/registration/01OtpStep.vue'
 import NameStep from '@components/registration/02NameStep.vue'
 import RegistrationStep from '@components/registration/03RegistrationStep.vue'
@@ -173,9 +184,20 @@ const getRegistration = async () => {
   status.loading = false
 }
 
+const downloadDiploma = async () => {
+  const { data, error } = supabase
+    .storage
+    .from('diplomas')
+    .getPublicUrl(`${registration.value.id}.pdf`)
+
+  const { publicUrl } = data
+  window.open(publicUrl, '_blank');
+}
+
 </script>
 
 <style scoped lang="scss">
+@import "@assets/library";
 .registration-container {
   width: 100%;
   display: flex;
@@ -186,6 +208,24 @@ const getRegistration = async () => {
     height: 300px;
     justify-content: center;
     align-items: center;
+  }
+  &__msg{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    & p{
+      font-size: 20px;
+      line-height: 24px;
+      color: $black;
+      text-align: center;
+      & a{
+        text-decoration: none;
+        color: $primary-color;
+      }
+    }
   }
 }
 </style>

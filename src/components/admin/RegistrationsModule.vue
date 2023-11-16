@@ -240,7 +240,6 @@ const downloadDiploma = async (registration) => {
       .getPublicUrl(`${id}.pdf`)
 
     const { publicUrl } = data
-
   window.open(publicUrl, '_blank');
 }
 

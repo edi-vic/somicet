@@ -1,10 +1,25 @@
 <template>
-
+  
   <section class="validation">
+    <h1>
+      Constancia de asistencia.
+    </h1>
     <User :profile="profile" />
   </section>
+  <section class="validation__download">
+    <button 
+      class="principal-btn"
+      @click="handleDownload"
+    >
+      Descargar constancia
 
-  <section class="validation">
+    </button>
+    <p>
+      Muchas gracias por tu participación y esperamos contar contigo en futuros eventos.
+    </p>
+    
+  </section>
+  <!-- <section class="validation">
     <div v-if="registration.status === REGISTRATION_STATUS[0] ">
       <p>
         Tu registro está en proceso de validación,
@@ -34,7 +49,7 @@
         Reenviar registro
       </button>
     </div>
-  </section>
+  </section> -->
 </template>
 
 <script setup>
@@ -43,7 +58,8 @@ import { reactive } from 'vue'
 import { REGISTRATION_STATUS } from '@helpers/constants';
 import { supabase } from '@helpers/supabase';
 
-const emit = defineEmits(["reset"])
+const emit = defineEmits(["reset", "download"])
+
 
 /*  vue  props  */
 const { registration } = defineProps({
@@ -77,11 +93,15 @@ const resetRegistration = async () => {
     console.error('Error in resetRegistration: ', error)
     status.error = error.message
   } else {
-    console.log(data)
     status.success = true
     emit("reset")
   }
   status.loading = false
+}
+
+const handleDownload = (e) =>{
+  e.preventDefault()
+  emit('download')
 }
 </script>
 
@@ -112,6 +132,26 @@ const resetRegistration = async () => {
     color: $white;
     font-size: 16px;
     cursor: pointer;
+  }
+  &__download{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & p{
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 700;
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+  & h1{
+    font-size: 24px;
+    line-height: 28px;
+    color: $black;
+    margin-bottom: 20px;
   }
 }
 </style>
