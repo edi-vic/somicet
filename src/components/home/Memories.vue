@@ -13,7 +13,7 @@
           @click="downloadMemories()"
           class="principal-btn"
         >
-          Descargar memorias
+          Ver memorias
         </button>
       </div>
     </div>
