@@ -4,71 +4,28 @@ import Layout from "@layouts/Layout.astro";
 
 <Layout title="Registro">
   <main class="reg-procs">
-    <h1 class="reg-procs__title">Proceso de registro</h1>
+    <h1 class="reg-procs__title">Descarga tu constancia</h1>
+    <a 
+      class="reg-procs__button"
+      href="/registro/formulario"
+    >
+      Obtener constancia
+    </a>
     <ul class="reg-procs__list">
       <li class="reg-procs__element">
-        <div class="reg-procs__instruction">
-          <span class="reg-procs__bullet">a</span>
-          <p>
-            Realiza el pago de tu aportación según el 
-            grupo al que pertenezcas.
-          </p>
-        </div>
-        <a 
-          class="reg-procs__button"
-          href="/registro/datos-bancarios"
-        >
-          Obtener datos bancarios
-        </a>
-      </li>
-      <li class="reg-procs__element">
-        <div class="reg-procs__instruction">
-          <span class="reg-procs__bullet">b</span>
-          <p>
-            Llena el formulario de registro con los 
-            datos necesarios para tu asistencia.
-          </p>
-        </div>
-        <a 
-          class="reg-procs__button"
-          href="/registro/formulario"
-        >
-          Llenar formulario
-        </a>
+        Antes de comenzar, hay puntos importantes que debes de saber: <br>
         <ol class="reg-procs__sub-list">
           <li class="reg-procs__sub-element">
             <p>
-              Registra tu correo electrónico.
+              Cada asistente tiene un plazo de 60 días a partir de 15 Noviembre de 2023 para descargar su constancia.
             </p>
           </li>
           <li class="reg-procs__sub-element">
             <p>
-              Te enviaremos un código para iniciar sesión.
+              Si dentro del periodo anteriormente mencionado se identifica alguna inconsistencia dentro de la constancia, el asistente puede solicitar la correción enviando un correo electrónico a <a href="mailto:somicet@gmail.com">somicet@gmail.com</a>. 
             </p>
           </li>
-          <li class="reg-procs__sub-element">
-            <p>
-              Sube tu comprobante de pago y completa el 
-              formulario con los detalles necesarios para 
-              tu asistencia y constancia.
-
-            </p>
-          </li>
-          <li class="reg-procs__sub-element">
-            <p>
-              Posteriormente recibirás un correo confirmando
-              tu lugar al evento.
-            </p>
-
-          </li>
-
         </ol>
-        <div class="reg-procs__banner">
-          <p>
-            Periodo de inscripción como asistente abierto hasta el día del evento.
-          </p>
-          
-        </div>
       </li>
       <!--<li class="reg-procs__element">
         <div class="reg-procs__instruction">
@@ -124,8 +81,7 @@ import Layout from "@layouts/Layout.astro";
         1 al 29 de septiembre de 2023</span>.
       </p> -->
       <p>
-        Resultados de carteles seleccionados: <br> <span class="important">
-          6 de Octubre de 2023</span>.
+        <b>La Sociedad Mexicana para la Investigación en Células Troncales</b> agaradece sinceramente la participación de todos los asistentes y los invita a participar en futuros eventos.
       </p>
 
     </div>
@@ -207,10 +163,10 @@ import Layout from "@layouts/Layout.astro";
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    padding: 8px;
+    padding:  8px;
     text-align: center;
     @media (min-width: 768px){
-      padding: 8px 0;
+      padding: 16px 8px;
 
     }
     & p{
@@ -228,16 +184,22 @@ import Layout from "@layouts/Layout.astro";
   &__sub-list {
     width: 80%;
     margin-left: 10%;
+    margin-top: 20px;
   }
   &__sub-element {
     margin-bottom: 10px;
     &::marker {
       color: $primary-color;
     }
+    & a{
+      text-decoration: none;
+      color: $primary-color;
+    }
   }
   @media (min-width: 768px) {
     max-width: 880px;
     padding: 40px 32px;
+    min-height: 450px;
     &__title {
       font-size: 36px;
       margin-bottom: 28px;

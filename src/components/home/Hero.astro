@@ -15,21 +15,23 @@
   </div>
   <div class="home__center-section">
     <div class="home__text">
+      <p>
+        Muchas gracias por tu participación en: <br>
+      </p>
+      <br>
       <h2>
         <span>
           Simposio
         </span> <br>
         Células Troncales, Medicina Regenerativa y Envejecimiento
       </h2>
-      <br>
-      <p>
-        19 y 20 de Octubre de 2023 <br>
-        <span>
-          CINVESTAV sede sur, CDMX
-        </span>
-      </p>
 
     </div>
+    <a 
+      class="principal-btn"
+      href="/registro">
+      Descarga tu constancia
+    </a>
     
   </div>
   
@@ -44,7 +46,10 @@
   .home{
     width: 100%;
     height: 788px;
-    background-color: $bg-hero;
+    background-image: url('../../assets/cells/stemCells2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,7 +57,9 @@
       padding-top: 60px;
       height: 410px;
       margin: 0;
+      overflow: hidden;
     }
+   
     &__circles{
       position: relative;
       height: 100%;
@@ -63,13 +70,13 @@
       height: 25px;
       top: 65vh;
       left: 6vw;
-      background: linear-gradient(to right, #F15, #F15A2A);
+      background: linear-gradient(to right,rgba(39, 170, 42, 0.40) , #0CA1AE);
       transform-origin: top left;
       border-radius: 50%;
       transform: scale(0) rotate(0deg) translate(-50%, -50%);
       animation: cube 20s ease-in forwards infinite;
       &:nth-child(2) {
-        background: radial-gradient(circle, rgba(251,72,63,1) 0%, rgba(64,12,12,1) 94%);
+        background:rgba(39, 170, 42, 0.40);
         top: 30vh;
         left: 20vw;
         animation-delay: 3s;
@@ -83,7 +90,7 @@
         top: 15vh;
         left: 5vw;
         animation-delay: 6s;
-        background: radial-gradient(circle, rgba(191,38,4,1) 0%, rgba(217,125,104,1) 94%);
+        background: rgba(12, 161, 174, 0.40);
       }
       &:nth-child(4){
         width: 15px;
@@ -91,7 +98,7 @@
         top: 25vh;
         left: 5vw;
         animation-delay: 10s;
-        background: radial-gradient(circle, rgba(64,12,12,1) 0%, rgba(191,38,4,1) 94%);
+        background: radial-gradient(circle, rgba(200, 210, 79, 0.40) 0%, rgba(39, 170, 42, 0.40) 94%);
       }
       &:nth-child(5){
         width: 15px;
@@ -100,32 +107,47 @@
         left: 9vw;
         animation-delay: 30s;
       }
+      &:nth-child(6){
+        width: 15px;
+        height: 15px;
+        top: 50vh;
+        left: 80vw;
+        animation-delay: 6s;
+        background: rgba(12, 161, 174, 0.40);
+      }
+      &:nth-child(7){
+        width: 8px;
+        height: 8px;
+        top: 35vh;
+        left: 85vw;
+        animation-delay: 10s;
+        background: radial-gradient(circle, rgba(200, 210, 79, 0.40) 0%, rgba(39, 170, 42, 0.40) 94%);
+      }
     }
     &__center-section{
-      width: 45%;
-      max-width: 680px;
-      height: 420px;
+      width: 100%; 
+      height: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      background: rgba(255, 255, 255, 0.25);
+      justify-content: center;
+      background: rgba(200, 210, 79, 0.2);
       backdrop-filter: blur(5px);
-      border: 4px solid $background-color;
-      border-radius: 40px;
       z-index: 1;
-      @media (max-width: 768px){
-        width: 80%;
-        height: 280px;
-      }
+      
     }
     &__text{
       width: 100%;
       display: flex;
       flex-direction: column;
       text-align: center;
+      max-width: 790px;
       & h2{
         font-size: 40px;
         line-height: 42px;
         font-weight: 600;
+        color: $white;
+        margin-top: 20px;
         @media (max-width: 768px){
           font-size: 24px;
           line-height: 28px;
@@ -144,7 +166,8 @@
         font-size: 30px;
         line-height: 36px;
         font-weight: 400;
-        margin-top: 20px;
+        
+        color: $white;
         @media (max-width: 768px){
           font-size: 14px;
           line-height: 18px;
