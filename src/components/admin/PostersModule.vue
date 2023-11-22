@@ -1,4 +1,7 @@
 <template>
+  <!-- <button @click="getPostersRelation">
+    Generate CSV
+  </button> -->
   <section class="posters__table">
     <div class="posters__control">
       <input
@@ -228,6 +231,82 @@ const handleUpdate = (element) => {
   const index = posters.value.findIndex((poster) => poster.id === element.id)
   posters.value[index] = element
   poster.value = null
+}
+
+
+// LOGIC FOR CSV GENERATION
+
+const getPostersRelation = async () => {
+  const { data, error } = await supabase
+    .from('posters')
+    .select(`*,
+      registrations (
+        email,
+        name
+      )
+    `)
+
+  if (error) {
+    console.error("Error in getPostersRelation: ", error.message)
+  } else {
+    console.log(data)
+    const csvData = arrayToCSV(data);
+    downloadCSV(csvData, 'posters.csv');
+  }
+
+}
+
+const flattenRegistrations = (data) => {
+  return data.map(poster => {
+    const flattened = { ...poster };
+    // Verificar si 'registrations' existe y no está vacío
+    if (flattened.registrations) {
+      flattened['registrations_email'] = flattened.registrations.email || '';
+      flattened['registrations_name'] = flattened.registrations.name || '';
+    } else {
+      // Asignar valores vacíos si no hay 'registrations'
+      flattened['registrations_email'] = '';
+      flattened['registrations_name'] = '';
+    }
+    delete flattened.registrations; // Eliminar la propiedad original
+    return flattened;
+  });
+};
+
+
+
+function arrayToCSV(response) {
+  const data = flattenRegistrations(response);
+  // Crear los encabezados del CSV (basados en las claves del primer objeto, si todos tienen la misma estructura)
+  const headers = Object.keys(data[0]).join(',');
+  console.log(headers)
+
+  // Crear las filas del CSV
+  const rows = data.map(obj => {
+    return Object.keys(obj).map(key => {
+      let val = obj[key];
+      if (key === 'name') {
+      // Eliminar espacios adicionales y convertir a mayúsculas
+      val = val.replace(/\s+/g, ' ').trim().toUpperCase();
+    }
+      return typeof val === 'string' ? `"${val.replace(/"/g, '""')}"` : val; // Manejar comillas dentro de los valores
+    }).join(',');
+  });
+
+  // Unir encabezados y filas, y agregar un salto de línea al final de cada fila
+  return [headers].concat(rows).join('\r\n');
+}
+
+function downloadCSV(csvData, filename = 'data.csv') {
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.style.visibility = 'hidden';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 
